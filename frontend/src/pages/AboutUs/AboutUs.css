@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+}
+
+.main-content {
+  max-width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.section-title {
+  padding: 10px;
+  font-family: copperplate;
+  font-size: 35px;
+  font-weight: 200px;
+  color: grey; 
+}
+
+.bold {
+font-size: 45px;
+color: black;
+}
+
+.grid-members {
+  display: grid;
+  grid-template-columns: 400px 400px 400px;
+  grid-gap: 50px;
+}
+
+.member-card {
+  width: 100%;
+  aspect-ratio: 1 /1 ;
+  padding: 50px;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-card::before {
+  content: '';
+  position: absolute;
+  opacity: 0;
+  bottom: 0px;
+  left: 55px;
+  height: 0px;
+  width: 0px;
+  border: black 1px solid;
+  transition: width .5s .1s, opacity .5s .1s;
+}
+
+.member-card:hover::before {
+  width: 90%;
+  opacity: 1;
+}
+
+.member-card::after {
+  content: '';
+  position: absolute;
+  opacity: 0;
+  top: 45px;
+  right: 0px;
+  height: 0px;
+  width: 0px;
+  border: black 1px solid;
+  transition: height .5s, opacity .5s;
+}
+
+.member-card:hover::after {
+  height: 90%;
+  opacity: 1;
+}
+
+.profile-image-container {
+  height: 75%;
+  width: 75%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform .5s, top .5s, left .5s;
+}
+
+.member-card:hover .profile-image-container {
+  top: 0px;
+  left: 0px;
+  transform: translate(-25%, -25%) scale(.5);
+}
+
+.profile-image {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background-color: lightblue;
+}
+.profile-description {
+  position: absolute;
+}
+
+.profile-socials {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  height: 30px;
+}
+
+.profile-name {
+  position: absolute;
+  top: 45%;
+  left: 80px;
+  color: black;
+  opacity: 0;
+  transition: opacity .5s, transform .5s;
+  transition-delay: 0s;
+}
+
+.profile-name::after {
+  content: '';
+  height: 0;
+  border: 2px solid black;
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  width: 130px;
+}
+
+.member-card:hover .profile-name,
+.member-card:hover .profile-description,
+.member-card:hover .profile-socials-icon{
+  opacity: 1;
+  transform: translate(0, -20px);
+  transition-delay: .25s;
+}
+
+.profile-description {
+  max-width: 70%;
+  position: absolute;
+  text-align: right;
+  right: 20px;
+  bottom: 30px;
+  transition: opacity .5s, transform .5s;
+  transition-delay: 0s;
+  opacity: 0;
+}
+
+.profile-socials-icon {
+  height: 100%;
+  opacity: 0;
+  transition: opacity .5s, transform .5s;
+  transition-delay: 0s;
+}
