@@ -1,37 +1,64 @@
+
+
 #layout {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 40px;
+    justify-content: space-between;
     text-align: center;
+    list-style-type: none;
+    padding: 50px 100px;
+    margin: none; 
+    padding-inline-start: none; 
+}
+
+  @media (max-width: 750px) {
+    #layout {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (min-width: 751px) and (max-width: 999px) {
+    #layout {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  
+  @media (min-width: 1000px) {
+    #layout {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+  }
+
+ul {
+    list-style-type: none;
+    padding: none;
+    margin: none; 
+    padding-inline-start: none; 
 }
 
 .layout-item {
-    background-color: whitesmoke;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    width: 300px;
-    height: 500px;
+    background-color: rgba(245, 245, 245, 0.6);
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: 0.5s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 20px;
+    justify-content: flex-start;
     cursor: pointer; /* Add cursor pointer for clickable items */
-}
-
-.layout-item:hover {
-    transform: scale(1.15);
-    border-radius: 20px;
 }
 
 .p-name {
     text-align: center;
-    font-size: 25px;
+    font-size: 22px;
     margin-bottom: 0;
-    margin-top: 0;
-    font-weight: 500;
+    margin: 20px 0px 10px 0px;
+    font-weight: 600;
+    font-family: baskerville;
+    color: rgba(0, 0, 0, 0.618);
 }
 
 .p-price {
@@ -39,6 +66,8 @@
     font-size: 15px;
     margin-top: 0;
     text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: baskerville;
 }
 
 .all-clothing-title {
@@ -49,6 +78,7 @@
 }
 
 .layout-item img {
-    border-radius: 8px;
+    width: 100%;
+    height: auto; 
     transition: transform 0.3s;
 }
