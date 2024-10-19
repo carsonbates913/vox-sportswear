@@ -1,0 +1,30 @@
+.main-content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding: 20px 100px;
+}
+
+.logo-container {
+  width: 100%;
+  padding: 0px 125px; 
+}
+
+.logo-image {
+  object-fit: contain;
+  width: 100%; 
+}
+
+.space-break {
+  margin: 10px 10px;
+  height: 1px;
+  width: 70%;
+  background-color: #00693e;
+}
+
+.company-title {
+  font-family: montserrat, baskerville; 
+  color: rgba(0, 0, 0, 0.656);
+  font-size: 3rem;
+  font-weight: 200;
+}

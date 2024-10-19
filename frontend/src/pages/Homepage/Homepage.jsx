@@ -5,7 +5,16 @@ const Homepage = () => {
     return (
         <div>
             <Navbar />
-            <p>Homepage</p>
+            <section className="main-content">
+                <div className="logo-container">
+                    <img className="logo-image" src="/assets/Logo.png"></img>
+                </div>
+                <div className="carousel-slider">
+                    <div classNamme=""></div>
+                </div>
+                <div className="space-break"/>
+                <div className="company-title">Vox Sportswear</div>
+            </section>
         </div>
     )
 }
