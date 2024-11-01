@@ -26,12 +26,12 @@ const Navbar = () => {
 
     return (
         <div className="navbar">
-            <NavLink className="inactive" activeClassName="active" to="/">
+            <NavLink className="inactive" activeclassname="active" to="/">
             <img src="/assets/DartmouthLogo.png" className="navbar-image"/></NavLink>
             <div className="navbar-right-container">
-                <NavLink className="inactive" activeClassName="active" to="/aboutus">AboutUs</NavLink>
-                <NavLink className="inactive" activeClassName="active" to="/products">Products</NavLink>
-                <NavLink className="inactive" activeClassName="active" to="/mycart">
+                <NavLink className="inactive" activeclassname="active" to="/aboutus">AboutUs</NavLink>
+                <NavLink className="inactive" activeclassname="active" to="/products">Products</NavLink>
+                <NavLink className="inactive" activeclassname="active" to="/mycart">
                 {auth.currentUser ? auth.currentUser.displayName : "MyAccount"} / Cart
                     <div className="cart-length-container">
                         {cartProducts.length > 0 && <span className="length-span">{cartProducts.length}</span>}

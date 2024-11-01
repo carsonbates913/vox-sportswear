@@ -23,8 +23,8 @@
 
 .navbar-right-container .inactive {
     box-sizing: border-box;
-    height: 87px;
-    padding: 30px 10px;
+    height: 67px;
+    padding: 25px 10px;
     color: #fff;
     text-decoration: none;
     font-family: montserrat;
@@ -61,5 +61,5 @@
 }
 
 .navbar-image {
-    height: 80px;
+    height: 60px;
 }
