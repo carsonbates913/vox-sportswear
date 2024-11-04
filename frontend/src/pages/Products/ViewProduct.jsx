@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { get } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 import Navbar from '../../components/Navbar/Navbar';
-import { addToCart, getSpecificProduct } from '../../services/datastore';
+import { initFirebase, addToCart, getSpecificProduct } from '../../services/datastore';
+import { retrieveCartFromSession, addToCartFromSession } from '../../services/sessionStorage.js';
 import React, {useEffect, useState } from 'react';
 import './Products.css'
 
@@ -10,14 +12,17 @@ import './Products.css'
 const ViewProduct =(props) => {
     const [productInfo, setProductInfo] = useState([]);
     const [size, setSize] = useState();
+    const app = initFirebase();
+    const auth = getAuth(app);
     console.log("productinfo,", size);
 
     useEffect(() => {
-        getSpecificProduct(props.selectedProduct, (GetProduct) => {
-            if (GetProduct) {
-                setProductInfo(GetProduct);  // Set the fetched product to the state
-            }
-        });
+        const getProduct = async () => {
+            const data = await getSpecificProduct(props.selectedProduct);
+            setProductInfo(data.data());
+        }
+
+        getProduct();
     }, []);
 
     /* Returns to the all product page */
@@ -31,7 +36,12 @@ const ViewProduct =(props) => {
     
     const handlePurchase =() =>{
         if (size) {
-            addToCart(props.selectedProduct,productInfo,size);
+            if(auth.currentUser){
+                addToCart(auth.currentUser.uid, props.selectedProduct, size);
+            }else{
+                addToCartFromSession({productID: props.selectedProduct, size: size});
+                window.dispatchEvent(new Event('storage'));
+            }
         } else {
             alert("select size")
         }
