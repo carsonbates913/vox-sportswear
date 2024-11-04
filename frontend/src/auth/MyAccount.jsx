@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initFirebase } from '../services/datastore';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { retrieveCartFromSession } from '../services/sessionStorage.js';
 
 const MyAccount = () => {
+
+    const [cartProducts, setCartProducts] = useState([]);
 
     const app = initFirebase();
     const auth = getAuth(app);
@@ -23,6 +26,18 @@ const MyAccount = () => {
         navigateTo('/homepage');
     }
 
+    const updateCartFromSession = () => {
+        let cart = retrieveCartFromSession();
+        setCartProducts(cart);
+    }
+
+    useEffect(() => {
+        updateCartFromSession();
+        window.addEventListener('storage', updateCartFromSession);
+        return () => {
+            window.removeEventListener('storage', updateCartFromSession);
+        };
+    }, [])
 
     return (
         <div>
