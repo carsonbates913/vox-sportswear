@@ -12,17 +12,16 @@ const Products = () => {
     console.log(products);
 
     useEffect(() => {
-        getAllProducts((GetProducts) => {
-            if (GetProducts) {
-                const productArray = Object.keys(GetProducts).map((productKey) => (
-                    {
-                        id: productKey,
-                        ...GetProducts[productKey]
-                    }
-                ));
+        const getProducts = async () => {
+            try {
+                const data = await getAllProducts();
+                const productArray = data.docs.map((doc) => ({ id: doc.id, ...doc.data()}));
                 setProducts(productArray);
+            } catch (error) {
+                console.error("Error fetching products:", error);
             }
-        });
+        }
+        getProducts();
     }, [])
 
     const handleViewClick = (id) => {
