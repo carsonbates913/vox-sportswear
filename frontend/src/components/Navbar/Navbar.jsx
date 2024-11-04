@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { initFirebase, getAllCart } from "../../services/datastore.js";
 import { getAuth } from 'firebase/auth';
+import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import './Navbar.css'
 
 const Navbar = () => {
@@ -10,19 +11,28 @@ const Navbar = () => {
     const auth = getAuth(app);
     const [cartProducts, setCartProducts] = useState([]);
 
+    const updateCartFromSession = () => {
+        let cart = retrieveCartFromSession();
+        setCartProducts(cart);
+    }
+
     useEffect(()=>{
-        getAllCart((getItems)=>{
-            if(getItems){
-                const cartArray = Object.keys(getItems).map((key)=>(
-                    {
-                        id: key,
-                        ...getItems[key]
-                    }
-                ))
-                setCartProducts(cartArray);
-            }
-        })
-    }, [])
+        if(auth.currentUser){
+            const cancel = getAllCart(auth.currentUser.uid, (snapshot)=>{
+                if(snapshot){
+                    const cartArray = snapshot.docs.map((doc) => ({id: doc.id ,...doc.data()}));
+                    setCartProducts(cartArray);
+                }
+            })
+            return typeof cancel === "function" ? cancel : undefined;
+        }else{
+            updateCartFromSession();
+            window.addEventListener('storage', updateCartFromSession);
+            return () => {
+                window.removeEventListener('storage', updateCartFromSession);
+            };
+        }
+    }, []);
 
     return (
         <div className="navbar">
