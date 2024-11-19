@@ -28,3 +28,9 @@
   font-size: 3rem;
   font-weight: 200;
 }
+
+.homeinfo-selectors {
+  display: flex;
+  justify-content: space-between;
+}
+

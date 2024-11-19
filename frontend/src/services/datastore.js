@@ -5,7 +5,6 @@ import { getAnalytics } from "firebase/analytics";
 import {
   getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot
 } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -43,12 +42,18 @@ export async function getSpecificProduct(productID){
   return data;
 }
 
-export async function getAllCart(userID, callback = () => {}){
+export function getAllCart(userID, callback = () => {}){
   const reference = collection(db, "Users", userID, "Cart");
   const cancel = onSnapshot(reference, (snapshot) => {
     callback(snapshot);
   });
-  return cancel;
+  return cancel; 
+}
+
+export async function getSpecificCartItem(userID, cartItemID){
+  const reference = doc(db, "Users", userID, "Cart", cartItemID);
+  const data = await getDoc(reference);
+  return data;
 }
 
 export async function addToCart(userID, productID, size){
@@ -61,14 +66,23 @@ export async function addToCart(userID, productID, size){
   await addDoc(reference, cartItem);
 }
 
-export async function deleteFromCart(id) {
-  const reference = doc(db,'Cart/' + id);
+export async function deleteFromCart(userID, cartItemID) {
+  const reference = doc(db, "Users", userID, "Cart", cartItemID);
   await deleteDoc(reference);
 }
 
-export function updateCartQuantity(id, newQuantity) {
-  const reference = doc(db, 'Cart/' + id);
-  updateDoc(reference, {
+export async function updateCartQuantity(userID, cartItemID, newQuantity) {
+  const reference = doc(db, "Users", userID, "Cart", cartItemID);
+  await updateDoc(reference, {
     quantity: newQuantity
   })
+}
+
+export async function addOrder(userEmail, cartItem){
+  const reference = collection(db, "Orders");
+  const orderItem = {
+    userEmail: userEmail,
+    ...cartItem
+  }
+  await addDoc(reference, orderItem);
 }

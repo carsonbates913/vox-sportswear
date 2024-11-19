@@ -4,7 +4,7 @@ import MyAccount from '../../auth/MyAccount';
 import { getSpecificProduct, initFirebase } from '../../services/datastore';
 import { getAuth } from 'firebase/auth';
 import './MyCart.css'
-import { getAllCart, updateCartQuantity, deleteFromCart} from '../../services/datastore';
+import { getAllCart, getSpecificCartItem, updateCartQuantity, deleteFromCart, addOrder} from '../../services/datastore';
 import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import { useEffect, useState } from 'react';
 
@@ -59,12 +59,12 @@ const MyCart = () => {
         fetchCart();
     }, [auth.currentUser])
 
-    const handleCartQuantity = (id, operation) => {
+    const handleCartQuantity = (cartItemID, operation) => {
         setCartProducts(prevCartProducts => {
             return prevCartProducts.map(product => {
-                if (product.id === id) {
+                if (product.cartItemID === cartItemID) {
                     const newQuantity = operation === 'increment' ? product.quantity + 1 : product.quantity - 1;
-                    updateCartQuantity(id, newQuantity);
+                    updateCartQuantity(auth.currentUser.uid, cartItemID, newQuantity);
                     return { ...product, quantity: newQuantity };
                 }
                 return product;
@@ -73,13 +73,30 @@ const MyCart = () => {
     }
 
     const handleDeleteFromCart = (cartItemID) => {
-        if(auth.currrentUser){
-            deleteFromCart(cartItemID);
+        if(auth.currentUser){
+            console.log("user");
+            deleteFromCart(auth.currentUser.uid, cartItemID);
         }else{
             let cart = JSON.parse(sessionStorage.getItem('vox-guestCart'));
             cart.splice(cartItemID, 1);
             sessionStorage.setItem("vox-guestCart", JSON.stringify(cart));
             window.dispatchEvent(new Event('storage'));
+        }
+    }
+
+    const clearCart = async () => {
+        const results = cartProducts.map(async (product)=> {
+            return await deleteFromCart(auth.currentUser.uid, product.cartItemID);
+        });
+        await Promise.all(results);
+    }
+
+    const handleCheckout = async () => {
+        if(auth.currentUser){
+            await addOrder(auth.currentUser.email, cartProducts);
+            await clearCart();
+        }else{
+            alert("must be signed in to order");
         }
     }
 
@@ -101,9 +118,9 @@ const MyCart = () => {
                             <p>$ {product.price}</p>
                             <p>{product.size}</p>
                             <div className="quantity-btn-container">
-                                <button onClick={() => handleCartQuantity(product.id, 'decrement')} disabled={product.quantity <= 1}>-</button>
+                                <button onClick={() => handleCartQuantity(product.cartItemID, 'decrement')} disabled={product.quantity <= 1}>-</button>
                                 <p className="q-p">{product.quantity}</p>
-                                <button onClick={() => handleCartQuantity(product.id, 'increment')}>+</button>
+                                <button onClick={() => handleCartQuantity(product.cartItemID, 'increment')}>+</button>
                             </div>
                         </div>
                     </div>
@@ -111,7 +128,7 @@ const MyCart = () => {
            </div>
            <div className="right-cart-container">
                 <MyAccount  />
-                <button onClick={console.log()}>check out</button>
+                <button onClick={handleCheckout}>check out</button>
            </div>
            </div>
         </div>
