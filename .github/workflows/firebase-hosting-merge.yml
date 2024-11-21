@@ -25,3 +25,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_VOX_SPORTSWEAR_B3355 }}
           channelId: live
           projectId: vox-sportswear-b3355
+          entryPoint: ./frontend
