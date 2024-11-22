@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initFirebase } from '../services/datastore';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { retrieveCartFromSession } from '../services/sessionStorage.js';
 
 const MyAccount = () => {
@@ -14,7 +14,7 @@ const MyAccount = () => {
     const navigateTo = useNavigate();
 
     const signIn = async () => {
-        const result = await signInWithPopup(auth, provider);
+        const result = await signInWithRedirect(auth, provider);
         const user = result.user;
         if (user) {
             navigateTo('/homepage');
