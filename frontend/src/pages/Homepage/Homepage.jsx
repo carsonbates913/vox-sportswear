@@ -1,10 +1,8 @@
-import Navbar from '../../components/Navbar/Navbar';
 import './Homepage.css'
 
 const Homepage = () => {
     return (
         <div>
-            <Navbar />
             <section className="main-content">
                 <div className="logo-container">
                     <img className="logo-image" src="/assets/Logo.png"></img>

@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-import Navbar from '../../components/Navbar/Navbar';
 import './Products.css';
 import { getAllProducts } from '../../services/datastore';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ViewProduct from './ViewProduct';
 
 const Products = () => {
@@ -31,7 +29,6 @@ const Products = () => {
 
     return (
         <div>
-            <Navbar />
             {viewProduct ? (
                 <div>
                     <h3 className="all-clothing-title">

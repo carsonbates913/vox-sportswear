@@ -1,10 +1,8 @@
-import Navbar from '../../components/Navbar/Navbar';
 import './AboutUs.css'
 
 const AboutUs = () => {
     return (
         <div>
-            <Navbar />
             <div>
             <section className="main-content">
                 <p className="section-title">Meet the <span className="bold">team</span></p>
