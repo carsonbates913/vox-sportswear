@@ -9,7 +9,8 @@ import { useAuth } from '../../context/AuthContext.jsx';
 const MyCart = () => {
     const [cartProducts, setCartProducts] = useState([]);
     const [requests, setRequests] = useState([]);
-    const [loadingCart, setLoadingCart] = useState(false);
+    const [loadingCart, setLoadingCart] = useState(true);
+    const [loadingCartDelete, setLoadingCartDelete] = useState(false);
 
     const {loading, user} = useAuth();
 
@@ -35,6 +36,7 @@ const MyCart = () => {
             console.log(user.displayName);
             if(user){
                 const cancel = getAllCart(user.uid, async (data)=>{
+
                     if(data){
                         let cartArray = data.docs.map((doc) => ({ cartItemID: doc.id, ...doc.data()}));
                         const promises = cartArray.map(async (cartItem) => {
@@ -44,8 +46,10 @@ const MyCart = () => {
                 
                         cartArray = await Promise.all(promises);
                         setCartProducts(cartArray);
+                        setLoadingCart(false);
                     }else{
                         setCartProducts([]);
+                        setLoadingCart(false);
                     }
                 })
                 return cancel; 
@@ -58,12 +62,7 @@ const MyCart = () => {
                 };
             }
         }
-
-        setLoadingCart(true);
-        if(!loading){
-            fetchCart();
-        }
-        setLoadingCart(false);
+        fetchCart();
     }, [user])
 
     const handleCartQuantity = (cartItemID, operation) => {
@@ -92,13 +91,13 @@ const MyCart = () => {
     }
 
     const clearCart = async () => {
-        setLoadingCart(true);
+        setLoadingCartDelete(true);
         const results = cartProducts.map(async (product)=> {
             return deleteFromCart(user.uid, product.cartItemID);
         });
         await Promise.all(results);
         setCartProducts([]);
-        setLoadingCart(false);
+        setLoadingCartDelete(false);
     }
 
     const handleCheckout = async () => {
@@ -109,8 +108,7 @@ const MyCart = () => {
         }
     }
 
-
-    if(loadingCart){
+    if(loadingCart || loadingCartDelete){
         return (
             <div>loading...</div>
         )
