@@ -78,11 +78,11 @@ export async function updateCartQuantity(userID, cartItemID, newQuantity) {
   })
 }
 
-export async function addOrder(userEmail, cartItem){
+export async function addOrder(userEmail, cartItems){
   const reference = collection(db, "Orders");
   const orderItem = {
     userEmail: userEmail,
-    ...cartItem
+    orders: cartItems,
   }
   await addDoc(reference, orderItem);
 }
