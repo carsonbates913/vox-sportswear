@@ -32,8 +32,6 @@ const MyCart = () => {
 
     useEffect(()=>{
         const fetchCart = async () => {
-            console.log("fetch");
-            console.log(user.displayName);
             if(user){
                 const cancel = getAllCart(user.uid, async (data)=>{
 
@@ -54,7 +52,8 @@ const MyCart = () => {
                 })
                 return cancel; 
             }else{
-                indexCartFromSession();
+                await indexCartFromSession();
+                setLoadingCart(false);
                 window.addEventListener('storage', indexCartFromSession);
                 
                 return () => {
@@ -102,6 +101,8 @@ const MyCart = () => {
 
     const handleCheckout = async () => {
         if(user){
+            console.log(cartProducts);
+            await addOrder(user.email, cartProducts);
             await clearCart();
         }else{
             alert("must be signed in to order");
