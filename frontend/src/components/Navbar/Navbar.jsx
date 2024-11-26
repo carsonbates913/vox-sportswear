@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAllCart } from "../../services/datastore.js";
+import { getAllCart, getUserData } from "../../services/datastore.js";
 import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import './Navbar.css'
@@ -9,7 +9,7 @@ const Navbar = () => {
 
     const [cartProducts, setCartProducts] = useState([]);
 
-    const {user, loading} = useAuth();
+    const { user } = useAuth();
 
     const updateCartFromSession = () => {
         let cart = retrieveCartFromSession();
@@ -33,6 +33,7 @@ const Navbar = () => {
             };
         }
     }, [user]);
+
         return (
             <div className="navbar">
                 <NavLink className="inactive" activeclassname="active" to="/">

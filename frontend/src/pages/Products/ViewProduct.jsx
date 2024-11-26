@@ -8,7 +8,7 @@ import './Products.css'
 const ViewProduct =(props) => {
     const [productInfo, setProductInfo] = useState([]);
     const [size, setSize] = useState();
-    const {user, loading } = useAuth();
+    const { user } = useAuth();
     console.log("productinfo,", size);
 
     useEffect(() => {

@@ -12,7 +12,7 @@ const MyCart = () => {
     const [loadingCart, setLoadingCart] = useState(true);
     const [loadingCartDelete, setLoadingCartDelete] = useState(false);
 
-    const {loading, user} = useAuth();
+    const {user} = useAuth();
 
     async function indexCartFromSession(){
         let cartArray = retrieveCartFromSession();
