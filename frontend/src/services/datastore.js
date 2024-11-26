@@ -86,3 +86,9 @@ export async function addOrder(userEmail, cartItems){
   }
   await addDoc(reference, orderItem);
 }
+
+export async function getUserData(userID){
+  const reference = doc(db, "Users", userID);
+  const data = await getDoc(reference);
+  return data;
+}
