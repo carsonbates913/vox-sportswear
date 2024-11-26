@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, createContext} from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { initFirebase } from "../services/datastore.js";
+import { initFirebase, getUserData } from "../services/datastore.js";
 
 const AuthContext = createContext();
 
@@ -12,8 +12,22 @@ export function AuthProvider({children}){
   const auth = getAuth(app)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      console.log("check");
+
+      if(currentUser){
+        const userData = await getUserData(currentUser.uid);
+        console.log("retrieving");
+        if(userData.exists()){
+          console.log("got data!")
+          setUser({...currentUser, ...userData.data()});
+        }else{
+          setUser(currentUser);
+          console.log("didn't get data");
+        }
+      }else{
+        setUser(null);
+      }
       setLoading(false);
     })
   
