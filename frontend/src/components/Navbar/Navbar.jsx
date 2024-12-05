@@ -42,10 +42,13 @@ const Navbar = () => {
                     <NavLink className="inactive" activeclassname="active" to="/aboutus">AboutUs</NavLink>
                     <NavLink className="inactive" activeclassname="active" to="/products">Products</NavLink>
                     <NavLink className="inactive" activeclassname="active" to="/mycart">
-                    {user ? user.displayName : "MyAccount"} / Cart
+                        Cart
                         <div className="cart-length-container">
                             {cartProducts.length > 0 && <span className="length-span">{cartProducts.length}</span>}
                         </div>
+                    </NavLink>
+                    <NavLink className="inactive" activeclassname="active" to="/myaccount">
+                        {user ? user.displayName : "MyAccount"}
                     </NavLink>
                 </div>
             </div>
