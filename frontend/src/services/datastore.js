@@ -78,17 +78,27 @@ export async function updateCartQuantity(userID, cartItemID, newQuantity) {
   })
 }
 
-export async function addOrder(userEmail, cartItems){
-  const reference = collection(db, "Orders");
+export async function addOrder(userID, userEmail, items){
+  const orderReference = collection(db, "Orders");
   const orderItem = {
     userEmail: userEmail,
-    orders: cartItems,
+    items: items,
   }
-  await addDoc(reference, orderItem);
+  await addDoc(orderReference, orderItem);
+
+  const historyReference = collection(db, "Users", userID, "Order History");
+  await addDoc(historyReference, orderItem);
 }
 
 export async function getUserData(userID){
   const reference = doc(db, "Users", userID);
   const data = await getDoc(reference);
   return data;
+}
+
+export async function getOrders(callback = () => {}){
+  const reference = collection (db, "Orders");
+  const cancel = onSnapshot(reference, (snapshot) => {
+    callback(snapshot);
+  })
 }

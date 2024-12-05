@@ -1,4 +1,4 @@
-import MyAccount from '../../auth/MyAccount';
+import MyAccount from '../MyAccount/MyAccount.jsx';
 import { getSpecificProduct, initFirebase } from '../../services/datastore';
 import './MyCart.css'
 import { getAllCart, updateCartQuantity, deleteFromCart, addOrder} from '../../services/datastore';
@@ -102,7 +102,8 @@ const MyCart = () => {
     const handleCheckout = async () => {
         if(user){
             console.log(cartProducts);
-            await addOrder(user.email, cartProducts);
+            const order = cartProducts.map(({ productID, quantity, size }) => ({ productID, quantity, size }));
+            await addOrder(user.uid, user.email, order);
             await clearCart();
         }else{
             alert("must be signed in to order");
@@ -140,7 +141,6 @@ const MyCart = () => {
                 ))}
                </div>
                <div className="right-cart-container">
-                    <MyAccount  />
                     <button onClick={handleCheckout}>check out</button>
                </div>
                </div>
