@@ -13,17 +13,12 @@ export function AuthProvider({children}){
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("check");
-
       if(currentUser){
         const userData = await getUserData(currentUser.uid);
-        console.log("retrieving");
         if(userData.exists()){
-          console.log("got data!")
           setUser({...currentUser, ...userData.data()});
         }else{
           setUser(currentUser);
-          console.log("didn't get data");
         }
       }else{
         setUser(null);
