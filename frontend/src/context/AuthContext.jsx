@@ -14,11 +14,13 @@ export function AuthProvider({children}){
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if(currentUser){
-        const userData = await getUserData(currentUser.uid);
-        if(userData.exists()){
-          setUser({...currentUser, ...userData.data()});
-        }else{
-          setUser(currentUser);
+        try {
+          const token = await currentUser.getIdTokenResult();
+          const isAdmin = token.claims.isAdmin || false;
+          setUser({...currentUser, isAdmin})
+        } catch (error) {
+          console.error("Error retrieving information about user", error);
+          setUser(null);
         }
       }else{
         setUser(null);

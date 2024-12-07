@@ -4,8 +4,6 @@ import { initFirebase, getOrders, getSpecificProduct } from '../../services/data
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import { useAuth } from '../../context/AuthContext.jsx';
-import sgMail from '@sendgrid/mail'
-sgMail.setApiKey(process.env.TWILIO_KEY)
 import './MyAccount.css'
 
 const MyAccount = () => {
@@ -51,12 +49,16 @@ const MyAccount = () => {
     }, [])
 
     const signIn = async () => {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        if (user) {
-            navigateTo('/homepage');
+        try{
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            if (user) {
+                navigateTo('/homepage');
+            }
+        } catch (error) {
+            console.error("Error - ", error);
         }
-    }
+    } 
 
     const signOut = async () => {
         await auth.signOut();
@@ -72,7 +74,16 @@ const MyAccount = () => {
         e.preventDefault();
         const action = e.nativeEvent.submitter.value;
         if(action === "accept"){
-            sgMail.send
+            const response = await fetch("https://sendorderresponse-ffshwcchqq-uc.a.run.app", {
+                mode: "cors",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({price: 20, message: "test message"}),
+            })
+            const data = await response.text();
+            console.log(data);
         }else if (action === "decline"){
             console.log("decline");
         }
@@ -84,7 +95,7 @@ const MyAccount = () => {
         setFormData((prevData) => ({...prevData, [name]: value }));
     }
 
-    if(user?.role === "admin"){
+    if(user?.isAdmin){
         return (
             <div className="myaccount-main">
                 <div className="pending-orders">
@@ -127,6 +138,12 @@ const MyAccount = () => {
                     </form>
                 </div>
                 <div></div>
+                <div>
+                {user ?
+                <button onClick={signOut}>Log out</button>
+                : <button onClick={signIn}>Log in with Google</button>
+                }
+            </div>
             </div>
         )
     }else{
