@@ -80,7 +80,7 @@ const MyAccount = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({price: 20, message: "test message"}),
+                body: JSON.stringify({price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
             })
             const data = await response.text();
             console.log(data);
@@ -104,7 +104,7 @@ const MyAccount = () => {
                         {orders.length > 0 && orders.map((order, index) => (
                             <div key={order.orderID} className="pending-order" onClick={()=> {handleSelectOrder(index)}}>
                                 <p>{order.userEmail}</p>
-                                <p>{order.items.length}</p>
+                                <p>{order.items.length || 0}</p>
                             </div>
                         ))}
                     </ul>
@@ -130,12 +130,14 @@ const MyAccount = () => {
                             <div>No order selected</div>
                         )}
                     </div>
-                    <form className="review-order-form" onSubmit={handleSubmit}>
+                    {selectedOrder && (
+                        <form className="review-order-form" onSubmit={handleSubmit}>
                         <input className="order-form-price" type="number" placeholder="$0.00" value={formData.price} onChange={e => {handleFormChange(e)}} name="price"></input>
                         <textarea required className="order-form-description" name="description" value={formData.description} onChange={e => {handleFormChange(e)}}></textarea>
                         <button className="order-form-submit" type="submit" name="hello" value="decline">Decline</button>
                         <button className="order-form-submit" type="submit" name="action" value="accept">Accept</button>
                     </form>
+                    )}
                 </div>
                 <div></div>
                 <div>
@@ -146,16 +148,16 @@ const MyAccount = () => {
             </div>
             </div>
         )
-    }else{
-        return (
-            <div>
-                {user ?
-                <button onClick={signOut}>Log out</button>
-                : <button onClick={signIn}>Log in with Google</button>
-                }
-            </div>
-        )
-    }
+   }else{
+      return (
+           <div>
+               {user ?
+               <button onClick={signOut}>Log out</button>
+               : <button onClick={signIn}>Log in with Google</button>
+               }
+           </div>
+      )
+   }
 }
 
 export default MyAccount;
