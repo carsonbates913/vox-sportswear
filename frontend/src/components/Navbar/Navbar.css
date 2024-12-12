@@ -1,65 +1,82 @@
 * {
+    box-sizing: border-box;
 }
 
 .navbar {
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 0px 20px 0px 40px;
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid white;
-    background-color: #00693e;
-    padding: 0 20px 0 20px;
+    background-color: var(--background-color);
 }
 
 .navbar-right-container {
-    height: 100%; 
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 50px;
+    gap: 70px;
 }
 
-.navbar-right-container .inactive {
-    box-sizing: border-box;
-    height: 67px;
-    padding: 25px 10px;
-    color: #fff;
+.inactive {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
     text-decoration: none;
     font-family: montserrat;
-    font-weight: 500;
-    border-bottom: 0px solid white;
-    transition: border-bottom .15s linear;
+    font-weight: 700;
+    font-size: 22px;
+    transition: border-bottom .15s linear, border-top .15s linear;
 }
 
-.navbar-right-container .inactive:hover {
-    border-bottom: 4px solid white;
+.inactive:hover {
+    color: var(--light-primary-color); 
 }
 
-.active {
-    color: #ffffff;
-    text-decoration: none;
+.navbar-cart-button.inactive:hover {
+    background-color: var(--light-primary-color);
+}
+
+.navbar-cart-button.inactive{
+    padding: 10px;
+    border-radius: 50px;
+    position: relative;
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
+}
+
+.navbar-profile-image-container {
+    height: 50px;
+    width: 50px;
+}
+
+.navbar-profile-image {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
 }
 
 .cart-length-container {
-    padding: none;
-    margin-left: 5px;
-    display: inline-block;
-    background-color: #fff;
+    height: 22px;
+    width: 22px;
     border-radius: 20px;
-    padding-right: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    color: black;
-}
-
-.length-span {
+    position: absolute;
+    top: -5px;
+    right: -20px;
     display: flex;
-    font-size: 10px;
-    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: var(--secondary-text-color);
+    background-color: var(--tertiary-color);
 }
 
 .navbar-image {
     height: 60px;
+}
+
+.vox-logo-svg {
+    box-sizing: content-box;
+    padding: 10px;
 }
