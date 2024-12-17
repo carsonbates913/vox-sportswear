@@ -21,10 +21,10 @@
 }
 
 .vox-logo {
-  height: 615px;
+  height: auto;
   position: absolute;
   left: 50%;
-  top: 43%;
+  top: 49%;
   height: auto;
   transform: translateX(-50%) translateY(-50%);
   font-size: 550px;
