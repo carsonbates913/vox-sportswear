@@ -169,7 +169,7 @@ ul {
 .view-product-image {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: rgb(0, 0, 0, .2);
+  background-color: rgb(0, 0, 0, .05);
   object-fit: contain;
 }
 
