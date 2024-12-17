@@ -3,9 +3,6 @@ import AppRoutes from './routes/AppRoutes.jsx'
 import NavBar from './components/Navbar/Navbar.jsx';
 import { useAuth } from './context/AuthContext.jsx'
 import './App.css'
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 function App() {
 
