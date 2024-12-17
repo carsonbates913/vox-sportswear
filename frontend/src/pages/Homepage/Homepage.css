@@ -1,36 +1,82 @@
-.main-content {
+.homepage-main-content {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   padding: 20px 100px;
 }
 
+.welcome-section {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo-container {
   width: 100%;
-  padding: 0px 125px; 
+  height: 400px; 
+  margin-top: 50px;
+  position: relative;
 }
 
-.logo-image {
-  object-fit: contain;
-  width: 100%; 
+.vox-logo {
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  height: auto;
+  transform: translateX(-50%);
+  font-size: 550px;
+  line-height: 400px;
+  font-weight: 750;
+  font-style: italic;
+  color: var(--primary-color);
 }
 
-.space-break {
-  margin: 10px 10px;
-  height: 1px;
-  width: 70%;
-  background-color: #00693e;
+.sportswear-logo {
+  position: absolute;
+  left: 50%;
+  top: 39%;
+  transform: translateX(-50%);
+  font-size: 140px;
+  font-weight: 650;
+  color: var(--secondary-color);
+  -webkit-text-stroke: .5px black;
+  text-shadow: 6px 6px 6px rgb(0, 0, 0, .25);
 }
 
-.company-title {
-  font-family: montserrat, baskerville; 
-  color: rgba(0, 0, 0, 0.656);
-  font-size: 3rem;
-  font-weight: 200;
+.button-shop-now {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  margin: 30px 0px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--secondary-text-color);
+  background-color: var(--tertiary-color);
 }
 
-.homeinfo-selectors {
+.company-description-section {
+  margin-top: 125px;
+}
+
+.company-description-container {
+  padding: 0;
+  margin: 0;
   display: flex;
-  justify-content: space-between;
+  flex-flow: row nowrap;
+  justify-content: center;
 }
 
+.company-description-container li {
+  width: 400px;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.company-description-container li:not(last-child) {
+  border-right: 1px solid var(--primary-color);
+}
