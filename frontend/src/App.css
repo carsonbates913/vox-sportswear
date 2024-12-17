@@ -8,6 +8,14 @@
   --secondary-text-color: white; 
 }
 
+* {
+  font-family: montserrat;
+}
+
 body {
   background-color: var(--background-color);
+}
+
+p {
+  margin: 0;
 }
