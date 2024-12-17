@@ -6,19 +6,17 @@ import {
   getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import dotenv from "dotenv"
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+dotenv.config();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCKrqm1M6F3Zzp6uDTsqmV0wpCWxNgXa6c",
-  authDomain: "vox-sportswear-b3355.firebaseapp.com",
-  projectId: "vox-sportswear-b3355",
-  storageBucket: "vox-sportswear-b3355.firebasestorage.app",
-  messagingSenderId: "483406817164",
-  appId: "1:483406817164:web:65c9e00079ccae951f58a9",
-  measurementId: "G-45Z989BFQK"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
 // Initialize Firebase
