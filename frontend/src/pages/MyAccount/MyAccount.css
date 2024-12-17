@@ -1,17 +1,53 @@
 .myaccount-main{
   display: flex;
+  justify-content: center;
+}
+
+.myaccount-section {
+  max-width: 1350px;
+  margin-top: 50px;
+  flex: 1;
+  display: flex;
+  gap: 50px;
 }
 
 .pending-orders {
   width: 415px;
-  padding: 20px;
-  height: calc(100vh - 69px);
+  height: 100%;
+}
+
+.pending-orders-title {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 23px;
+  font-weight: 600;
 }
 
 .pending-orders-list {
-  padding: 0;
+  height: 625px;
+  padding-left: 20px;
+  border-left: 1px solid black;
   margin: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
   list-style: none;
+}
+
+.pending-order {
+  padding: 7px 0px 7px 20px;
+}
+
+.pending-order-title {
+  margin-bottom: 7px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.pending-order-details {
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .pending-order:hover {
@@ -19,17 +55,14 @@
 }
 
 .review-order {
-  padding: 20px 50px; 
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
 }
 
 .selected-order {
-  padding: 50px 20px;
   display: flex;
   flex-flow: column nowrap; 
-  background-color: pink;
 }
 
 .item-gallery {
@@ -37,32 +70,118 @@
   gap: 10px; 
 }
 
-.selected-item {
-  display: flex;
-}
-
-.selected-item-image {
-  width: 300px;
-  height: 300px; 
-  background-color: lightblue;
+.item {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  background: var(--primary-color);
 }
 
 .review-order-form {
+  padding: 20px 0px;
   display: flex;
   flex-flow: column nowrap; 
-  height: 200px;
+}
+
+.order-form-price-container {
+  margin-bottom: 10px;
 }
 
 .order-form-price {
   width: 100px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255, .5);
 }
 
 .order-form-description {
-  width: 500px;
-  height: 300px;
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+  max-height: 150px;
+  border-radius: 3px;
+  resize: vertical;
+  background-color: rgb(255, 255, 255, .5);
+}
+
+.order-form-description-container {
+}
+
+.order-form-buttons-container {
+  align-self: end;
 }
 
 .order-form-submit {
-  height: 100px;
-  width: 100px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 5px; 
+  color: white;
+  font-weight: 600;
+}
+
+.order-form-submit[value="accept"] {
+background-color: var(--primary-color);
+}
+
+.order-form-submit[value="decline"] {
+  background-color: var(--tertiary-color);
+}
+
+
+/* Order */
+
+.selected-item {
+  width: 100%;
+  padding: 20px 40px 20px 0px;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+}
+
+.selected-item-details {
+  flex: 1;
+  margin-left: 20px;
+  display: grid;
+  grid-template-rows: auto; 
+}
+
+.selected-item-image {
+  width: 300px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background-color: rgb(0, 0, 0, .05);
+}
+
+.selected-item-title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.selected-item-attribute {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.selected-item-attribute-selected {
+  max-height: 200px;
+  max-width: 100%;
+  font-weight: 200;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+}
+
+.selected-item-description-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 30px;
+  gap: 40px;
+  font-size: 12px; 
 }
