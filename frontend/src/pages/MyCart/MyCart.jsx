@@ -64,12 +64,23 @@ const MyCart = () => {
         fetchCart();
     }, [user])
 
-    const handleCartQuantity = (cartItemID, operation) => {
+    const handleCartQuantityChange = (e, cartItemID, operation) => {
         setCartProducts(prevCartProducts => {
             return prevCartProducts.map(product => {
                 if (product.cartItemID === cartItemID) {
-                    const newQuantity = operation === 'increment' ? product.quantity + 1 : product.quantity - 1;
-                    updateCartQuantity(user.uid, cartItemID, newQuantity);
+                    let newQuantity;
+                    if(operation){
+                        newQuantity = operation === 'increment' ? Number(product.quantity) + 1 : Number(product.quantity) - 1;
+                    }else{
+                        newQuantity = e.target.value;
+                    }
+                    if(newQuantity==="" || newQuantity<=0){
+                        newQuantity = 1;
+                    }else if (newQuantity > 1000){
+                        newQuantity = 1000;
+                    }else {
+                        updateCartQuantity(user.uid, cartItemID, newQuantity);
+                    }
                     return { ...product, quantity: newQuantity };
                 }
                 return product;
@@ -77,10 +88,10 @@ const MyCart = () => {
         });
     }
 
-    const handleDeleteFromCart = (cartItemID) => {
+    const handleDeleteFromCart = (cartItemID, imageName) => {
         if(user){
             console.log("user");
-            deleteFromCart(user.uid, cartItemID);
+            deleteFromCart(user.uid, cartItemID, imageName);
         }else{
             let cart = JSON.parse(sessionStorage.getItem('vox-guestCart'));
             cart.splice(cartItemID, 1);
@@ -92,7 +103,7 @@ const MyCart = () => {
     const clearCart = async () => {
         setLoadingCartDelete(true);
         const results = cartProducts.map(async (product)=> {
-            return deleteFromCart(user.uid, product.cartItemID);
+            return deleteFromCart(user.uid, product.cartItemID, product.imageName);
         });
         await Promise.all(results);
         setCartProducts([]);
@@ -100,9 +111,9 @@ const MyCart = () => {
     }
 
     const handleCheckout = async () => {
-        if(user){
+        if(user && cartProducts.length > 0){
             console.log(cartProducts);
-            const order = cartProducts.map(({ productID, quantity, size }) => ({ productID, quantity, size }));
+            const order = cartProducts.map(({ productID, quantity, size, color, customization, imageName, imageURL}) => ({ productID, quantity, size, color, customization, imageName, imageURL}));
             await addOrder(user.uid, user.email, order);
             await clearCart();
         }else{
@@ -116,34 +127,63 @@ const MyCart = () => {
         )
     }else{
         return (
-            <div>
-                <div className="cart-main">
+            <div className="my-cart-main-content">
+                <section className="section-my-cart">
                 <div className="cart">
-                {(user) ? (<p>Signed In</p>) : (<p>Not Signed in</p>)}
-                {(user && user.email == "carson.d.bates.27@dartmouth.edu") ? (<p>Admin Permission</p>) : (<p>No Admin Permission</p>)}
                 {cartProducts.length === 0 || !cartProducts ?
                     <p>your cart is currently empty</p>
                     : cartProducts.map((product)=>(
                         <div className="cart-card" key={product.cartItemID}>
-                            <img src='/assets/mockimg.png' width="150px" />
+                            <img className="cart-card-image" src={'/assets/Vox-Bag.png'} />
                             <div className="cart-inner-description">
-                                <button id="delete-from-cart" onClick={() => handleDeleteFromCart(product.cartItemID)}>x</button>
-                                <p>{product.productName}</p>
-                                <p>$ {product.price}</p>
-                                <p>{product.size}</p>
-                                <div className="quantity-btn-container">
-                                    <button onClick={() => handleCartQuantity(product.cartItemID, 'decrement')} disabled={product.quantity <= 1}>-</button>
-                                    <p className="q-p">{product.quantity}</p>
-                                    <button onClick={() => handleCartQuantity(product.cartItemID, 'increment')}>+</button>
+                                <p className="cart-product-title">{product.name}</p>
+                                <div className="cart-inner-description-row">
+                                    <p className="cart-product-attribute">Size</p>
+                                    <p className="cart-product-attribute-selected">{product.size}</p>
+                                </div>
+                                <div className="cart-inner-description-row">
+                                    <p className="cart-product-attribute">Color</p>
+                                    <p className="cart-product-attribute-selected">{product.size}</p>
+                                </div>
+                                {product.customization && (
+                                    <div className="cart-inner-description-row">
+                                        <p className="cart-product-attribute">Customization</p>
+                                        <p className="cart-product-attribute-selected">{product.customization}</p>
+                                    </div>
+                                )}
+                                {product.imageURL && (
+                                    <div className="cart-inner-description-row">
+                                        <p className="cart-product-attribute">Image URL</p>
+                                        <p className="cart-product-attribute-selected">{product.imageName || "none"}</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="cart-product-quantity-container">
+                                <p className="cart-product-quantity-header">qty</p>
+                                <div className="cart-product-quantity">
+                                    <button className="button-quantity-change" onClick={(e) => handleCartQuantityChange(e, product.cartItemID, 'decrement')} disabled={product.quantity <= 1}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>    
+                                    </button>
+                                    <input className="input-quantity-change" type="number" value={product.quantity} min="1" max="1000" onInput={(e) => {handleCartQuantityChange(e, product.cartItemID, null)}}>
+                                    </input>
+                                    <button className="button-quantity-change"onClick={(e) => handleCartQuantityChange(e, product.cartItemID, 'increment')}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+                                    </button>
                                 </div>
                             </div>
+                            <button className="delete-from-cart" onClick={() => handleDeleteFromCart(product.cartItemID, product.imageName)}>X</button>
                         </div>
                 ))}
                </div>
                <div className="right-cart-container">
-                    <button onClick={handleCheckout}>check out</button>
+                <div className="order-summary">
+                <p>Order Summary</p>
+                <p>{cartProducts.reduce((sum, item) => item.quantity + sum, 0)}items</p>
+                    <button className="button-checkout" onClick={handleCheckout}>
+                        Check Out</button>
+                </div>
                </div>
-               </div>
+               </section>
             </div>
         )
     }
