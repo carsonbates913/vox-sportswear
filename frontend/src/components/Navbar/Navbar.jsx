@@ -51,7 +51,7 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink className="inactive" activeclassname="active" to="/myaccount">
                         <div className="navbar-profile-image-container">
-                            <img src={user ? (user.photoURL ? user.photoURL : '../../public/assets/Blank_Profile.jpeg') : '../../public/assets/Blank_Profile.jpeg'} alt="profile-image" className="navbar-profile-image"/>
+                            <img src={user ? (user.photoURL ? user.photoURL : '/assets/Blank_Profile.jpeg') : '/assets/Blank_Profile.jpeg'} alt="profile-image" className="navbar-profile-image"/>
                         </div>
                     </NavLink>
                 </div>
