@@ -1,52 +1,44 @@
+import { useRef } from 'react';
+import ProfileCard from '../../components/ProfileCard/ProfileCard.jsx'
 import './AboutUs.css'
 
 const AboutUs = () => {
+    const gridRef = useRef(null);
+
+    const handleScrollDown = () => {
+        if(gridRef.current){
+            gridRef.current.scrollBy({
+                top: 570,
+                behavior: 'smooth'
+            })
+        }
+    }
+
     return (
         <div>
             <div>
-            <section className="main-content">
-                <p className="section-title">Meet the <span className="bold">team</span></p>
-                <div className="section-break"></div>
-                <div className="grid-members">
-                    <div className="member-card">
-                        <div className="profile-image-container">
-                            <div className="profile-image"></div>
-                        </div>
-                        <div className="profile-details">
-                            <div className="profile-socials">
-                            <svg className="profile-socials-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg>
-                            </div>
-                            <p className="profile-name">Name</p>
-                            <p className="profile-description">Hello, my name is Carson. I like to crochet and code.</p>
-                        </div>
-                    </div>
-                    <div className="member-card">
-                        <div className="profile-image-container">
-                            <div className="profile-image"></div>
-                        </div>
-                        <div className="profile-details">
-                            <div className="profile-socials">
-                            <svg className="profile-socials-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg>
-                            </div>
-                            <p className="profile-name">Name</p>
-                            <p className="profile-description">Hello, my name is Carson. I like to crochet and code.</p>
-                        </div>
-                    </div>
-                    <div className="member-card">
-                        <div className="profile-image-container">
-                            <div className="profile-image"></div>
-                        </div>
-                        <div className="profile-details">
-                            <div className="profile-socials">
-                            <svg className="profile-socials-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg>
-                            </div>
-                            <p className="profile-name">Name</p>
-                            <p className="profile-description">Hello, my name is Carson. I like to crochet and code.</p>
-                        </div>
-                    </div>
-                    <div className="member-card"></div>
-                    <div className="member-card"></div>
+            <section className="aboutus-main-content">
+                <p className="section-title">Meet the <span className="bold">Team</span></p>
+                <div className="grid-members" ref={gridRef}>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sofia_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Rod_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Kristi_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sam_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sydney_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Jake_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sofia_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Rod_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Kristi_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sam_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Sydney_Profile.jpeg'}/>
+                    <ProfileCard name={"Henry"} description={"i work here"} profileURL={'/assets/Jake_Profile.jpeg'}/>
                 </div>
+                <button className="button-scroll-profile" onClick={handleScrollDown}>
+                    <svg width="68" height="28" viewBox="0 0 79 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M76.4728 13.9926C79.4941 10.9713 79.4941 6.07272 76.4728 3.05137C73.4514 0.0300255 68.5528 0.0300293 65.5315 3.05138L39.5478 29.0351L13.4686 2.95596C10.4473 -0.0653954 5.54871 -0.0653954 2.52737 2.95596C-0.493988 5.9773 -0.493988 10.8759 2.52736 13.8972L33.5803 44.9501C35.0004 46.3703 36.8354 47.1229 38.6951 47.208C41.0695 47.5965 43.5903 46.8751 45.4214 45.044L76.4728 13.9926Z" fill="black"/>
+                    </svg>
+
+                </button>
 
             </section>
             </div>
