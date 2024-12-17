@@ -31,22 +31,39 @@ const Products = () => {
         <div>
             {viewProduct ? (
                 <div>
-                    <h3 className="all-clothing-title">
-                        ALL CLOTHING
-                    </h3>
                     <ViewProduct selectedProduct={selectedProduct} setViewProduct={setViewProduct} />
                 </div>
             ) : (
                 <div>
-                    <ul id="layout">
+                    <div className="grid-products" id="layout">
                         {products.map((product) => (
-                            <li key={product.id} className="layout-item" onClick={() => handleViewClick(product.id)}>
-                                <img src='/assets/mockimg.png' width="250px" height="400px" alt={product.productName} />
-                                <p className="p-name">{product.productName}</p>
-                                <p className="p-price">${product.price}</p>
-                            </li>
+                            <div key={product.id} className="product-item" onClick={() => handleViewClick(product.id)}>
+                                <div className="product-hover"/>
+                                <div className="product-view">View Item</div>
+                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
+                                <div className="product-background"/>
+                            </div>
                         ))}
-                    </ul>
+                            <div className="product-item" >
+                                <div className="product-hover"/>
+                                <div className="product-view">View Item</div>
+                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
+                                <div className="product-background"/>
+                            </div>
+                            <div className="product-item" >
+                                <div className="product-hover"/>
+                                <div className="product-view">View Item</div>
+                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
+                                <div className="product-background"/>
+                            </div>
+                            <div className="product-item" >
+                                <div className="product-hover"/>
+                                <div className="product-view">View Item</div>
+                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
+                                <div className="product-background"/>
+                            </div>
+
+                    </div>
                 </div>
             )}
         </div>
