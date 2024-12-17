@@ -54,6 +54,12 @@
   font-weight: 700;
   color: var(--secondary-text-color);
   background-color: var(--tertiary-color);
+  opacity: 1;
+  z-index: 1;
+}
+
+.button-shop-now:hover {
+  opacity: .8;
 }
 
 .company-description-section {
