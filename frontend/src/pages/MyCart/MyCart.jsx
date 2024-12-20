@@ -2,7 +2,7 @@ import MyAccount from '../MyAccount/MyAccount.jsx';
 import { getSpecificProduct, initFirebase } from '../../services/datastore';
 import './MyCart.css'
 import { getAllCart, updateCartQuantity, deleteFromCart, addOrder} from '../../services/datastore';
-import { retrieveCartFromSession } from '../../services/sessionStorage.js';
+import { retrieveCartFromSession, updateCartSessionQuantity} from '../../services/sessionStorage.js';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -79,7 +79,11 @@ const MyCart = () => {
                     }else if (newQuantity > 1000){
                         newQuantity = 1000;
                     }else {
-                        updateCartQuantity(user.uid, cartItemID, newQuantity);
+                        if(user){
+                            updateCartQuantity(user.uid, cartItemID, newQuantity);
+                        } else {
+                            updateCartSessionQuantity(cartItemID, newQuantity);
+                        }
                     }
                     return { ...product, quantity: newQuantity };
                 }
@@ -178,7 +182,7 @@ const MyCart = () => {
                <div className="right-cart-container">
                 <div className="order-summary">
                 <p>Order Summary</p>
-                <p>{cartProducts.reduce((sum, item) => item.quantity + sum, 0)}items</p>
+                <p>{cartProducts.reduce((sum, item) => Number(item.quantity) + sum, 0)}items</p>
                     <button className="button-checkout" onClick={handleCheckout}>
                         Check Out</button>
                 </div>
