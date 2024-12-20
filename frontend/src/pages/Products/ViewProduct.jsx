@@ -39,7 +39,7 @@ const ViewProduct =(props) => {
                 console.log(formData);
                 addToCart(user.uid, props.selectedProduct, formData);
             }else{
-                addToCartFromSession({productID: props.selectedProduct, size: size});
+                addToCartFromSession({productID: props.selectedProduct, ...formData, quantity: 1});
                 window.dispatchEvent(new Event('storage'));
             }
             props.setViewProduct(false);
