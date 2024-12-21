@@ -1,4 +1,3 @@
-
 export function retrieveCartFromSession(){
   let cart = sessionStorage.getItem("vox-guestCart");
   cart = cart ? JSON.parse(cart) : [];
