@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initFirebase, getOrders, getSpecificProduct } from '../../services/datastore.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import './MyAccount.css'
 
@@ -10,7 +9,7 @@ const MyAccount = () => {
     const [orders, setOrders] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [formData, setFormData] = useState({price: "", description: ""})
+    const [formData, setFormData] = useState({price: "0.00", description: ""})
 
     const {user} = useAuth();
 
@@ -48,7 +47,7 @@ const MyAccount = () => {
 
     useEffect(()=> {
         if(selectedOrder){
-            setFormData({price: "", description: ""});
+            setFormData({price: "0.00", description: ""});
         }
     }, [selectedOrder])
 
@@ -79,13 +78,17 @@ const MyAccount = () => {
         e.preventDefault();
         const action = e.nativeEvent.submitter.value;
         if(action === "accept"){
+            if(isNaN(formData.price) || formData.price.trim() === '' || Number(formData.price).toFixed(2) !== formData.price){
+                alert(`Invalid price format - must be two decimal places (e.g. 20.00)`);
+                return;
+            }
             const response = await fetch("https://sendorderresponse-ffshwcchqq-uc.a.run.app", {
                 mode: "cors",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({submitType: "accept", recipientEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
+                body: JSON.stringify({submitType: "accept", consumerEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
             })
             const data = await response.text();
             console.log(data);
@@ -96,7 +99,7 @@ const MyAccount = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({submitType: "decline", recipientEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
+                body: JSON.stringify({submitType: "decline", consumerEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
             })
             const data = await response.text();
             console.log(data);
@@ -106,7 +109,7 @@ const MyAccount = () => {
     }
 
     const handleFormChange = (e) => {
-        const {name, value} = e.target;
+        let {name, value} = e.target;
         setFormData((prevData) => ({...prevData, [name]: value }));
     }
 
