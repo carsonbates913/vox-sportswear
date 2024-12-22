@@ -6,8 +6,7 @@ import ViewProduct from './ViewProduct';
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [viewProduct, setViewProduct] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(''); // holds the ID of the Product 
-    console.log(products);
+    const [selectedProduct, setSelectedProduct] = useState('');
 
     useEffect(() => {
         const getProducts = async () => {
@@ -30,41 +29,22 @@ const Products = () => {
     return (
         <div>
             {viewProduct ? (
-                <div>
+                <main className="view-product">
                     <ViewProduct selectedProduct={selectedProduct} setViewProduct={setViewProduct} />
-                </div>
+                </main>
             ) : (
-                <div>
-                    <div className="grid-products" id="layout">
+                <main className="products">
+                    <div className="products__grid">
                         {products.map((product) => (
-                            <div key={product.id} className="product-item" onClick={() => handleViewClick(product.id)}>
-                                <div className="product-hover"/>
-                                <div className="product-view">View Item</div>
-                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
-                                <div className="product-background"/>
+                            <div key={product.id} className="grid__product-item" onClick={() => handleViewClick(product.id)}>
+                                <div className="product-item__hover"/>
+                                <div className="product-item__view">View Item</div>
+                                <img className="product-item__image" src='/assets/Vox-Bag.png' alt="hello" />
+                                <div className="product-item__background"/>
                             </div>
                         ))}
-                            <div className="product-item" >
-                                <div className="product-hover"/>
-                                <div className="product-view">View Item</div>
-                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
-                                <div className="product-background"/>
-                            </div>
-                            <div className="product-item" >
-                                <div className="product-hover"/>
-                                <div className="product-view">View Item</div>
-                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
-                                <div className="product-background"/>
-                            </div>
-                            <div className="product-item" >
-                                <div className="product-hover"/>
-                                <div className="product-view">View Item</div>
-                                <img className="product-image" src='/assets/Vox-Bag.png' alt="hello" />
-                                <div className="product-background"/>
-                            </div>
-
                     </div>
-                </div>
+                </main>
             )}
         </div>
     )
