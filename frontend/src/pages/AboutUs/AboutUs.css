@@ -1,40 +1,34 @@
-* {
-  box-sizing: border-box;
-}
-
-.aboutus-main-content {
+.about-us {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
 }
 
-.section-title {
+.about-us__title {
   margin: 0px 0px 20px 0px;
   font-family: montserrat;
-  font-size: 70px;
+  font-size: 60px;
   font-weight: 200;
   color: var(--primary-text-color); 
 }
 
-.bold {
-font-size: 70px;
+.about-us__title--bold {
 color: var(--primary-color);
 font-weight: 800;
 }
 
-.grid-members {
-  height: 570px;
+.about-us__grid-members {
+  height: 620px;
   padding: 0px 30px;
   display: grid;
-  grid-template-columns: 275px 275px 275px;
+  grid-template-columns: 300px 300px 300px;
   grid-column-gap: 150px;
   grid-row-gap: 10px;
   overflow-y: scroll;
 }
 
-.button-scroll-profile {
-  margin-top: 20px;
+.about-us__scroll-button {
+  margin-top: 17px;
   background-color: transparent;
   border: none;
-
 }
