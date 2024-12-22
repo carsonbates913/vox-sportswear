@@ -1,11 +1,13 @@
-.homepage-main-content {
+.homepage {
+  padding: 20px 100px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  padding: 20px 100px;
 }
 
-.welcome-section {
+/*=========Welcome Section=========*/
+
+.homepage__welcome-section {
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -13,14 +15,14 @@
   align-items: center;
 }
 
-.logo-container {
+.welcome-section__logo-container {
   width: 100%;
   height: 400px; 
   margin-top: 50px;
   position: relative;
 }
 
-.vox-logo {
+.logo-container__vox-element {
   height: auto;
   position: absolute;
   left: 50%;
@@ -33,7 +35,7 @@
   color: var(--primary-color);
 }
 
-.sportswear-logo {
+.logo-container__sportswear-element {
   position: absolute;
   left: 50%;
   top: 39%;
@@ -45,7 +47,7 @@
   text-shadow: 6px 6px 6px rgb(0, 0, 0, .25);
 }
 
-.button-shop-now {
+.welcome-section__shop-button {
   padding: 10px 20px;
   border: none;
   border-radius: 50px;
@@ -58,23 +60,22 @@
   z-index: 1;
 }
 
-.button-shop-now:hover {
-  opacity: .8;
-}
+/*==========Company Description Section=========*/
 
-.company-description-section {
+.homepage__company-description-section {
   margin-top: 125px;
 }
 
-.company-description-container {
+.company-description-section__description-list {
   padding: 0;
   margin: 0;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+  list-style: none;
 }
 
-.company-description-container li {
+.description-list__item {
   width: 400px;
   padding: 10px 0px;
   text-align: center;
@@ -83,6 +84,12 @@
   color: var(--primary-color);
 }
 
-.company-description-container li:not(last-child) {
+.description-list__item:not(last-child) {
   border-right: 1px solid var(--primary-color);
+}
+
+/*==========Hover Effects==========*/
+
+.welcome-section__shop-button:hover {
+  opacity: .8;
 }
