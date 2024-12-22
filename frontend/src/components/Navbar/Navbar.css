@@ -1,26 +1,27 @@
-* {
-    box-sizing: border-box;
-}
-
 .navbar {
     padding: 0px 20px 0px 40px;
     position: sticky;
     top: 0;
+    z-index: 500;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: var(--background-color);
-    z-index: 500;
 }
 
-.navbar-right-container {
+.vox-logo-svg {
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+.navbar__right-container {
     display: flex;
     justify-content: space-between;
     gap: 70px;
 }
 
-.inactive {
+.right-container__navlink {
     display: flex;
     align-items: center;
     color: var(--primary-color);
@@ -28,39 +29,60 @@
     font-family: montserrat;
     font-weight: 700;
     font-size: 22px;
-    transition: border-bottom .15s linear, border-top .15s linear;
 }
 
-.inactive:hover {
-    color: var(--light-primary-color); 
-}
-
-.navbar-cart-button.inactive:hover {
-    background-color: var(--light-primary-color);
-}
-
-.navbar-cart-button.inactive{
+.right-container__cart-navlink{
     padding: 10px;
     border-radius: 50px;
     position: relative;
-    background-color: var(--primary-color);
     color: var(--secondary-text-color);
+    background-color: var(--primary-color);
 }
 
-.navbar-profile-image-container {
-    height: 50px;
+.navlink__profile-container {
     width: 50px;
+    height: 50px;
+    position: relative;
 }
 
-.navbar-profile-image {
+.right-container__profile-navlink{
+    position: relative;
+}
+
+.connector {
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+    height: 10px;
+    display: none;
+}
+
+.navlink__sign-out-button {
+    padding: 8px 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: absolute;
+    bottom: -42.5px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    visibility: hidden;
+    white-space: nowrap;
+    font-size: 12px;
+    background-color: rgb(255, 255, 255, .5);
+    box-shadow: 2px 2px 5px rgb(0, 0, 0, .2);
+    opacity: 0;
+    transition: opacity .25s, transform .25s;
+}
+
+.profile-container__image {
     height: 100%;
-    object-fit: cover;
     border-radius: 50px;
+    object-fit: cover;
 }
 
-.cart-length-container {
-    height: 22px;
+.cart-navlink__length {
     width: 22px;
+    height: 22px;
     border-radius: 20px;
     position: absolute;
     top: -5px;
@@ -73,11 +95,27 @@
     background-color: var(--tertiary-color);
 }
 
-.navbar-image {
-    height: 60px;
+/*=========Hover Effects==========*/
+
+.right-container__navlink:hover {
+    color: var(--light-primary-color); 
 }
 
-.vox-logo-svg {
-    box-sizing: content-box;
-    padding: 10px;
+.right-container__cart-navlink:hover {
+    color: white;
+    background-color: var(--light-primary-color);
+}
+
+.navlink__sign-out-button:hover {
+    background-color: white;
+}
+
+.right-container__profile-navlink:hover .connector {
+    display: block;
+}
+
+.right-container__profile-navlink:hover .navlink__sign-out-button {
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
 }
