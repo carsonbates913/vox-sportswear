@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { initFirebase, getOrders, getSpecificProduct } from '../../services/datastore.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getOrders, getSpecificProduct } from '../../services/datastore.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import './MyAccount.css'
 
@@ -12,12 +10,6 @@ const MyAccount = () => {
     const [formData, setFormData] = useState({price: "0.00", description: ""})
 
     const {user} = useAuth();
-
-    const app = initFirebase();
-    const auth = getAuth(app);
-
-    const provider = new GoogleAuthProvider();
-    const navigateTo = useNavigate();
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -50,18 +42,6 @@ const MyAccount = () => {
             setFormData({price: "0.00", description: ""});
         }
     }, [selectedOrder])
-
-    const signIn = async () => {
-        try{
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            if (user) {
-                navigateTo('/homepage');
-            }
-        } catch (error) {
-            console.error("Error - ", error);
-        }
-    } 
 
     const signOut = async () => {
         await auth.signOut();
@@ -188,11 +168,7 @@ const MyAccount = () => {
                                 </div>
                             </form>
                         )}
-                                            <div>
-                        {user ?
-                        <button onClick={signOut}>Log out</button>
-                        : <button onClick={signIn}>Log in with Google</button>
-                        }
+                        <div>
                     </div>
                     </div>
                 </section>
@@ -200,12 +176,9 @@ const MyAccount = () => {
         )
    }else{
       return (
-           <div>
-               {user ?
-               <button onClick={signOut}>Log out</button>
-               : <button onClick={signIn}>Log in with Google</button>
-               }
-           </div>
+           <header>
+            Previous Orders
+           </header>
       )
    }
 }
