@@ -135,7 +135,7 @@ const MyCart = () => {
                 <section className="section-my-cart">
                 <div className="cart">
                 {cartProducts.length === 0 || !cartProducts ?
-                    <p>your cart is currently empty</p>
+                    <p className="cart__empty-alert">your cart is currently empty</p>
                     : cartProducts.map((product)=>(
                         <div className="cart-card" key={product.cartItemID}>
                             <img className="cart-card-image" src={'/assets/Vox-Bag.png'} />
@@ -181,8 +181,7 @@ const MyCart = () => {
                </div>
                <div className="right-cart-container">
                 <div className="order-summary">
-                <p>Order Summary</p>
-                <p>{cartProducts.reduce((sum, item) => Number(item.quantity) + sum, 0)}items</p>
+                <p className="order-summary__num-items">{cartProducts.reduce((sum, item) => Number(item.quantity) + sum, 0)}  items</p>
                     <button className="button-checkout" onClick={handleCheckout}>
                         Check Out</button>
                 </div>
