@@ -147,7 +147,7 @@ const MyCart = () => {
                                 </div>
                                 <div className="cart-inner-description-row">
                                     <p className="cart-product-attribute">Color</p>
-                                    <p className="cart-product-attribute-selected">{product.size}</p>
+                                    <p className="cart-product-attribute-selected">{product.color}</p>
                                 </div>
                                 {product.customization && (
                                     <div className="cart-inner-description-row">
