@@ -1,4 +1,14 @@
-
+.products {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.products h3 {
+  font-weight: 400; 
+  text-align: center;
+  width: 1300px; 
+  margin-top: 50px; 
+}
 
 .products__grid {
     width: 100%;
@@ -264,4 +274,10 @@
   color: white;
   font-weight: 200;
   background-color: var(--primary-color);
+}
+
+.custom-image div {
+  margin-left: 20px; 
+  width: 100px;
+  height: 100px;
 }

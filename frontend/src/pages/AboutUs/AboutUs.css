@@ -18,17 +18,19 @@ font-weight: 800;
 }
 
 .about-us__grid-members {
-  height: 620px;
   padding: 0px 30px;
   display: grid;
   grid-template-columns: 300px 300px 300px;
   grid-column-gap: 150px;
   grid-row-gap: 10px;
-  overflow-y: scroll;
 }
 
 .about-us__scroll-button {
   margin-top: 17px;
   background-color: transparent;
   border: none;
+}
+
+.about-us {
+  margin-bottom: 50px; 
 }

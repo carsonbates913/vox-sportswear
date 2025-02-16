@@ -2,7 +2,9 @@ import { addToCart, getSpecificProduct } from '../../services/datastore';
 import { addToCartFromSession } from '../../services/sessionStorage.js';
 import {useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx'
+
 import './Products.css'
+import ImageUpload from '../../components/ImageUpload/ImageUpload.jsx';
 
 
 const ViewProduct =(props) => {
@@ -65,11 +67,11 @@ const ViewProduct =(props) => {
                         </svg>
                     </button>
                     <div className="display-section__product-card">
-                        <img className="product-card__image" src="/assets/Vox-Bag.png"></img>
+                        <img className="product-card__image" src={productInfo.imageURL}></img>
                     </div>
                     <div className="display-section__form">
                         <div className="form__product-info">
-                            <p className="product-info__name">Short-Sleeve Shirt</p>
+                            <p className="product-info__name">{productInfo.name}</p>
                             <p className="product-info__description">Customizeable Label</p>
                         </div>
                         <div className="form__line-break"/>
@@ -102,8 +104,8 @@ const ViewProduct =(props) => {
                                 {addPersonalDesign && (
                                     <>
                                     <textarea className="view-product-personal-customization" name="customization" value={formData.customization} onChange={(e) => {handleFormChange(e)}}/>
+                                    <ImageUpload className="custom-image" id="customImage"/>
                                     <label className="image-customization-label">
-                                    <input className="button-add-image" type="file" accept="image/*" onChange={e=>{handleImageChange(e)}} />
                                     </label>
                                     </>
                                 )}
