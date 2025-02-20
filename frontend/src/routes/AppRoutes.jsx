@@ -4,6 +4,7 @@ import AboutUs from '../pages/AboutUs/AboutUs.jsx';
 import MyCart from '../pages/MyCart/MyCart.jsx';
 import Products from '../pages/Products/Products.jsx';
 import MyAccount from '../pages/MyAccount/MyAccount.jsx';
+import OrderHistory from '../pages/OrderHistory/OrderHistory.jsx';
 
 export default function AppRoutes(){
 
@@ -15,6 +16,7 @@ export default function AppRoutes(){
       <Route path="/homepage" element={<Homepage/>}/>
       <Route path="/myaccount" element={<MyAccount/>}/>
       <Route path="/" element={<Homepage/>}/>
+      <Route path="/order-history" element={<OrderHistory/>}/>
     </Routes>
   )
 }

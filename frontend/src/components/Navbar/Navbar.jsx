@@ -70,10 +70,14 @@ const Navbar = () => {
                 <div className="navbar__right-container">
                     <NavLink className="right-container__navlink" to="/aboutus">About</NavLink>
                     <NavLink className="right-container__navlink" to="/products">Products</NavLink>
+
+                    <NavLink className="right-container__navlink" to="/order-history">Order History</NavLink> 
+                    
                     <NavLink className="right-container__navlink right-container__cart-navlink" to="/mycart">
                         Cart
                             {cartItems.length > 0 && (cartItems.length < 10 ? (<div className="cart-navlink__length">{cartItems.length}</div>) : (<div className="cart-navlink__length">9+</div>) ) }
                     </NavLink>
+            
                     <NavLink className="right-container__profile-navlink" onClick={() => !user && signIn()} to="/myaccount">
                         {user ? (
                             <>
