@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "vox-sportswear-b3355"
-  }
+    "default": "vox-sportswear-b3355",
+    "a": "vox-sportswear-b3355"
+  },
+  "targets": {},
+  "etags": {}
 }

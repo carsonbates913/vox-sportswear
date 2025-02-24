@@ -1,0 +1,26 @@
+.homepage__company-description-section {
+    margin-top: 116px;
+}
+  
+  .company-description-section__description-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    list-style: none;
+}
+  
+  .description-list__item {
+    width: 400px;
+    padding: 10px 0px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+  
+  .description-list__item:not(last-child) {
+    border-right: 1px solid var(--primary-color);
+}
+  
