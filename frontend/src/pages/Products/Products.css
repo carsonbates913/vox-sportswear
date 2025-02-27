@@ -3,108 +3,23 @@
   flex-direction: column;
   align-items: center; 
 }
-.products h3 {
-  font-weight: 400; 
+
+.products__note {
+  margin: 30px;
+  width: 70vw; 
+}
+
+.products__note h3 {
+  font-weight: 300; 
   text-align: center;
-  width: 1300px; 
-  margin-top: 50px; 
 }
 
-.products__grid {
-    width: 100%;
-    display: grid;
-    column-gap: 30px;
-    row-gap: 40px;
-    justify-content: space-between;
-    text-align: center;
-    list-style-type: none;
-    padding: 50px 100px;
-    margin: none; 
-    padding-inline-start: none; 
-}
-
-@media (max-width: 599px) {
-  .products__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-  @media (min-width: 600px) and (max-width: 899px) {
-    .products__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  @media (min-width: 900px) and (max-width: 1399px) {
-    .products__grid {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-  
-  @media (min-width: 1400px) {
-    .products__grid {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-  }
-
-.grid__product-item {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: 0.5s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer; /* Add cursor pointer for clickable items */
-    overflow: hidden;
-}
-.product-item__image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  background-color: transparent;
-  transition: transform 0.3s;
-}
-
-.product-item__background {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background-color: black;
-  opacity: 0.05;
-  z-index: -1; 
-}
-
-.product-item__view {
-  height: 13%;
-  width: 100%;
-  position: absolute;
-  bottom: -13%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: var(--primary-color);
-  transition: bottom .25s;
-}
-
-.product-item__hover {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(to top, black 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity .25s;
-}
-
-.grid__product-item:hover .product-item__hover {
-  opacity: .2;
-}
-
-.grid__product-item:hover .product-item__view {
-  bottom: 0;
+.products-gallery-container p{
+  margin: 30px 0px;
+  font-size: 20;
+  font-weight: 800;
+  letter-spacing: 10px;
+  text-align: center; 
 }
 
 /* View Product */
