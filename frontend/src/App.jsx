@@ -1,7 +1,7 @@
-import { BrowserRouter as Router} from 'react-router-dom';
-import AppRoutes from './routes/AppRoutes.jsx'
+import { RouterProvider } from 'react-router-dom';
 import NavBar from './components/Navbar/Navbar.jsx';
 import { useAuth } from './context/AuthContext.jsx'
+import { router } from './routes/AppRoutes.jsx'
 import './App.css'
 
 function App() {
@@ -13,10 +13,8 @@ function App() {
   }else{
     return (
       <>
-        <Router>
-          <NavBar />
-          <AppRoutes />
-        </Router>
+        <RouterProvider router={router}>
+        </RouterProvider>
       </>
     )
   }

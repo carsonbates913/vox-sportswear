@@ -1,0 +1,13 @@
+.product-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.product-list__row {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

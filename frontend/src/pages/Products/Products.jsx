@@ -1,4 +1,6 @@
 import './Products.css';
+import ProductList from '../../components/ProductList/ProductList.jsx';
+import ProductGallery from '../../components/ProductGallery/ProductGallery.jsx';
 import { getAllProducts } from '../../services/datastore';
 import { useEffect, useState } from 'react';
 import ViewProduct from './ViewProduct';
@@ -27,26 +29,25 @@ const Products = () => {
     }
 
     return (
-        <div>
+        <>
             {viewProduct ? (
                 <main className="view-product">
                     <ViewProduct selectedProduct={selectedProduct} setViewProduct={setViewProduct} />
                 </main>
             ) : (
                 <main className="products">
-                    <div className="products__grid">
-                        {products.map((product) => (
-                            <div key={product.id} className="grid__product-item" onClick={() => handleViewClick(product.id)}>
-                                <div className="product-item__hover"/>
-                                <div className="product-item__view">View Item</div>
-                                <img className="product-item__image" src='/assets/Vox-Bag.png' alt="hello" />
-                                <div className="product-item__background"/>
-                            </div>
-                        ))}
+                    <div className="products__note">
+                        <h3>The products on our website are just a <span style={{color:'4A4A4A', fontWeight:"600"}}>sample</span> of what we can create.</h3>
+                        <h3>If you’re looking for something specific that’s not listed, just reach out—we’d love to make it happen for you!</h3>
+                    </div>
+                    <div className="products-gallery-container">
+                        <ProductList products={products} />
+                        <p>Our Products</p>
+                        <ProductGallery products={products} handleViewClick={handleViewClick}/>
                     </div>
                 </main>
             )}
-        </div>
+        </>
     )
 }
 

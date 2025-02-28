@@ -2,7 +2,12 @@ import { addToCart, getSpecificProduct } from '../../services/datastore';
 import { addToCartFromSession } from '../../services/sessionStorage.js';
 import {useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx'
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import './Products.css'
+import ImageUpload from '../../components/ImageUpload/ImageUpload.jsx';
+import ViewProductForm from '../../components/ViewProductForm/ViewProductForm.jsx';
 
 
 const ViewProduct =(props) => {
@@ -14,18 +19,24 @@ const ViewProduct =(props) => {
     const [productInfo, setProductInfo] = useState([]);
     const { user } = useAuth();
 
+    const navigate = useNavigate();
+    const { productName } = useParams();
+
     useEffect(() => {
         const getProduct = async () => {
-            const data = await getSpecificProduct(props.selectedProduct);
-            setProductInfo(data.data());
+            const data = await getSpecificProduct(productName);
+            console.log(data);
+            setProductInfo(data.docs[0].data());
         }
 
         getProduct();
+        console.log(productInfo);
     }, []);
 
     /* Returns to the all product page */
     const handleBack=()=>{
-        props.setViewProduct(false);
+        console.log(productInfo);
+        navigate('/products')
     }
     
     const handlePurchase =() =>{
@@ -41,12 +52,6 @@ const ViewProduct =(props) => {
             }
             props.setViewProduct(false);
         }
-    }
-
-    const handleFormChange = (e) => {
-        const {name, value} = e.target;
-        console.log(formData);
-        setFormData((prevData) => ({...prevData, [name]: value}));
     }
 
     const handleImageChange = (e) => {
@@ -65,11 +70,13 @@ const ViewProduct =(props) => {
                         </svg>
                     </button>
                     <div className="display-section__product-card">
-                        <img className="product-card__image" src="/assets/Vox-Bag.png"></img>
+                        <img className="product-card__image" src={productInfo?.ImageURLs?.[0] || ""}></img>
                     </div>
+                    <ViewProductForm productInfo={productInfo} />
+                    {/*}
                     <div className="display-section__form">
                         <div className="form__product-info">
-                            <p className="product-info__name">Short-Sleeve Shirt</p>
+                            <p className="product-info__name">{productInfo.name}</p>
                             <p className="product-info__description">Customizeable Label</p>
                         </div>
                         <div className="form__line-break"/>
@@ -102,8 +109,8 @@ const ViewProduct =(props) => {
                                 {addPersonalDesign && (
                                     <>
                                     <textarea className="view-product-personal-customization" name="customization" value={formData.customization} onChange={(e) => {handleFormChange(e)}}/>
+                                    <ImageUpload className="custom-image" id="customImage"/>
                                     <label className="image-customization-label">
-                                    <input className="button-add-image" type="file" accept="image/*" onChange={e=>{handleImageChange(e)}} />
                                     </label>
                                     </>
                                 )}
@@ -111,6 +118,7 @@ const ViewProduct =(props) => {
                         </div>
                         <button className="form__add-cart-button" onClick={handlePurchase}>Add To Cart</button>
                     </div>
+                    */}
                 </section>
             </main>
     )

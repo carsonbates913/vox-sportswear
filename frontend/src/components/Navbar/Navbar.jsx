@@ -6,6 +6,7 @@ import { initFirebase } from '../../services/datastore.js';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { Outlet } from "react-router-dom";
 import './Navbar.css';
 
 const Navbar = () => {
@@ -60,6 +61,7 @@ const Navbar = () => {
     }, [user]);
 
         return (
+            <>
             <nav className="navbar">
                 <NavLink to="/">
                     <svg className="vox-logo-svg" width="186" height="68" viewBox="0 0 186 68" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,6 +88,8 @@ const Navbar = () => {
                     </NavLink>
                 </div>
             </nav>
+            <Outlet />
+            </>
         )
 }
 

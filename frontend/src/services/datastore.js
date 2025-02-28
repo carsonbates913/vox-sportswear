@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
-  getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot
+  getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot, query, where
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
@@ -33,9 +33,10 @@ export async function getAllProducts(){
   return data;
 }
 
-export async function getSpecificProduct(productID){
-  const reference = doc(db, "Products", productID);
-  const data = await getDoc(reference);
+export async function getSpecificProduct(productName){
+  const reference = collection(db, "Products");
+  const q = query(reference, where("name", "==", productName));
+  const data = await getDocs(q);
   return data;
 }
 
