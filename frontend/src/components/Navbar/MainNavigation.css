@@ -1,0 +1,16 @@
+.main-navigation__logo {
+  height: 70px;
+  padding: 4px; 
+}
+
+.main-navigation__logo img {
+  height: 100%;
+  box-sizing: content-box;
+  padding: 0; 
+}
+
+.main-navigation__header-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 70px;
+}
