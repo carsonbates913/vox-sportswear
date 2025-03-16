@@ -6,16 +6,10 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import './Products.css'
-import ImageUpload from '../../components/ImageUpload/ImageUpload.jsx';
 import ViewProductForm from '../../components/ViewProductForm/ViewProductForm.jsx';
 
 
 const ViewProduct =(props) => {
-    const colorList = ["#FFFFFF", "#000000", "#D3D3D3", "#333333", "#F5F5DC", "#B38B6D", "#FFFFF0"];
-    const sizeList = ["S", "M", "L", "XL", "XXL"];
-
-    const [formData, setFormData] = useState({color: colorList[0], size: null, customization: "", image: null}) 
-    const [addPersonalDesign, setAddPersonalDesign] = useState(false);
     const [productInfo, setProductInfo] = useState([]);
     const { user } = useAuth();
 
@@ -25,40 +19,13 @@ const ViewProduct =(props) => {
     useEffect(() => {
         const getProduct = async () => {
             const data = await getSpecificProduct(productName);
-            console.log(data);
             setProductInfo(data.docs[0].data());
         }
-
         getProduct();
-        console.log(productInfo);
     }, []);
 
-    /* Returns to the all product page */
     const handleBack=()=>{
-        console.log(productInfo);
         navigate('/products')
-    }
-    
-    const handlePurchase =() =>{
-        if (!formData.size){
-            alert("select size");
-        }else {
-            if(user){
-                console.log(formData);
-                addToCart(user.uid, props.selectedProduct, formData);
-            }else{
-                addToCartFromSession({productID: props.selectedProduct, ...formData, quantity: 1});
-                window.dispatchEvent(new Event('storage'));
-            }
-            props.setViewProduct(false);
-        }
-    }
-
-    const handleImageChange = (e) => {
-        const image = e.target.files[0];
-        if(image) {
-            setFormData((prevData) => ({...prevData, image: image}))
-        }
     }
 
     return(
