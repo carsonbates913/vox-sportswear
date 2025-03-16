@@ -4,57 +4,61 @@ import './ViewProductForm.css'
 import ColorInput from '../ColorInput/ColorInput.jsx';
 import SizeInput from '../SizeInput/SizeInput.jsx';
 import CustomizationInput from "../CustomizationInput/CustomizationInput.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { addToCartFromSession } from "../../services/sessionStorage.js";
+import { addToCart } from "../../services/datastore.js";
 
 export default function ViewProductForm(props) {
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      sizes: {
+        S: 0,
+        M: 0,
+        L: 0,
+        XL: 0,
+      },
+    },
+  })
 
-  const onSubmit = (data) => {console.log(data)}
+  const { user } = useAuth();
+
+  const onSubmit = (data) =>{
+    if (!data){
+        alert("No Data");
+    }else {
+        if(user){
+            console.log(data);
+            addToCart(user.uid, props.productInfo.name, data);
+        }else{
+            addToCartFromSession({productID: props.selectedProduct, ...formData, quantity: 1});
+            window.dispatchEvent(new Event('storage'));
+        }
+    }
+}
 
   const selectedColor = watch("color");
+
+  const selectedImage = watch("file");
 
 
   return (
     <form className="view-product-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="view-product-form__product-info">
-          <p className="product-info__name">{props.productInfo.name}</p>
-          <p className="product-info__description">Customizeable Label</p>
+      <div className="view-product-form__input-container">
+        <div className="view-product-form__product-info">
+            <h1>{props.productInfo.name}</h1>
+            <h2>If there's something you need that isn't listed, simply request it in the box below."</h2>
+        </div>
+        <div className="form__line-break"/>
+        <ColorInput selectedColor={selectedColor} register={register}/>
+        <SizeInput register={register} setValue={setValue}/>
+        <CustomizationInput register={register} selectedImage={selectedImage}/>
       </div>
-      <div className="form__line-break"/>
-      <ColorInput selectedColor={selectedColor} register={register}/>
-      <SizeInput register={register}/>
-      <CustomizationInput register={register}/>
-      {/*}
-      <SizeInput register={register} />
-      <div className="customizeables__size">
-          <p className="customizeables__label">Size*</p>
-          <div className="customizeables__set">
-              {sizeList.map(size => {
-                  return (
-                      <label key={size} htmlFor={size} className={`view-product-size-label ${formData.size === size ? 'size-selected' : ''}`}>
-                          {size}
-                          <input key={size} type="radio" className="size-selector" id={size} name="size"  value={size} onChange={e=>{handleFormChange(e)}} checked={formData.size===size}/>
-                      </label>
-                  )
-              })}
-          </div>
-      </div>
-      <div className="customizeables__personal-design">
-          <p className="customizeables__label" onClick={()=>{setAddPersonalDesign(!addPersonalDesign)}}>Personal Design +</p>
-          {addPersonalDesign && (
-              <>
-              <textarea className="view-product-personal-customization" name="customization" value={formData.customization} onChange={(e) => {handleFormChange(e)}}/>
-              <ImageUpload className="custom-image" id="customImage"/>
-              <label className="image-customization-label">
-              </label>
-              </>
-          )}
-      </div>
-*/}
       <button className="form__add-cart-button">Add To Cart</button>
     </form>
   )
