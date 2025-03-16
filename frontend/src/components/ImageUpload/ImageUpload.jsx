@@ -1,48 +1,47 @@
 import './ImageUpload.css';
 
 import { useState, useEffect } from 'react';
+import imageUpload from '../../assets/image-upload.png';
 
-export default function ImageUpload(props) {
+export default function ImageUpload({register, className, id, selectedImage}) {
 
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState();
 
   useEffect(() => {
-    if(!file) {
+    if (!selectedImage || selectedImage.length === 0) {
+      setFile(null);
+      return;
+    }
+    setFile(selectedImage[0]); // Select the first file
+  }, [selectedImage]);
+
+  useEffect(() => {
+    if (!file) {
+      setPreviewUrl(null);
       return;
     }
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
-    }
+    };
     fileReader.readAsDataURL(file);
-  }, [file])
 
-  const handleSelectImage = (e) => {
-    let selectedFile;
-    let isFileValid = isValid;
-    if(e.target.files && e.target.files.length === 1){
-      selectedFile = e.target.files[0];
-      setFile(selectedFile);
-      isFileValid=true;
-      setIsValid(true);
-    }else {
-      isFileValid=false;
-      setIsValid(false);
-    }
-    props.onInput(props.id, selectedFile, isFileValid);
-  }
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [file, previewUrl]);
 
   return (
-    <div className={`image-upload ${props.className}`}>
-      <label htmlFor={props.id}>Upload Image</label>
+    <div className={`image-upload ${className}`}>
+      <label htmlFor={id}>Upload Image</label>
         {previewUrl && 
               <div className="image-upload__preview">
         <img src={previewUrl}/>
         </div>}
-      <input id={props.id} style={{display: "none"}} type="file" accept=".jpg,.png,.jpeg" onChange={handleSelectImage}/>
+      <input {...register("file")} id={id} style={{display: "none"}} type="file" accept=".jpg,.png,.jpeg"/>
     </div>
   )
 }
