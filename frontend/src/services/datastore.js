@@ -6,6 +6,7 @@ import {
   getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot, query, where
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: `${import.meta.env.VITE_FIREBASE_API_KEY}`,
@@ -21,6 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app)
+export const auth = getAuth(app);
 
 export const initFirebase = () => {
     return app;
@@ -54,21 +56,22 @@ export async function getSpecificCartItem(userID, cartItemID){
   return data;
 }
 
-export async function addToCart(userID, productID, formData){
+export async function addToCart(userID, product, formData){
   const reference = collection(db, "Users", userID, "Cart");
   const cartItem = { 
-    productID,
-    size: formData.size,
+    product,
+    sizes: formData.sizes,
     color: formData.color,
-    customization: formData.customization,
-    quantity: 1,
-    imageURL: null,
-    imageName: null,
+    designNotes: formData.designNotes,
+    imageURL: "",
   }
+  console.log(cartItem);
+  console.log(formData.file);
   const docRef = await addDoc(reference, cartItem);
-  if(formData.image){
-    const url = await uploadImage(userID, formData.image);
-    await updateDoc(docRef, {imageURL: url, imageName: formData.image.name});
+  if(formData.file[0]){
+    console.log("check");
+    const url = await uploadImage(userID, formData.file[0]);
+    await updateDoc(docRef, {imageURL: url});
   }
 }
 
