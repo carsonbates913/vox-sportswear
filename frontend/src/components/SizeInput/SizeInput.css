@@ -5,31 +5,7 @@
   gap: 7px;
 }
 
-.size-input__set label {
-  height: 50px;
-  width: 50px;
-  border: 1.5px solid lightgrey;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 600;
-  transition: color .25s, background-color .25s, border .25s, opacity .25s;
-  appearance: none;
-}
-
-.size-input__set input[type="checkbox"]:checked + label {
-  border: 1.5px solid var(--primary-color);
-  color: white;
-  background-color: var(--primary-color);
-}
-
-.size-input__set input[type="checkbox"]:not(:checked) + label:hover {
-  opacity: .5;
-}
-
-.size-selector {
-  position: absolute;
-  opacity: 0;
+.size-input__title {
+  font-weight: 400;
+  margin-bottom: 10px;
 }

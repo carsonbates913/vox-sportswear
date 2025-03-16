@@ -1,22 +1,19 @@
 import './SizeInput.css';
 
-export default function SizeInput({register}) {
+import SizeBox from '../SizeBox/SizeBox.jsx';
 
-  const sizeList = ["XS", "S", "M", "L", "XL", "XXL"];
+export default function SizeInput({register, setValue}) {
+
+  const sizeList = ["S", "M", "L", "XL"];
 
   return(
     <>
-    <div className="size-input">
-      <label><span style={{fontWeight: "200"}}>Sizes</span></label>
+    <div className="size-input view-product-form__input">
+      <div className="size-input__title"><span>Sizes</span></div>
       <div className="size-input__set">
           {sizeList.map( (size, index) => {
               return (
-                <div key={size}>
-                  <input style={{display: "none"}} type="checkbox" className="size-selector" id={size} name="size"  value={size}/>
-                  <label htmlFor={size}>
-                  {size}
-                  </label>
-                </div>
+                  <SizeBox setValue={setValue} key={index} register={register} size={size}></SizeBox>
               )
           })}
       </div>
