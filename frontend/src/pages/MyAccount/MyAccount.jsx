@@ -19,8 +19,8 @@ const MyAccount = () => {
                 const promises = ordersArray.map(async (order) => {
                     const promises = order.items.map(async (item) => {
                         console.log(item.productID);
-                        const productSnapshot = await getSpecificProduct(item.productID);
-                        return {...item, ...productSnapshot.data()}
+                        const productSnapshot = await getSpecificProduct(item.product);
+                        return {...item, ...productSnapshot.docs[0].data()}
                     })
                     const itemsArray = await Promise.all(promises);
                     return {...order, items: itemsArray};
@@ -118,31 +118,27 @@ const MyAccount = () => {
                                         })}
                                     </div>
                                     <div className="selected-item" key={selectedItem.orderItemID}>
-                                        <img className="selected-item-image" src={'/assets/Vox-Bag.png'} />
+                                        <img className="selected-item-image" src={selectedItem.imageURL} />
                                         <div className="selected-item-details">
                                             <p className="selected-item-title">{selectedItem.name}</p>
                                             <div className="selected-item-description-row">
-                                                <p className="selected-item-attribute">Quantity</p>
-                                                <p className="selected-item-attribute-selected">{selectedItem.quantity}</p>
-                                            </div>
-                                            <div className="selected-item-description-row">
                                                 <p className="selected-item-attribute">Size</p>
-                                                <p className="selected-item-attribute-selected">{selectedItem.size}</p>
+                                                <p className="selected-item-attribute-selected">{selectedItem.sizes.M}</p>
                                             </div>
                                             <div className="selected-item-description-row">
                                                 <p className="selected-item-attribute">Color</p>
-                                                <p className="selected-item-attribute-selected">{selectedItem.size}</p>
+                                                <p className="selected-item-attribute-selected">{JSON.parse(selectedItem.color).name}</p>
                                             </div>
-                                            {selectedItem.customization && (
+                                            {selectedItem.designNotes && (
                                                 <div className="selected-item-description-row">
-                                                    <p className="selected-item-attribute">Customization</p>
-                                                    <p className="selected-item-attribute-selected">{selectedItem.customization}</p>
+                                                    <p className="selected-item-attribute">Design Notes</p>
+                                                    <p className="selected-item-attribute-selected">{selectedItem.designNotes}</p>
                                                 </div>
                                             )}
                                             {selectedItem.imageURL && (
                                                 <div className="selected-item-description-row">
                                                     <p className="selected-item-attribute">Image URL</p>
-                                                    <p className="selected-item-attribute-selected">{selectedItem.imageName || "none"}</p>
+                                                    <p className="selected-item-attribute-selected">{selectedItem.imageURL || "none"}</p>
                                                 </div>
                                             )}
                                         </div>

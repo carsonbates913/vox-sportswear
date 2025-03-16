@@ -5,12 +5,12 @@ import MyCart from '../pages/MyCart/MyCart.jsx';
 import Products from '../pages/Products/Products.jsx';
 import MyAccount from '../pages/MyAccount/MyAccount.jsx';
 import ViewProduct from '../pages/Products/ViewProduct.jsx';
-import NavBar from '../components/Navbar/Navbar.jsx';
+import RootLayout from '../layouts/RootLayout.jsx';
 
   export const router = createBrowserRouter([
     {
       path: '/',
-      element: <NavBar />,
+      element: <RootLayout />,
       children: [
         {
           path: '/',
