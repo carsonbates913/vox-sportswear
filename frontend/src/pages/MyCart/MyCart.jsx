@@ -38,8 +38,9 @@ const MyCart = () => {
                     if(data){
                         let cartArray = data.docs.map((doc) => ({ cartItemID: doc.id, ...doc.data()}));
                         const promises = cartArray.map(async (cartItem) => {
-                            const productSnapshot = await getSpecificProduct(cartItem.productID);
-                            return { ...cartItem, ...productSnapshot.data() };
+                            console.log(cartItem);
+                            const productSnapshot = await getSpecificProduct(cartItem.product);
+                            return { ...cartItem, ...productSnapshot.docs[0].data() };
                         });
                 
                         cartArray = await Promise.all(promises);
@@ -117,7 +118,7 @@ const MyCart = () => {
     const handleCheckout = async () => {
         if(user && cartProducts.length > 0){
             console.log(cartProducts);
-            const order = cartProducts.map(({ productID, quantity, size, color, customization, imageName, imageURL}) => ({ productID, quantity, size, color, customization, imageName, imageURL}));
+            const order = cartProducts.map(({ product, sizes, color, designNotes, imageURL}) => ({ product, sizes, color, designNotes, imageURL}));
             await addOrder(user.uid, user.email, order);
             await clearCart();
         }else{
@@ -138,42 +139,29 @@ const MyCart = () => {
                     <p className="cart__empty-alert">your cart is currently empty</p>
                     : cartProducts.map((product)=>(
                         <div className="cart-card" key={product.cartItemID}>
-                            <img className="cart-card-image" src={'/assets/Vox-Bag.png'} />
+                            <img className="cart-card-image" src={product.imageURL} />
                             <div className="cart-inner-description">
-                                <p className="cart-product-title">{product.name}</p>
+                                <p className="cart-product-title">{product.product}</p>
                                 <div className="cart-inner-description-row">
                                     <p className="cart-product-attribute">Size</p>
-                                    <p className="cart-product-attribute-selected">{product.size}</p>
+                                    <p className="cart-product-attribute-selected">{product.sizes.M}</p>
                                 </div>
                                 <div className="cart-inner-description-row">
                                     <p className="cart-product-attribute">Color</p>
-                                    <p className="cart-product-attribute-selected">{product.color}</p>
+                                    <p className="cart-product-attribute-selected">{JSON.parse(product.color).name}</p>
                                 </div>
-                                {product.customization && (
+                                {product.designNotes && (
                                     <div className="cart-inner-description-row">
-                                        <p className="cart-product-attribute">Customization</p>
-                                        <p className="cart-product-attribute-selected">{product.customization}</p>
+                                        <p className="cart-product-attribute">Request Details</p>
+                                        <p className="cart-product-attribute-selected">{product.designNotes}</p>
                                     </div>
                                 )}
                                 {product.imageURL && (
                                     <div className="cart-inner-description-row">
                                         <p className="cart-product-attribute">Image URL</p>
-                                        <p className="cart-product-attribute-selected">{product.imageName || "none"}</p>
+                                        <p className="cart-product-attribute-selected">{product.imageURL || "none"}</p>
                                     </div>
                                 )}
-                            </div>
-                            <div className="cart-product-quantity-container">
-                                <p className="cart-product-quantity-header">qty</p>
-                                <div className="cart-product-quantity">
-                                    <button className="button-quantity-change" onClick={(e) => handleCartQuantityChange(e, product.cartItemID, 'decrement')} disabled={product.quantity <= 1}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>    
-                                    </button>
-                                    <input className="input-quantity-change" type="number" value={product.quantity} min="1" max="1000" onInput={(e) => {handleCartQuantityChange(e, product.cartItemID, null)}}>
-                                    </input>
-                                    <button className="button-quantity-change"onClick={(e) => handleCartQuantityChange(e, product.cartItemID, 'increment')}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
-                                    </button>
-                                </div>
                             </div>
                             <button className="delete-from-cart" onClick={() => handleDeleteFromCart(product.cartItemID, product.imageName)}>X</button>
                         </div>
@@ -181,9 +169,9 @@ const MyCart = () => {
                </div>
                <div className="right-cart-container">
                 <div className="order-summary">
-                <p className="order-summary__num-items">{cartProducts.reduce((sum, item) => Number(item.quantity) + sum, 0)}  items</p>
+                <p className="order-summary__num-items">{cartProducts.length} {cartProducts.length > 1 ? "items" : "item"}</p>
                     <button className="button-checkout" onClick={handleCheckout}>
-                        Check Out</button>
+                        Send Request</button>
                 </div>
                </div>
                </section>
