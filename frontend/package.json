@@ -19,6 +19,7 @@
     "firebase-admin": "^13.0.1",
     "firebase-functions": "^6.1.1",
     "firebase-tools": "^13.26.0",
+    "framer-motion": "^12.4.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
