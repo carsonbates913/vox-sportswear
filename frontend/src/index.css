@@ -8,16 +8,21 @@
 
 
   --background-color: #FBFAF6;
-  --primary-color: #01683E;
-  --dark-primary-color: #015332;
-  --light-primary-color: #5D9273;
-  --secondary-color: #DAE6C5;
+  --background-color-dark: #F3F3EF;
+  --background-color-light: #FDFDFB;
+  
+  --primary-color: #01472B;
+  --primary-color-dark: #015332;
+  --primary-color-light: #5D9273;
+  --secondary-color: #02AD69;
   --tertiary-color: #CEAD8F;
   --primary-text-color: #000000;
   --secondary-text-color: white; 
   --light-grey: lightgrey;
   --black: black; 
   --white: white;
+  --header-font: montserrat;
+  --body-font: playfair-display;
 }
 
 * {
@@ -34,10 +39,11 @@ body {
   min-width: 320px;
   min-height: 100vh;
   position: relative;
+  background-color: var(--background-color);
 }
 
 main {
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 80px);
   flex: 1;
   position: relative;
 }
