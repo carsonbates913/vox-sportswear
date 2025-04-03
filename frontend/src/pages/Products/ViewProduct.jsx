@@ -1,5 +1,3 @@
-import { addToCart, getSpecificProduct } from '../../services/datastore';
-import { addToCartFromSession } from '../../services/sessionStorage.js';
 import {useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useParams } from 'react-router-dom';
@@ -7,10 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import './Products.css'
 import ViewProductForm from '../../components/ViewProductForm/ViewProductForm.jsx';
-
+import { getSpecificProduct } from '../../services/datastore';
+import LoadingModule from '../../components/LoadingModule/LoadingModule.jsx';
+import Footer from '../../components/Footer/Footer.jsx';
 
 const ViewProduct =(props) => {
     const [productInfo, setProductInfo] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(0);
+    const [loading, setLoading] = useState(false);
     const { user } = useAuth();
 
     const navigate = useNavigate();
@@ -18,8 +20,10 @@ const ViewProduct =(props) => {
 
     useEffect(() => {
         const getProduct = async () => {
+            setLoading(true);
             const data = await getSpecificProduct(productName);
             setProductInfo(data.docs[0].data());
+            setLoading(false);
         }
         getProduct();
     }, []);
@@ -28,7 +32,14 @@ const ViewProduct =(props) => {
         navigate('/products')
     }
 
+    if(loading){
+        return(
+            <LoadingModule viewport />
+        )
+    }
+
     return(
+        <>
             <main className="view-product">
                 <section className="view-product__display-section">
                     <button className="display-section__back-button"onClick={handleBack}>
@@ -37,57 +48,22 @@ const ViewProduct =(props) => {
                         </svg>
                     </button>
                     <div className="display-section__product-card">
-                        <img className="product-card__image" src={productInfo?.ImageURLs?.[0] || ""}></img>
+                        <div className="product-card__image-container">
+                            <img src={productInfo?.ImageURLs?.[selectedProduct] || ""}></img>
+                        </div>
+                        <ul className="options-container">
+                            {productInfo?.ImageURLs?.map((image, index) => 
+                                <li key={image} onClick={() => {setSelectedProduct(index)}} className={(selectedProduct == index) && 'active'}>
+                                    <img src={image} alt={`Product Image ${index + 1}`} />
+                                </li>
+                                    )}
+                        </ul>
                     </div>
                     <ViewProductForm productInfo={productInfo} />
-                    {/*}
-                    <div className="display-section__form">
-                        <div className="form__product-info">
-                            <p className="product-info__name">{productInfo.name}</p>
-                            <p className="product-info__description">Customizeable Label</p>
-                        </div>
-                        <div className="form__line-break"/>
-                        <div className="form__customizeables">
-                            <div className="customizeables__color">
-                                <p className="customizeables__label">Color: <span style={{fontWeight: "200"}}>{formData.color}</span></p>
-                                <div className="customizeables__set">
-                                    {colorList.map( color => {
-                                        return (
-                                            <input key={color} type="radio" className={`color-selector ${formData.color === color ? 'color-selected' : ''}`} style={{backgroundColor: `${color}`}} name="color" value={color} onChange={e=>{handleFormChange(e)}} checked={formData.color===color}/>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                            <div className="customizeables__size">
-                                <p className="customizeables__label">Size*</p>
-                                <div className="customizeables__set">
-                                    {sizeList.map(size => {
-                                        return (
-                                            <label key={size} htmlFor={size} className={`view-product-size-label ${formData.size === size ? 'size-selected' : ''}`}>
-                                                {size}
-                                                <input key={size} type="radio" className="size-selector" id={size} name="size"  value={size} onChange={e=>{handleFormChange(e)}} checked={formData.size===size}/>
-                                            </label>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                            <div className="customizeables__personal-design">
-                                <p className="customizeables__label" onClick={()=>{setAddPersonalDesign(!addPersonalDesign)}}>Personal Design +</p>
-                                {addPersonalDesign && (
-                                    <>
-                                    <textarea className="view-product-personal-customization" name="customization" value={formData.customization} onChange={(e) => {handleFormChange(e)}}/>
-                                    <ImageUpload className="custom-image" id="customImage"/>
-                                    <label className="image-customization-label">
-                                    </label>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                        <button className="form__add-cart-button" onClick={handlePurchase}>Add To Cart</button>
-                    </div>
-                    */}
                 </section>
             </main>
+            <Footer />
+            </>
     )
 }
 export default ViewProduct;

@@ -27,11 +27,9 @@ const Products = () => {
                 <h3>The products on our website are just a <span style={{color:'4A4A4A', fontWeight:"600"}}>sample</span> of what we can create.</h3>
                 <h3>If you’re looking for something specific that’s not listed, just reach out—we’d love to make it happen for you!</h3>
             </div>
-            <div className="products-gallery-container">
                 <ProductList products={products} />
                 <p>Our Products</p>
                 <ProductGallery ImageURLs={products.flatMap(product => product.ImageURLs)}/>
-            </div>
         </main>
     )
 }

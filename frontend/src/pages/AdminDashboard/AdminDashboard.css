@@ -1,0 +1,59 @@
+.admin-dashboard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-dashboard header {
+  height: 150px;
+  width: 100vw;
+  margin: 0px 0px 60px 0px;
+  position: relative;
+  background-color: var(--background-color-dark);
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.2);
+}
+
+.admin-dashboard header h1 {
+  position: absolute;
+  left: 60px;
+  bottom: 20px;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.admin-dashboard__content {
+  width: 100%;
+  max-width: 1350px;
+  display: flex;
+  gap: 50px;
+}
+
+.admin-dashboard__content__pending-orders-container {
+  width: 415px;
+  height: 100%;
+}
+
+.admin-dashboard__content__review-order-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-out-button {
+  position: absolute;
+  right: 60px;
+  bottom: 20px;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s ease-out;
+}
+
+.sign-out-button:hover {
+  background-color: var(--primary-color-dark);
+}

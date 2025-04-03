@@ -1,182 +1,69 @@
 import { useState, useEffect } from 'react';
-import { getOrders, getSpecificProduct } from '../../services/datastore.js';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
+
 import './MyAccount.css'
+import { useAuth } from '../../context/AuthContext.jsx';
+import { getPreviousOrders } from '../../services/datastore.js';
+import OrderHistoryList from '../../components/OrderHistoryList/OrderHistoryList.jsx';
+import LoadingModule from '../../components/LoadingModule/LoadingModule.jsx';
+import Footer from '../../components/Footer/Footer.jsx';
 
 const MyAccount = () => {
-    const [orders, setOrders] = useState([]);
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [formData, setFormData] = useState({price: "0.00", description: ""})
 
-    const {user} = useAuth();
+    const [completedOrders, setCompletedOrders] = useState([]);
+    const [pendingOrders, setPendingOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const { user, signOut } = useAuth();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            const unsubscribe = getOrders(async (snapshot) => {
-                let ordersArray = snapshot.docs.map((doc) => ({ orderID: doc.id, ...doc.data() }));
-                console.log(ordersArray);
-                const promises = ordersArray.map(async (order) => {
-                    const promises = order.items.map(async (item) => {
-                        console.log(item.productID);
-                        const productSnapshot = await getSpecificProduct(item.product);
-                        return {...item, ...productSnapshot.docs[0].data()}
-                    })
-                    const itemsArray = await Promise.all(promises);
-                    return {...order, items: itemsArray};
-                });
-                ordersArray = await Promise.all(promises);
-
-                setOrders(ordersArray);
-                console.log(ordersArray);
-            }); 
-
-            return unsubscribe; 
-        }
-
-        fetchOrders();
-    }, [])
-
-    useEffect(()=> {
-        if(selectedOrder){
-            setFormData({price: "0.00", description: ""});
-        }
-    }, [selectedOrder])
-
-    const signOut = async () => {
-        await auth.signOut();
-        navigateTo('/homepage');
-    }
-
-    const handleSelectOrder = (index) => {
-        console.log(orders);
-        setSelectedOrder(orders[index]); 
-        setSelectedItem(orders[index].items[0]); 
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const action = e.nativeEvent.submitter.value;
-        if(action === "accept"){
-            if(isNaN(formData.price) || formData.price.trim() === '' || Number(formData.price).toFixed(2) !== formData.price){
-                alert(`Invalid price format - must be two decimal places (e.g. 20.00)`);
-                return;
+        const cancel = getPreviousOrders(user.uid, (snapshot) => {
+            if(snapshot){
+                const orderArray = snapshot.docs.map((doc) => ({orderID: doc.id, ...doc.data()}));
+                const completedOrder = orderArray.filter((order) => order.status === "accepted" || order.status === "declined");
+                const pendingOrder = orderArray.filter((order) => order.status === "pending");
+                setCompletedOrders(completedOrder);
+                setPendingOrders(pendingOrder);
+            }else {
+                setCompletedOrders([]);
+                setPendingOrders([]);
             }
-            const response = await fetch("https://sendorderresponse-ffshwcchqq-uc.a.run.app", {
-                mode: "cors",
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({submitType: "accept", consumerEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
-            })
-            const data = await response.text();
-            console.log(data);
-        }else if (action === "decline"){
-            const response = await fetch("https://sendorderresponse-ffshwcchqq-uc.a.run.app", {
-                mode: "cors",
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({submitType: "decline", consumerEmail: selectedOrder.userEmail, price: formData.price, message: formData.description, orderID: selectedOrder.orderID}),
-            })
-            const data = await response.text();
-            console.log(data);
-            console.log("decline");
-        }
-        setFormData({price: "", description: ""});
-    }
+            setLoading(false);
+        },)
 
-    const handleFormChange = (e) => {
-        let {name, value} = e.target;
-        setFormData((prevData) => ({...prevData, [name]: value }));
-    }
+        return () => cancel();
+    }, [user.uid])
 
-    if(user?.isAdmin){
-        return (
-            <div className="myaccount-main">
-                <section className="myaccount-section">
-                    <div className="pending-orders">
-                        <p className="pending-orders-title">Pending Orders</p>
-                        <ul className="pending-orders-list">
-                            {orders.length > 0 && orders.map((order, index) => (
-                                <div key={order.orderID} className="pending-order" onClick={()=> {handleSelectOrder(index)}}>
-                                    <p className="pending-order-title">{order.userEmail}</p>
-                                    <p className="pending-order-details">{order.items.length || 0} Items</p>
-                                </div>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="review-order">
-                        <div className="selected-order">
-                            {selectedOrder ? (
-                                <>
-                                    <div className="item-gallery"> 
-                                        {selectedOrder.items.map((item, index)=> {
-                                            return (<button className="item"key={index} onClick={()=> {setSelectedItem(item); console.log(selectedOrder)}}>{item.name}</button>);
-                                        })}
-                                    </div>
-                                    <div className="selected-item" key={selectedItem.orderItemID}>
-                                        <img className="selected-item-image" src={selectedItem.imageURL} />
-                                        <div className="selected-item-details">
-                                            <p className="selected-item-title">{selectedItem.name}</p>
-                                            <div className="selected-item-description-row">
-                                                <p className="selected-item-attribute">Size</p>
-                                                <p className="selected-item-attribute-selected">{selectedItem.sizes.M}</p>
-                                            </div>
-                                            <div className="selected-item-description-row">
-                                                <p className="selected-item-attribute">Color</p>
-                                                <p className="selected-item-attribute-selected">{JSON.parse(selectedItem.color).name}</p>
-                                            </div>
-                                            {selectedItem.designNotes && (
-                                                <div className="selected-item-description-row">
-                                                    <p className="selected-item-attribute">Design Notes</p>
-                                                    <p className="selected-item-attribute-selected">{selectedItem.designNotes}</p>
-                                                </div>
-                                            )}
-                                            {selectedItem.imageURL && (
-                                                <div className="selected-item-description-row">
-                                                    <p className="selected-item-attribute">Image URL</p>
-                                                    <p className="selected-item-attribute-selected">{selectedItem.imageURL || "none"}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <div>No order selected</div>
-                            )}
+    return (
+        <main className="my-account">
+            <div className="my-account-wrapper">
+                <header>
+                    {user.displayName ? <h1>Hi, {user.displayName.split(" ").filter(Boolean)[0]}</h1> : <h1>My Account</h1>}
+                    <button className="sign-out-button" onClick={() => {signOut(); navigate('/')}}>Sign Out</button>
+                </header>
+                {loading ? (<LoadingModule viewport />) : (
+                    <div className="my-account__content">
+                    <div className="my-account__content__requests-container">
+                        <div className="my-account__content__requests-container-title" style={{height: '100px'}}>
+                        <h1><span>Pending</span> Requests</h1>
                         </div>
-                        {selectedOrder && (
-                            <form className="review-order-form" onSubmit={handleSubmit}>
-                                <div className="order-form-price-container">
-                                    <p style={{marginRight: "20px"}}>Price: </p>
-                                    <input className="order-form-price" type="number" placeholder="$0.00" value={formData.price} onChange={e => {handleFormChange(e)}} name="price"></input>
-                                </div>
-                                <div className="order-form-description-container">
-                                    <p>Message: </p>
-                                    <textarea required className="order-form-description" name="description" value={formData.description} onChange={e => {handleFormChange(e)}}></textarea>
-                                </div>
-                                <div className="order-form-buttons-container">
-                                    <button className="order-form-submit" type="submit" name="hello" value="decline">Decline</button>
-                                    <button className="order-form-submit" type="submit" name="action" value="accept">Accept</button>
-                                </div>
-                            </form>
-                        )}
-                        <div>
+                        <OrderHistoryList orders={pendingOrders} />
                     </div>
+                    <div className="my-account__content__requests-container">
+                        <div className="my-account__content__requests-container-title" style={{height: '100px'}}>
+                        <h1><span>Completed</span> Requests</h1>
+                        <h2>Check your Email!</h2>
+                        </div>
+                        <OrderHistoryList orders={completedOrders} />
                     </div>
-                </section>
+                </div>
+                )}
             </div>
-        )
-   }else{
-      return (
-           <header>
-            Previous Orders
-           </header>
+            <Footer />
+        </main>
       )
    }
-}
 
 export default MyAccount;
