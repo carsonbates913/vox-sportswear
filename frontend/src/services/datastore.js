@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
-  getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot, query, where
+  getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot, query, where, serverTimestamp
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
@@ -84,23 +84,27 @@ export async function deleteFromCart(userID, cartItemID, imageName) {
   }
 }
 
-export async function updateCartQuantity(userID, cartItemID, newQuantity) {
-  const reference = doc(db, "Users", userID, "Cart", cartItemID);
-  await updateDoc(reference, {
-    quantity: newQuantity
-  })
-}
-
 export async function addOrder(userID, userEmail, items){
-  const orderReference = collection(db, "Orders");
+  const orderID = doc(collection(db, "Orders")).id;
+
   const orderItem = {
     userEmail,
+    userID,
     items,
-  }
-  await addDoc(orderReference, orderItem);
+    status: "pending",
+    date: serverTimestamp(),
+  };
 
-  const historyReference = collection(db, "Users", userID, "Order History");
-  await addDoc(historyReference, orderItem);
+  const orderRef = doc(db, "Orders", orderID);
+  const historyRef = doc(db, "Users", userID, "Order History", orderID);
+
+  await setDoc(orderRef, orderItem);
+  await setDoc(historyRef, orderItem);
+}
+
+export async function updateOrderStatus(userID, orderID, status){
+  const reference = doc(db, "Users", userID, "Order History", orderID);
+  await updateDoc(reference, {status});
 }
 
 export async function getUserData(userID){
@@ -109,11 +113,20 @@ export async function getUserData(userID){
   return data;
 }
 
-export async function getOrders(callback = () => {}){
+export function getOrders(callback = () => {}){
   const reference = collection (db, "Orders");
   const cancel = onSnapshot(reference, (snapshot) => {
     callback(snapshot);
+  });
+  return cancel;
+}
+
+export function getPreviousOrders(userID, callback = () => {}){
+  const reference = collection(db, "Users", userID, "Order History");
+  const cancel = onSnapshot(reference, (snapshot) => {
+    callback(snapshot);
   })
+  return cancel;
 }
 
 async function uploadImage(userID, image) {
