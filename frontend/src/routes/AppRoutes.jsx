@@ -6,6 +6,8 @@ import Products from '../pages/Products/Products.jsx';
 import MyAccount from '../pages/MyAccount/MyAccount.jsx';
 import ViewProduct from '../pages/Products/ViewProduct.jsx';
 import RootLayout from '../layouts/RootLayout.jsx';
+import { MyAccountRedirect } from './ProtectedRoutes.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
   export const router = createBrowserRouter([
     {
@@ -35,7 +37,7 @@ import RootLayout from '../layouts/RootLayout.jsx';
         },
         {
           path: '/myaccount',
-          element: <MyAccount />,
+          element: <MyAccountRedirect />,
         },
       ]
     }

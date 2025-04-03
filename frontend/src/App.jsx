@@ -1,23 +1,33 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/AppRoutes.jsx'
 import AuthContext from './context/AuthContext.jsx'
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { auth } from './services/datastore.js';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import './App.css'
+import { createBrowserRouter } from 'react-router-dom';
+import Homepage from './pages/Homepage/Homepage.jsx';
+import AboutUs from './pages/AboutUs/AboutUs.jsx';
+import MyCart from './pages/MyCart/MyCart.jsx';
+import Products from './pages/Products/Products.jsx';
+import ViewProduct from './pages/Products/ViewProduct.jsx';
+import RootLayout from './layouts/RootLayout.jsx';
+import { MyAccountRedirect } from './routes/ProtectedRoutes.jsx';
+import LoadingModule from './components/LoadingModule/LoadingModule.jsx';
 
 function App() {
   
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const provider = useCallback(new GoogleAuthProvider(), []);
+  const provider = useMemo(() => new GoogleAuthProvider(), []);
 
   const signIn = useCallback(async () => {
     try {
+      console.log(auth)
+      console.log(provider)
         const result = await signInWithPopup(auth, provider);
         return result.user;
     } catch (error) {
@@ -48,10 +58,48 @@ function App() {
       })
 
     return () => unsubscribe();
-  }, [auth])
+  }, [])
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout />,
+      children: [
+        {
+          path: '/',
+          element: <Homepage />,
+          errorElement: <div>Page not found</div>,
+        },
+        {
+          path: '/aboutus',
+          element: <AboutUs />,
+        },
+        {
+          path: '/products',
+          element: <Products />,
+        },
+        {
+          path: '/products/:productName',
+          element: <ViewProduct />,
+        },
+        {
+          path: '/mycart',
+          element: <MyCart />,
+        },
+        {
+          path: '/myaccount',
+          element: <MyAccountRedirect user={user} />,
+        },
+      ]
+    }
+  ])
 
   if(loading){
-    return <div>loading...</div>
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <LoadingModule />
+      </div> 
+    )
   }else{
     return (
       <>
