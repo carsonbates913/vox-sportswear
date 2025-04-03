@@ -14,7 +14,9 @@ export default function CustomizationInput({register, selectedImage}) {
         {(
             <>
             <textarea {...register("designNotes")} className="view-product-personal-customization"/>
-            <ImageUpload register={register} className="custom-image" id="customImage" selectedImage={selectedImage}/>
+            <div className="custom-image__wrapper">
+              <ImageUpload register={register} className="custom-image" id="customImage" selectedImage={selectedImage}/>
+            </div>
             <label className="image-customization-label">
             </label>
             </>

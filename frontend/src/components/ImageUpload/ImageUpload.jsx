@@ -1,7 +1,7 @@
 import './ImageUpload.css';
 
 import { useState, useEffect } from 'react';
-import imageUpload from '../../assets/image-upload.png';
+import camera from '../../assets/camera.svg';
 
 export default function ImageUpload({register, className, id, selectedImage}) {
 
@@ -36,11 +36,14 @@ export default function ImageUpload({register, className, id, selectedImage}) {
 
   return (
     <div className={`image-upload ${className}`}>
-      <label htmlFor={id}>Upload Image</label>
-        {previewUrl && 
-              <div className="image-upload__preview">
-        <img src={previewUrl}/>
-        </div>}
+      <label htmlFor={id}></label>
+        {previewUrl ? 
+          (<img className="image-upload__preview-img" src={previewUrl}/>) :
+          (<>
+            <img className="image-upload__camera-icon" src={camera}></img>
+            <h3>Upload Image</h3>
+          </>)
+        }
       <input {...register("file")} id={id} style={{display: "none"}} type="file" accept=".jpg,.png,.jpeg"/>
     </div>
   )

@@ -9,6 +9,7 @@ import { addToCartFromSession } from "../../services/sessionStorage.js";
 import { addToCart } from "../../services/datastore.js";
 
 export default function ViewProductForm(props) {
+
   const {
     register,
     handleSubmit,
