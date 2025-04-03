@@ -1,6 +1,7 @@
 .main-navigation__logo {
-  height: 70px;
-  padding: 4px; 
+  height: 45px;
+  margin: 15px 0px 10px 0px; 
+  margin-right: auto;
 }
 
 .main-navigation__logo img {
@@ -9,8 +10,45 @@
   padding: 0; 
 }
 
-.main-navigation__header-nav {
+.main-navigation__profile-nav {
+  margin-left: auto;
   display: flex;
-  justify-content: space-between;
-  gap: 70px;
+  gap: 30px;
+}
+
+.main-navigation__icon-container {
+  height: 35px;
+  width: 35px;
+  position: relative;
+  cursor: pointer;
+}
+
+.main-navigation__icon-container img {
+  height: 100%;
+  width: 100%;
+}
+
+.main-navigation__cart {
+  height: 35px;
+  width: 35px;
+  padding: 2px 0px 3px 0px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.main-navigation__cart div {
+  width: 22px;
+  height: 22px;
+  border-radius: 20px;
+  position: absolute;
+  top: 0px;
+  right: -8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+  background-color: var(--tertiary-color);
 }

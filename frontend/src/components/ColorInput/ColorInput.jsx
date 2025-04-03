@@ -7,7 +7,7 @@ import dropdown from '../../../public/assets/Dropdown.svg';
 
 export default function ColorInput({register, selectedColor}) {
 
-  const colorList = [{hex: null, name: "Unspecified" }, {hex: "#000000", name: "Black"}, {hex: "#FFFFFF", name: "White"}, {hex: "#8B4513", name: "Brown"}, {hex: "#006400", name: "Dark Green"}, {hex: "#90EE90", name: "Light Green"}, {hex: "#FFFF00", name: "Yellow"}, {hex: "#FFA500", name: "Orange"}, {hex: "#ADD8E6", name: "Light Blue"}, {hex: "#00008B", name: "Dark Blue"}, {hex: "#FFC0CB", name: "Pink"}, {hex: "#800080", name: "Purple"}, {hex: "#800000", name: "Maroon"}, {hex: "#D3D3D3", name: "Light Grey"}, {hex: "#A9A9A9", name: "Dark Grey"}, {hex: "#FF0000", name: "Red"}, {hex: "#000080", name: "Navy"}, {hex: "#F0E68C", name: "Khaki"}]
+  const colorList = [{hex: null, name: "See Request Notes" }, {hex: "#000000", name: "Black"}, {hex: "#FFFFFF", name: "White"}, {hex: "#8B4513", name: "Brown"}, {hex: "#006400", name: "Dark Green"}, {hex: "#90EE90", name: "Light Green"}, {hex: "#FFFF00", name: "Yellow"}, {hex: "#FFA500", name: "Orange"}, {hex: "#ADD8E6", name: "Light Blue"}, {hex: "#00008B", name: "Dark Blue"}, {hex: "#FFC0CB", name: "Pink"}, {hex: "#800080", name: "Purple"}, {hex: "#800000", name: "Maroon"}, {hex: "#D3D3D3", name: "Light Grey"}, {hex: "#A9A9A9", name: "Dark Grey"}, {hex: "#FF0000", name: "Red"}, {hex: "#000080", name: "Navy"}, {hex: "#F0E68C", name: "Khaki"}]
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);

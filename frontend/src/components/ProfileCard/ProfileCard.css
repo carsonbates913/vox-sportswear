@@ -1,166 +1,106 @@
-
 .profile-card {
   width: 100%;
-  aspect-ratio: 1 /1 ;
+  aspect-ratio: 1 / 1;
   position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(136deg, #099773 19.61%, #000 72.74%);
+  color: white;
+  text-align: center;
+  transition: all .2s ease-in;
+  overflow: hidden;
+}
+
+.profile-card::after {
+  content: '';
+  border: 2px solid white;
+  position: absolute;
+  top: 30px;
+  left: 25px;
+  right: 25px;
+  bottom: 30px;
+  transform: scale(1.5); 
+  transition: all .2s ease-out;
+}
+
+.profile-card__image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all .2s ease-out;
+}
+
+.profile-card__details__title {
+  width: 100%;
+  max-width: calc(100% - 60px);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
 
-.profile-card::before {
-  content: '';
-  width: 0px;
-  height: 1px;
-  position: absolute;
-  left: 20%;
-  bottom: 0px;
-  background-color: black;
-  opacity: 0;
-  transition: width .5s .1s, opacity .5s .1s;
+.profile-card__details h1{
+  width: 100%; 
+  font-size: 22px;
+  opacity: 0; 
+  transform: translateY(20px);
+  transition: all .2s ease-out;
 }
 
-.profile-card::after {
-  content: '';
-  width: 1px;
-  height: 0px;
-  position: absolute;
-  top: 20%;
-  right: 0px;
-  background-color: black;
-  opacity: 0;
-  transition: height .5s, opacity .5s;
+.profile-card__details h2{
+  width: 100%; 
+  font-size: 18px;
+  opacity: 0; 
+  transform: translateY(20px);
+  transition: all .2s ease-out;
 }
 
-.profile-card__image{
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 100;
-  transform: translate(-50%, -50%) scale(1);
-  transition: transform .5s, top .5s, left .5s;
-}
-
-.details__profile-name {
-  position: absolute;
-  top: 49%;
-  right: 62.5%;
-  left: 0;
-  color: black;
-  text-align: left;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity .5s, transform .5s;
-  transition-delay: 0s;
-}
-
-.details__profile-name::after {
-  content: '';
-  height: 0;
-  border: 1px solid black;
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  right: 0;
-}
-
-.details__profile-description {
-  max-width: 75%;
+.profile-card p {
   max-height: 50px;
+  width: calc(100% - 60px);
   position: absolute;
-  right: 20px;
-  bottom: 0%;
-  text-align: right;
+  left: 50%;
+  bottom: 40px;
+  text-align: center;
   opacity: 0;
   overflow-y: scroll;
   font-size: 14px;
-  transition: opacity .5s, transform .5s;
-  transition-delay: 0s;
+  font-weight: 400;
+  transform: translateX(-50%) translateY(20px);
+  transition: all .2s ease-out;
 }
 
-.details__socials {
-  height: 30px;
+.profile-card a {
   position: absolute;
-  top: 30px;
-  right: 30px; 
-  opacity: 0;
-  transition: opacity .5s, transform .5s;
-  transition-delay: 0s;
-}
-
-.details__socials::after {
-  content: '';
-  width: 1px;
-  height: 1px;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: -1;
-  background-color: var(--primary-color);
-  opacity: 0;
-  transform: translateX(-50%) translateY(-50%);
-  transition: opacity .25s, transform .25s;
-  transition-delay: .1s;
-}
-
-.details__socials::before {
-  content: '';
-  width: 1px;
-  height: 1px;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: -1;
-  background-color: var(--secondary-color);
-  opacity: 0;
-  transform: translateX(-50%) translateY(-50%);
-  transition: opacity .25s, transform .25s;
-}
-
-.socials__icon {
+  width: 100%;
   height: 100%;
-  fill: black; 
-  transition: fill .5s;
+  z-index: 1;
 }
+
 
 /*==========Hover Effects==========*/
 
-.profile-card:hover::before {
-  width: 85%;
-  opacity: 1;
+.profile-card:hover .profile-card__image {
+  opacity: .5;
 }
 
 .profile-card:hover::after {
-  height: 85%;
+  transform: scale(1);
+}
+
+.profile-card:hover .profile-card__details h1,
+.profile-card:hover .profile-card__details h2 {
   opacity: 1;
+  transform: translateY(0);
 }
 
-.profile-card:hover .profile-card__image{
-  top: 0px;
-  left: 0px;
-  transform: translate(-25%, -25%) scale(.5);
-}
-
-.details__socials:hover .socials__icon {
-  fill: white;
-}
-
-.profile-card:hover .details__profile-name,
-.profile-card:hover .details__profile-description,
-.profile-card:hover .details__socials{
+.profile-card:hover .profile-card__details p {
   opacity: 1;
-  transform: translate(0, -20px);
-  transition-delay: .25s;
-}
-
-.details__socials:hover::before,
-.details__socials:hover::after {
-  transform: scale(50);
-  opacity: 1;
+  transform: translateX(-50%) translateY(0px);
 }

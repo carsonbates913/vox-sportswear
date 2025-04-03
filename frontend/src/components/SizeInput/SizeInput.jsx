@@ -4,7 +4,7 @@ import SizeBox from '../SizeBox/SizeBox.jsx';
 
 export default function SizeInput({register, setValue}) {
 
-  const sizeList = ["S", "M", "L", "XL"];
+  const sizeList = ["XS", "S", "M", "L", "XL", "XXL"];
 
   return(
     <>

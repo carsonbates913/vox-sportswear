@@ -1,0 +1,48 @@
+.pending-orders {
+  width: 100%;
+}
+
+.pending-orders__title {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.pending-orders__list {
+  max-height: 800px;
+  padding-left: 10px;
+  border-left: 2px solid black;
+  margin: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  list-style: none;
+  overflow: scroll;
+}
+
+.pending-orders__item {
+  padding: 7px 0px 7px 20px;
+  border-radius: 4px;
+  transition: all .2s;
+}
+
+.pending-orders__item.active {
+  background-color: var(--background-color-dark);
+}
+
+.pending-orders__item h1 {
+  margin-bottom: 7px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.pending-orders__item p {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pending-orders__item:hover {
+  background-color: var(--background-color-dark);
+}

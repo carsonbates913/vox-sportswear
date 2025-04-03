@@ -1,13 +1,9 @@
 .product-list {
+  width: 75vw;
   display: flex;
-  flex-flow: column nowrap;
-  gap: 10px;
-}
-
-.product-list__row {
-  margin: 0;
-  display: flex;
-  justify-content: center;
+  flex-flow: row wrap-reverse;
   align-items: center;
+  justify-content: center;
+  margin: 0;
   gap: 10px;
 }

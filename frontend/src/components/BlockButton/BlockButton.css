@@ -1,11 +1,16 @@
 .block-button {
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center; 
   font-family: montserrat;
-  font-weight: 300;
+  font-weight: 400;
   cursor: pointer;
-  transition: background-color .1s ease-out, color .1s ease-out;
   white-space: nowrap;
   width: 180px;
+  transition: all 0.1s ease-in;
+}
+
+.block-button:hover {
+  transform: scale(1.05);
 }

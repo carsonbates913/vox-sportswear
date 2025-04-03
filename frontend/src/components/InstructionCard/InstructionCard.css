@@ -1,0 +1,36 @@
+.instruction-card {
+  height: 400px;
+  width: 325px;
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: var(--secondary-color);
+}
+
+.instruction-card__icon-container {
+  height: 80px;
+  width: 80px;
+}
+
+.instruction-card__icon-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.instruction-card__content h1 {
+  width: fit-content;
+  font-size: 90px;
+  font-weight: 600;
+  color: white;
+}
+
+.instruction-card__content p {
+  height: 110px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}

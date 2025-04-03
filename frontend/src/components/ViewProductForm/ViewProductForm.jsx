@@ -18,11 +18,16 @@ export default function ViewProductForm(props) {
   } = useForm({
     defaultValues: {
       sizes: {
+        XS: 0,
         S: 0,
         M: 0,
         L: 0,
         XL: 0,
+        XXL: 0,
       },
+      color: JSON.stringify({
+        hex: null, 
+        name: "See Request Notes" }),
     },
   })
 

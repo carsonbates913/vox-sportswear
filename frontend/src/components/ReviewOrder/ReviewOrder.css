@@ -1,0 +1,21 @@
+.review-order {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.review-order__item-list {
+  display: flex;
+  gap: 10px;
+  margin: 0px 0px 10px 0px;
+}
+
+.review-order__item {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  background: var(--primary-color);
+}

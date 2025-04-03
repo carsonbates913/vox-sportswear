@@ -21,7 +21,7 @@ export default function ProductGallery({ImageURLs}) {
 
   useEffect(() => {
     const shuffledImages = shuffleArray(ImageURLs);
-    setDisplayedImages(shuffledImages.slice(0, 12));
+    setDisplayedImages(shuffledImages.slice(0, 12).map(item => [item, item]));
     setRemainingImages(shuffledImages.slice(12));
     console.log(displayedImages);
   }, [ImageURLs]); // This runs only once when ImageURLs changes
@@ -38,17 +38,35 @@ export default function ProductGallery({ImageURLs}) {
           }
         }
 
-        const nextImages = remainingImages.slice(0, 2);
+        let nextImages = remainingImages.slice(0, 2);
         let updatedRemainingImages = remainingImages.slice(2);
 
-        const updatedDisplayedImages = [...displayedImages];
+        let updatedDisplayedImages = [...displayedImages];
         let remainingImagesToAdd = [];
+        
+        updatedDisplayedImages = updatedDisplayedImages.map((images, index) => {
+          if(indicesToReplace.includes(index)){
+            remainingImagesToAdd.push(images[1]);
+
+            const index1 = images[1];
+            const index2 = nextImages[0];
+            nextImages.shift();
+            console.log("check");
+            return [index1, index2];
+          }else{
+            return [images[1], images[1]];
+          }
+        })
+        /*
         indicesToReplace.forEach((index, i) => {
-          remainingImagesToAdd.push(displayedImages[index]);
-          updatedDisplayedImages[index] = nextImages[i];
+          remainingImagesToAdd.push(displayedImages[index][1]);
+          updatedDisplayedImages[index][0] = updatedDisplayedImages[index][1];
+          updatedDisplayedImages[index][1] = nextImages[i];
         });
+        */
 
         updatedRemainingImages = [...updatedRemainingImages, ...remainingImagesToAdd];
+        console.log(updatedDisplayedImages);
 
         setDisplayedImages(updatedDisplayedImages);
         setRemainingImages(updatedRemainingImages);
@@ -62,18 +80,9 @@ export default function ProductGallery({ImageURLs}) {
   return(
     <>
       <div className="product-gallery">
-      {displayedImages.map((ImageURL) => {
+      {displayedImages.map((ImageURLs, index) => {
         return (
-        <motion.div
-        key={ImageURL}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 2 }}
-        layout
-      >
-        <GalleryItem ImageURL={ImageURL} />
-      </motion.div>
+        <GalleryItem key={index} ImageURLs={ImageURLs} />
         )
 })}
       </div>

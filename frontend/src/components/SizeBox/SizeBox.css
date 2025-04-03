@@ -21,6 +21,10 @@
   background-color: var(--primary-color);
 }
 
+.size-box.active:hover {
+  border: 1.5px solid var(--primary-color);
+}
+
 .size-box__label {
   width: 49px;
   height: 100%;
@@ -56,4 +60,8 @@
 .size-box__input-container input::-webkit-inner-spin-button {
   -webkit-appearance: none; /* Hide the arrow buttons */
   margin: 0;
+}
+
+.size-box:hover {
+  border: 1.5px solid black;
 }

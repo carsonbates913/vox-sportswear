@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import './MainNavigation.css';
 import Navbar from './Navbar.jsx';
@@ -10,12 +10,29 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { getAllCart} from "../../services/datastore.js";
 import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import voxlogo from '../../assets/vox-logo.svg';
+import profileIcon from '../../assets/profile_icon.svg';
+import cartIcon from '../../assets/cart_icon.svg';
 
 
 export default function MainNavigation(props) {
   const [cart, setCart] = useState([]);
   const { user, signIn, signOut } = useAuth();
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSignIn = async () => {
+    if(user){
+      navigate('/myaccount');
+    }else {
+      const result = await signIn(); 
+      if (result) {
+        navigate('/myaccount')
+      } else {
+        navigate('/');
+      }
+    }
+  }
 
   const closeDrawer = () => {
     setDrawerIsOpen(false);
@@ -62,8 +79,19 @@ export default function MainNavigation(props) {
           <NavLink to="/" className="main-navigation__logo">
             <img src={voxlogo}/>
           </NavLink>
+
           <nav className="main-navigation__header-nav">
             <NavLinks cart={cart} signIn={signIn} signOut={signOut} user={user}/>
+          </nav>
+
+          <nav className="main-navigation__profile-nav">
+            <NavLink className="main-navigation__icon-container main-navigation__cart" to="/mycart">
+              <img src={cartIcon}/>
+                    {cart.length > 0 && (cart.length < 10 ? (<div>{cart.length}</div>) : (<div>9+</div>) ) }
+            </NavLink>
+            <div className="main-navigation__icon-container" onClick={handleSignIn}>
+              <img src={profileIcon}/>
+            </div>
           </nav>
         </Navbar>
     </>
