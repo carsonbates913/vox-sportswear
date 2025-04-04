@@ -1,17 +1,18 @@
 import ReactDOM from 'react-dom'
-import { useRef } from 'react'
-import { CSSTransition } from 'react-transition-group';
+import { motion } from 'motion/react';
 
 import './Backdrop.css';
 
 export default function Backdrop(props) {
 
-  const nodeRef = useRef(null);
-
   const content = 
-  <CSSTransition in={props.show} nodeRef={nodeRef} timeout={200} mountOnEnter unmountOnExit>
-      <div className="backdrop" onClick={props.onClick} ref={nodeRef}></div>
-  </CSSTransition>
+      <motion.div 
+      className="backdrop"
+      style={{backgroundColor: props.backgroundColor}}
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      onClick={props.onClick}
+  />
 
   return ReactDOM.createPortal(content, document.getElementById('backdrop-portal-root'));
 }

@@ -34,4 +34,9 @@
   font-size: 14px;
   letter-spacing: 2px;
   background-color: var(--primary-color);
+  transition: all 0.2s ease-out;
+}
+
+.button-checkout:hover {
+  background-color: var(--primary-color-dark);
 }

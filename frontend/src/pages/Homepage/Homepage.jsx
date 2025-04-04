@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
+
 import HeroTitle from '../../components/HeroTitle/HeroTitle.jsx';
 import Carousel from '../../components/Carousel/Carousel.jsx';
 import Hoodie from '../../assets/Vox-Hoodie2.svg?react'
@@ -18,10 +20,15 @@ import designIcon from '../../assets/design-icon.svg'
 import wandIcon from '../../assets/wand-icon.svg'
 import mailIcon from '../../assets/mail-icon.svg'
 import rightArrow2 from '../../assets/right-arrow-2.svg'
+import Modal from '../../components/Modal/Modal.jsx';
+import Backdrop from '../../components/Backdrop/Backdrop.jsx';
+
 
 const Homepage = () => {
 
     const [animationDone, setAnimationDone] = useState(false);
+
+    const navigate = useNavigate();
 
     const images = [Bag, Hoodie];
 
@@ -98,7 +105,7 @@ const Homepage = () => {
                     transition={{duration: 0.6, delay: 1.2}}
                 >
                         <SoftButton padding="0px" height="65px" width="200px" text="SIGN IN" fontSize="20px" color="white" backgroundColor="black" border="1px solid black" fontWeight="700"/>
-                        <button className="homepage__shop-now-btn">
+                        <button className="homepage__shop-now-btn" onClick={() => navigate('./products')}>
                             <p>SHOP NOW</p>
                             <img src={rightArrow2}></img>
                         </button>
@@ -174,7 +181,7 @@ const Homepage = () => {
                     transition={{duration: 0.6, delay: 1.2}}
                     >
                         <SoftButton padding="0px" height="65px" width="200px" text="SIGN IN" fontSize="20px" color="white" backgroundColor="black" border="1px solid black" fontWeight="700"/>
-                        <button className="homepage__shop-now-btn">
+                        <button className="homepage__shop-now-btn" onClick={() => navigate('./products')}>
                             <p>SHOP NOW</p>
                             <img src={rightArrow2}></img>
                         </button>

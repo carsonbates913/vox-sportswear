@@ -10,6 +10,8 @@ import CartList from '../../components/CartList/CartList.jsx';
 import OrderSummary from '../../components/OrderSummary/OrderSummary.jsx';
 import LoadingModule from '../../components/LoadingModule/LoadingModule.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
+import Modal from '../../components/Modal/Modal.jsx';
+import Backdrop from '../../components/Backdrop/Backdrop.jsx';
 
 const MyCart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -46,16 +48,15 @@ const MyCart = () => {
     }
 
     const clearCart = async () => {
-        setLoadingRequest(true);
         const results = cartItems.map(async (item)=> {
             return deleteFromCart(user.uid, item.cartItemID, item.imageName);
         });
         await Promise.all(results);
         setCartItems([]);
-        setLoadingRequest(false);
     }
 
     const handleCheckout = async () => {
+        setLoadingRequest(true);
         if(user && cartItems.length > 0){
             console.log(cartItems);
             const order = cartItems.map(({ product, sizes, color, designNotes, imageURL}) => ({ product, sizes, color, designNotes, imageURL}));
@@ -64,12 +65,22 @@ const MyCart = () => {
         }else{
             alert("must be signed in to order");
         }
+        setLoadingRequest(false);
     }
 
         return (
             <main className="my-cart">
+                {loadingRequest && (
+                    <>
+                        <Modal>
+                            <div className="loading-modal">
+                                <LoadingModule />
+                            </div>
+                        </Modal>
+                        <Backdrop />
+                    </>
+                )}
                 <div className="my-cart-wrapper">
-                    {loadingRequest && <LoadingModule viewport />}
                     <header>
                         <h1>My Cart</h1>
                     </header>

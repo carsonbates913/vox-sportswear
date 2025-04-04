@@ -15,7 +15,7 @@ export default function HeroTitle() {
         <motion.h1
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}  // Delay to make it appear after the container
+          transition={{ duration: 0.6, delay: 0.0 }}  // Delay to make it appear after the container
         >
           MERCH
         </motion.h1>
@@ -26,9 +26,9 @@ export default function HeroTitle() {
         />
       </motion.div>
       <motion.h1
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.2 }}  // Delay to make the second "MADE SIMPLE" appear last
+        transition={{ duration: 0.6, delay: 0 }}  // Delay to make the second "MADE SIMPLE" appear last
       >
         MADE SIMPLE
       </motion.h1>

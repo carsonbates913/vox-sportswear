@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import { useState } from "react";
 
 import './ViewProductForm.css'
 import ColorInput from '../ColorInput/ColorInput.jsx';
@@ -7,8 +8,12 @@ import CustomizationInput from "../CustomizationInput/CustomizationInput.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { addToCartFromSession } from "../../services/sessionStorage.js";
 import { addToCart } from "../../services/datastore.js";
+import notesIcon from '../../assets/notes-icon.svg';
+import xIconGreen from '../../assets/x-icon-green.svg';
 
 export default function ViewProductForm(props) {
+
+  const [alertVisible, setAlertVisible] = useState(true);
 
   const {
     register,
@@ -58,7 +63,17 @@ export default function ViewProductForm(props) {
       <div className="view-product-form__input-container">
         <div className="view-product-form__product-info">
             <h1>{props.productInfo.name}</h1>
-            <h2>If there's something you need that isn't listed, simply request it in the box below."</h2>
+            {alertVisible && (
+              <div className="alert">
+                <div className="alert__icon-container">
+                  <img src={notesIcon} />
+                </div>
+                <div className="alert__note">If there's a specific size, color, image, or anything else you'd like that isn't listed below, just let us know in the Request Notes section — we can make it happen!</div>
+                <div className="alert__exit">
+                  <button onClick={() => setAlertVisible(false)}>x</button>
+                </div>
+              </div>
+            )}
         </div>
         <div className="form__line-break"/>
         <ColorInput selectedColor={selectedColor} register={register}/>

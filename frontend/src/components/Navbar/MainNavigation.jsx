@@ -68,7 +68,9 @@ export default function MainNavigation(props) {
 
   return (
     <>
-        <Backdrop show={drawerIsOpen} onClick={closeDrawer}/>
+        {drawerIsOpen && (
+          <Backdrop onClick={closeDrawer}/>
+        )}
         <SideDrawer show={drawerIsOpen} onClick={closeDrawer}>
           <nav className="main-navigation__drawer-nav">
             <NavLinks />

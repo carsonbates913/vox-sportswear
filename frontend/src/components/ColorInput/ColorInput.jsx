@@ -46,7 +46,9 @@ export default function ColorInput({register, selectedColor}) {
                 })}
             </div>
           </CSSTransition>
-          <Backdrop show={isOpen} onClick={closeDropdown}/>
+          {isOpen && (
+            <Backdrop onClick={closeDropdown} backgroundColor="rgba(0, 0, 0, 0)"/>
+          )}
         </div>
       </div>
     </>

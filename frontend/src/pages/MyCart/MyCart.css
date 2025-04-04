@@ -45,7 +45,12 @@
     width: 450px;
 }
 
-
+.loading-modal {
+    height: 125px;
+    width: 125px;
+    border-radius: 16px;
+    background-color: white;
+}
 
 
 

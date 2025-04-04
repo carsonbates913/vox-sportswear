@@ -47,21 +47,37 @@
 }
 
 .display-section__back-button {
-  padding: 0px 10px;
+  height: 60px;
+  width: 60px;
   border: none;
+  border-top-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   position: absolute;
   background-color: transparent;
   z-index: 10;
+  overflow: hidden;
 }
 
-.display-section__back-button:hover .back-button-svg {
-  stroke: var(--primary-color);
-  transform: scale(1.1);
+.display-section__back-button > img {
+  transform: rotate(180deg);
+  height: 100%;
+  width: 100%;
 }
 
-.back-button-svg {
-  height: 45px;
-  transition: transform 0.1s ease-in-out;
+.display-section__back-button__hover-container {
+  height: 100%;
+  width: 100%;
+  border-top-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+}
+
+.display-section__back-button__hover-container > img {
+  transform: rotate(-135deg);
 }
 
 .display-section__product-card {
