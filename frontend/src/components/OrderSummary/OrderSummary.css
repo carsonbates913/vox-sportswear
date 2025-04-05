@@ -33,10 +33,10 @@
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 2px;
-  background-color: var(--primary-color);
+  background-color: var(--green1);
   transition: all 0.2s ease-out;
 }
 
 .button-checkout:hover {
-  background-color: var(--primary-color-dark);
+  background-color: var(--green1-dark);
 }

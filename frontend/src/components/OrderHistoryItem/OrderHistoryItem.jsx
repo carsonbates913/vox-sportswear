@@ -34,7 +34,7 @@ export default function OrderHistoryItem(props) {
         {props.order.status === 'pending' && <p>Date Requested: {formattedDate}</p>}
         {props.order.status === 'accepted' && (
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <p style={{color: 'var(--primary-color)', fontWeight: '600'}}>Declined</p>
+            <p style={{color: 'var(--green1)', fontWeight: '600'}}>Declined</p>
             <img style={{margin: '1px 4px 0px 4px', height: '15px'}} src={checkIcon}></img>
             <p>{': '+ formattedDate}</p>
         </div>

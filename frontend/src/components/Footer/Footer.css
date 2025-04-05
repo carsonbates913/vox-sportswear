@@ -4,7 +4,7 @@
   padding: 40px 60px;
   margin: 100px 0px 0px 0px;
   background-color: var(--background-color-dark);
-  color: var(--primary-color);
+  color: var(--green1);
   display: flex;
   align-items: flex-end;
 }
@@ -36,7 +36,7 @@
   height: 35px;
   width: 35px;
   border-radius: 20px;
-  background-color: var(--primary-color);
+  background-color: var(--green1);
   opacity: 50%;
 }
 
@@ -46,5 +46,5 @@
 }
 
 .footer__socials__contact a {
-  color: var(--primary-color);
+  color: var(--green1);
 }

@@ -80,7 +80,7 @@
   right: 10px;
   font-size: 12px;
   background-color: transparent;
-  color: var(--primary-color);
+  color: var(--green1);
 }
 
 .delete-from-cart:hover {
@@ -92,6 +92,6 @@
   padding: 1px 4px;
   font-size: 11px;
   font-weight: 600;
-  background-color: var(--primary-color);
+  background-color: var(--green1);
   color: white;
 }

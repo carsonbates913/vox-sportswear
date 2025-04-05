@@ -6,6 +6,8 @@
 }
 
 .size-input__title {
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px;
+  color: black;
 }

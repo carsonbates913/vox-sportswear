@@ -1,32 +1,32 @@
 
 .size-box {
-  height: 50px;
-  width: 50px;
-  border: 1.5px solid lightgrey;
+  height: 55px;
+  width: 55px;
+  border: 2px solid lightgrey;
   margin: 0;
   display: flex;
   justify-content: start;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   transition: all .25s;
   appearance: none;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .size-box.active {
-  width: 100px;
-  border: 1.5px solid var(--primary-color);
+  width: 110px;
+  border: 2px solid var(--green1);
   color: white;
-  background-color: var(--primary-color);
+  background-color: var(--green1);
 }
 
 .size-box.active:hover {
-  border: 1.5px solid var(--primary-color);
+  border: 2px solid var(--green1);
 }
 
 .size-box__label {
-  width: 49px;
+  width: 52.5px;
   height: 100%;
   flex-shrink: 0;
   border-right: 1px solid white;
@@ -36,7 +36,7 @@
 }
 
 .size-box__input-container {
-  width: 48px;
+  width: 53.5px;
   height: 100%;
   flex-shrink: 0; 
   display: flex;
@@ -45,7 +45,7 @@
 }
 
 .size-box__input-container input {
-  width: 30px; 
+  width: 35px; 
   appearance: none; 
   border: none;
   border-bottom: 1px solid white; 
@@ -63,5 +63,5 @@
 }
 
 .size-box:hover {
-  border: 1.5px solid black;
+  border: 2px solid rgb(184, 184, 184);
 }

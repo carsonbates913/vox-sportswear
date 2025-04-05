@@ -17,7 +17,7 @@
 }
 
 .view-product-form__product-info h1 {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 500;
   line-height: 1; 
   margin: 0;
@@ -29,9 +29,9 @@
 }
 
 .form__line-break {
-  margin: 30px 0px;
+  margin: 20px 0px;
   height: 1px;
-  background-color: black;
+  background-color: rgb(202, 202, 202);
 }
 
 .view-product-form__input {
@@ -47,21 +47,21 @@
   font-weight: 400;
   font-size: 16px;
   letter-spacing: 5px;
-  background-color: var(--primary-color);
+  background-color: var(--green1);
   transition: all 200ms;
 }
 
 .form__add-cart-button:hover {
-  background-color: var(--primary-color-dark);
+  background-color: var(--green1-dark);
 }
 
 .alert {
-  height: 80px;
+  min-height: 80px;
   padding: 4px 10px;
-  border: 1px solid var(--primary-color);
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
-  align-items: center;
+  border: 1px solid #A3D9A5;
+  align-items: stretch;
   gap: 10px;
   background-color: #E8FFE3;
 }
@@ -72,7 +72,8 @@
 
 .alert__note {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  align-self: center;
 }
 
 .alert__exit {
@@ -80,6 +81,7 @@
   width: 20px;
   display: flex;
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .alert__exit button {

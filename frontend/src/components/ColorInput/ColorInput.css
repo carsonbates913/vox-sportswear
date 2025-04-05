@@ -3,8 +3,10 @@
 }
 
 .color-input__title {
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px;
+  color: black;
 }
 
 .color-input__set {
@@ -23,19 +25,30 @@
 }
 
 .color-input__dropdown__selectedColor {
+  height: 50px;
   width: 100%;
   display: flex;
-  border: 1px solid var(--black);;
-  border-radius: 4px; 
+  border: 2px solid lightgray;
+  border-radius: 8px; 
   justify-content: space-between;
   align-items: center; 
   padding: 5px 10px; 
+  transition: all 200ms;
+}
+
+.color-input__dropdown__selectedColor:hover {
+  border: 2px solid rgb(184, 184, 184);
 }
 
 .color-input__dropdown__selectedColor div {
   display: flex;
   justify-content: center;
   align-items: center; 
+}
+
+.color-input__dropdown__selectedColor p {
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .color-input__dropdown__selectedColor img {
@@ -47,7 +60,8 @@
 .color-display {
   height: 30px;
   width: 30px;
-  border: .5px solid var(--light-grey);
+  aspect-ratio: 1 / 1;
+  border: 1px solid lightgray;
   border-radius: 30px;
   position: relative;
   appearance: none; 
@@ -69,16 +83,16 @@
 .color-input__dropdown__list {
   width: 100%;
   max-height: 400px;
-  border: none;
-  border-radius: 4px; 
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 8px; 
   position: absolute;
   top: calc(100% + 5px); 
   left: 0px; 
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--background-color);
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-  transition: all 200ms;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.2);
   z-index: 1000;
   overflow: scroll;
 }
@@ -87,6 +101,7 @@
 
 .color-input__dropdown__list label {
   padding: 10px 10px;
+  border-radius: 8px;
   display: flex;
   justify-content: start;
   align-items: center; 
@@ -95,43 +110,11 @@
 
 .color-input__dropdown__list label p {
   color: black;
-  font-weight: 300;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 18px;
 }
 
-.color-input__dropdown__list label::after {
-  content: '';
-  height: 1px;
-  position: absolute;
-  width: 95%;
-  left: 50%;
-  bottom: 0; 
-  transform: translateX(-50%) translateY(-50%);
-  background-color: var(--light-grey);
-}
 
 .color-input__dropdown__list label:hover {
   background-color: rgba(0,0,0,0.05);
-}
-
-.dropdown-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.dropdown-enter-active {
-  opacity: 1;
-  transform: translateY(0px);
-  transition: all 200ms;
-}
-
-.dropdown-exit {
-  opacity: 1;
-  transform: translateY(0px);
-}
-
-.dropdown-exit-active {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 200ms;
 }

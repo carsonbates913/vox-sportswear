@@ -1,9 +1,3 @@
-.my-cart{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .my-cart-wrapper {
     display: flex;
     flex-direction: column;
@@ -80,7 +74,7 @@
 }
 
 .cart__empty-alert {
-    color: var(--primary-color);
+    color: var(--green1);
     font-size: 16px;
     font-weight: 600;
 }

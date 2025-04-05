@@ -10,7 +10,7 @@ export default function CustomizationInput({register, selectedImage}) {
   return(
     <>
       <div className="customization-input">
-        <p className="customization-input__title">Request Notes</p>
+        <p className="customization-input__title">REQUEST NOTES</p>
         {(
             <>
             <textarea {...register("designNotes")} className="view-product-personal-customization"/>

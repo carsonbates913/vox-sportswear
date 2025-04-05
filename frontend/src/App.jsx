@@ -1,13 +1,9 @@
-import { RouterProvider } from 'react-router-dom';
-import { router } from './routes/AppRoutes.jsx'
-import AuthContext from './context/AuthContext.jsx'
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import AuthContext from './context/AuthContext.jsx'
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from './services/datastore.js';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import { createBrowserRouter } from 'react-router-dom';
 import Homepage from './pages/Homepage/Homepage.jsx';
 import AboutUs from './pages/AboutUs/AboutUs.jsx';
 import MyCart from './pages/MyCart/MyCart.jsx';
@@ -48,14 +44,13 @@ function App() {
             const isAdmin = token.claims.isAdmin || false;
             setUser({...currentUser, isAdmin})
           } catch (error) {
-            console.error("Error retrieving information about user", error);
             setUser(null);
           }
         }else{
           setUser(null);
         }
         setLoading(false);
-      })
+      }) 
 
     return () => unsubscribe();
   }, [])

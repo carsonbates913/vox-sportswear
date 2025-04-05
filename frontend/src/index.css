@@ -11,9 +11,9 @@
   --background-color-dark: #F3F3EF;
   --background-color-light: #FDFDFB;
   
-  --primary-color: #01472B;
-  --primary-color-dark: #015332;
-  --primary-color-light: #5D9273;
+  --green1: #01472B;
+  --green1-dark: #015332;
+  --green1-light: #5D9273;
   --secondary-color: #02AD69;
   --tertiary-color: #CEAD8F;
   --primary-text-color: #000000;
@@ -21,8 +21,6 @@
   --light-grey: lightgrey;
   --black: black; 
   --white: white;
-  --header-font: montserrat;
-  --body-font: playfair-display;
 }
 
 * {

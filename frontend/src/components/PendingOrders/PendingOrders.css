@@ -4,7 +4,7 @@
 
 .pending-orders__title {
   margin-bottom: 20px;
-  color: var(--primary-color);
+  color: var(--green1);
   font-size: 23px;
   font-weight: 600;
 }
@@ -35,7 +35,7 @@
   margin-bottom: 7px;
   font-size: 18px;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--green1);
 }
 
 .pending-orders__item p {

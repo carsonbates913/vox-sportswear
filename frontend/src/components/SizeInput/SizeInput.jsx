@@ -9,7 +9,7 @@ export default function SizeInput({register, setValue}) {
   return(
     <>
     <div className="size-input view-product-form__input">
-      <div className="size-input__title"><span>Sizes</span></div>
+      <div className="size-input__title"><span>SIZES</span></div>
       <div className="size-input__set">
           {sizeList.map( (size, index) => {
               return (
