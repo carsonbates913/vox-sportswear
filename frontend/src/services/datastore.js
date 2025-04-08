@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
-  getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, deleteDoc, updateDoc, onSnapshot, query, where, serverTimestamp
+  getFirestore, collection, doc, getDocs, deleteDoc, updateDoc, onSnapshot, query, where,
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
+import { getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
   apiKey: `${import.meta.env.VITE_FIREBASE_API_KEY}`,
@@ -23,12 +23,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app)
 export const auth = getAuth(app);
+export const functions = getFunctions(app);
 
 export const initFirebase = () => {
     return app;
 }
 
-/* Returns all clothing data from database */
 export async function getAllProducts(){
   const reference = collection(db, "Products");
   const data = await getDocs(reference);
@@ -50,67 +50,23 @@ export function getAllCart(userID, callback = () => {}){
   return cancel; 
 }
 
-export async function getSpecificCartItem(userID, cartItemID){
-  const reference = doc(db, "Users", userID, "Cart", cartItemID);
-  const data = await getDoc(reference);
-  return data;
-}
-
-export async function addToCart(userID, product, formData){
-  const reference = collection(db, "Users", userID, "Cart");
-  const cartItem = { 
-    product,
-    sizes: formData.sizes,
-    color: formData.color,
-    designNotes: formData.designNotes,
-    imageURL: "",
+export async function uploadImageToStorage(userID, cartItemRef, image){
+  if(!image || !cartItemRef || !userID){
+    console.error("Error: Missing parameters");
+    return;
   }
-  console.log(cartItem);
-  console.log(formData.file);
-  const docRef = await addDoc(reference, cartItem);
-  if(formData.file[0]){
-    console.log("check");
-    const url = await uploadImage(userID, formData.file[0]);
-    await updateDoc(docRef, {imageURL: url});
-  }
+  const imageRef = ref(storage, `Users/${userID}/Cart/${image.name}`);
+  const upload = await uploadBytes(imageRef, image);
+  const url = await getDownloadURL(upload.ref);
+  await updateDoc(cartItemRef, {imageURL: url});
 }
 
 export async function deleteFromCart(userID, cartItemID, imageName) {
   const reference = doc(db, "Users", userID, "Cart", cartItemID);
   await deleteDoc(reference);
   if(imageName){
-    console.log(imageName);
     await deleteImageFromStorage(userID, imageName);
   }
-}
-
-export async function addOrder(userID, userEmail, items){
-  const orderID = doc(collection(db, "Orders")).id;
-
-  const orderItem = {
-    userEmail,
-    userID,
-    items,
-    status: "pending",
-    date: serverTimestamp(),
-  };
-
-  const orderRef = doc(db, "Orders", orderID);
-  const historyRef = doc(db, "Users", userID, "Order History", orderID);
-
-  await setDoc(orderRef, orderItem);
-  await setDoc(historyRef, orderItem);
-}
-
-export async function updateOrderStatus(userID, orderID, status){
-  const reference = doc(db, "Users", userID, "Order History", orderID);
-  await updateDoc(reference, {status});
-}
-
-export async function getUserData(userID){
-  const reference = doc(db, "Users", userID);
-  const data = await getDoc(reference);
-  return data;
 }
 
 export function getOrders(callback = () => {}){
@@ -122,21 +78,11 @@ export function getOrders(callback = () => {}){
 }
 
 export function getPreviousOrders(userID, callback = () => {}){
-  const reference = collection(db, "Users", userID, "Order History");
+  const reference = collection(db, "Users", userID, "OrderHistory");
   const cancel = onSnapshot(reference, (snapshot) => {
     callback(snapshot);
   })
   return cancel;
-}
-
-async function uploadImage(userID, image) {
-  if(!image){
-    return;
-  }
-  const imageRef = ref(storage, `Users/${userID}/Cart/${image.name}`);
-  const upload = await uploadBytes(imageRef, image);
-  const url = await getDownloadURL(upload.ref);
-  return url;
 }
 
 async function deleteImageFromStorage(userID, imageName){

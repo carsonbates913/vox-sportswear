@@ -1,5 +1,9 @@
 .cart {
+  max-height: 1000px;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
   gap: 20px;
+  overflow: scroll;
 }

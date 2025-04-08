@@ -6,6 +6,7 @@
 
 .my-account-wrapper {
   min-height: calc(100vh - 80px);
+  width: 100vw;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -14,24 +15,23 @@
 .my-account header {
   height: 150px;
   width: 100vw;
+  padding: 20px 20px;
   margin: 0px 0px 30px 0px;
   position: relative;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-end;
   background-color: var(--background-color-dark);
   box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.2);
 }
 
 .my-account header h1 {
-  position: absolute;
-  left: 60px;
-  bottom: 20px;
   font-size: 50px;
   font-weight: 700;
 }
 
 .sign-out-button {
-  position: absolute;
-  right: 60px;
-  bottom: 20px;
   padding: 10px 20px;
   background-color: var(--green1);
   color: white;
@@ -58,8 +58,8 @@
 }
 
 .my-account__content__requests-container {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 575px;
+  min-width: 575px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -91,4 +91,11 @@
 .my-account__content__requests-container span {
   font-weight: 500;
   font-style: italic;
+}
+
+@media (max-width: 800px) {
+  .my-account__content__requests-container {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
 }

@@ -1,4 +1,4 @@
-.about-us {
+.about-us-wrapper {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
@@ -9,7 +9,7 @@
   font-family: montserrat;
   font-size: 80px;
   font-weight: 200;
-  color: var(--primary-text-color); 
+  color: black; 
   text-align: center;
 }
 

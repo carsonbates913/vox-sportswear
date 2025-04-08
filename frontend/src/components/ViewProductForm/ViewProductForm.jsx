@@ -1,26 +1,27 @@
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { useState } from "react";
+import { httpsCallable } from "firebase/functions";
 
 import './ViewProductForm.css'
 import ColorInput from '../ColorInput/ColorInput.jsx';
 import SizeInput from '../SizeInput/SizeInput.jsx';
 import CustomizationInput from "../CustomizationInput/CustomizationInput.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { addToCartFromSession } from "../../services/sessionStorage.js";
-import { addToCart } from "../../services/datastore.js";
-import notesIcon from '../../assets/notes-icon.svg';
-import xIconGreen from '../../assets/x-icon-green.svg';
+import { uploadImageToStorage, functions } from "../../services/datastore.js";
+import InfoBox from '../InfoBox/InfoBox.jsx';
+import AlertModal from '../AlertModal/AlertModal.jsx';
 
 export default function ViewProductForm(props) {
 
-  const [alertVisible, setAlertVisible] = useState(true);
+  const [currentModal, setCurrentModal] = useState(null);
+
+  const { user } = useAuth();
 
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
   } = useForm({
     defaultValues: {
       sizes: {
@@ -37,43 +38,86 @@ export default function ViewProductForm(props) {
     },
   })
 
-  const { user } = useAuth();
-
-  const onSubmit = (data) =>{
-    if (!data){
-        alert("No Data");
-    }else {
-        if(user){
-            console.log(data);
-            addToCart(user.uid, props.productInfo.name, data);
-        }else{
-            addToCartFromSession({productID: props.selectedProduct, ...formData, quantity: 1});
-            window.dispatchEvent(new Event('storage'));
-        }
-    }
-}
-
   const selectedColor = watch("color");
 
   const selectedImage = watch("file");
 
+  const handleClear = () => {
+    setCurrentModal(null);
+  }
+
+  const addToCart = httpsCallable(functions, "addToCart");
+
+  const onSubmit = async (data) =>{
+    if(!user){
+      setCurrentModal("signIn");
+      return;
+    }
+
+    if(!data){
+      console.error("Error: No data");
+      return;
+    }
+
+    props.loader(true);
+
+    try {
+      const result = await addToCart({
+        product: props.productInfo.name,
+        sizes: data.sizes,
+        color: data.color,
+        designNotes: data.designNotes,
+      })
+
+      if (data.file[0]) {
+        await uploadImageToStorage(user.uid, result.data.docId, data.file[0]);
+      }
+
+    }catch(error){
+      if(error.code){
+        console.error("Firebase error:", error.code, error.message);
+
+        if(error.code === "functions/unauthenticated"){
+          setCurrentModal("signIn");
+        }else if(error.code === "functions/resource-exhausted") {
+          setCurrentModal("overloadedCart");
+        }
+      }
+    }finally {
+      props.loader(false);
+    }
+  }
 
   return (
     <form className="view-product-form" onSubmit={handleSubmit(onSubmit)}>
+      <AlertModal 
+        show={(currentModal === "signIn") && !user}
+        header="Sign In Required"
+        body="Please sign in to continue with your order"
+        handleClear={handleClear}>
+            <button 
+              className="sign-in-alert__btn" 
+              onClick={async () => {
+                const result = await props.signIn()
+                if(result){
+                  handleClear()
+                }
+              }}
+            style={{backgroundColor: '#3EFFA1', color: 'black'}}
+            >
+            Sign in
+            </button>
+      </AlertModal>
+      <AlertModal 
+        show={(currentModal === "overloadedCart")}
+        header="Cart Full"
+        body="Maxiumum of 20 items is allowed per request"
+        handleClear={handleClear}
+      />
       <div className="view-product-form__input-container">
         <div className="view-product-form__product-info">
             <h1>{props.productInfo.name}</h1>
-            {alertVisible && (
-              <div className="alert">
-                <div className="alert__icon-container">
-                  <img src={notesIcon} />
-                </div>
-                <div className="alert__note">If there's a specific size, color, image, or anything else you'd like that isn't listed below, just let us know in the Request Notes section — we can make it happen!</div>
-                <div className="alert__exit">
-                  <button onClick={() => setAlertVisible(false)}>x</button>
-                </div>
-              </div>
-            )}
+            <InfoBox />
         </div>
         <div className="form__line-break"/>
         <ColorInput selectedColor={selectedColor} register={register}/>

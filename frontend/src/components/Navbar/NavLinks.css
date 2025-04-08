@@ -10,7 +10,7 @@
 .navlinks li {
   display: flex;
   align-items: center;
-  color: var(--primary-text-color);
+  color: black;
   font-family: montserrat;
   font-weight: 500;
   font-size: 18px;

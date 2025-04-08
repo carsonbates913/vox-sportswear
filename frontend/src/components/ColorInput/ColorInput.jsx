@@ -44,7 +44,7 @@ export default function ColorInput({register, selectedColor}) {
                           <label htmlFor={color.hex} key={color.hex} onClick={closeDropdown}> 
                               <div className="color-display" style={{backgroundColor: color.hex}}></div>
                               <p>{color.name}</p>
-                            <input id={color.hex} {...register("color")} type="radio" style={{display: 'none'}} name="color" value={JSON.stringify(color)} onClick={() => console.log(selectedColor)}/>
+                            <input id={color.hex} {...register("color")} type="radio" style={{display: 'none'}} name="color" value={JSON.stringify(color)}/>
                           </label>
                         )
                     })}

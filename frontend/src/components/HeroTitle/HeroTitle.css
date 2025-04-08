@@ -21,7 +21,7 @@
 
 .hero-title__image-container{
 
-  padding:  0px clamp(80px, 7%, 160px);
+  padding:  0px clamp(60px, 7%, 160px);
   position: relative;
   margin: 0 0 0 0;
   display: inline-flex;

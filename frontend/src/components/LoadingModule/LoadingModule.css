@@ -6,6 +6,14 @@
   align-items: center;
 }
 
+.loader-container.modal {
+  height: fit-content;
+  width: fit-content;
+  padding: 30px;
+  border-radius: 16px;
+  background-color: white;
+}
+
 .loader {
   width: 50px;
   padding: 8px;

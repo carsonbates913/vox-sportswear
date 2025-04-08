@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 
 import './MainNavigation.css';
 import Navbar from './Navbar.jsx';
@@ -8,10 +9,10 @@ import NavLinks from './NavLinks.jsx';
 import Backdrop from '../Backdrop/Backdrop.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { getAllCart} from "../../services/datastore.js";
-import { retrieveCartFromSession } from '../../services/sessionStorage.js';
 import voxlogo from '../../assets/vox-logo.svg';
 import profileIcon from '../../assets/profile_icon.svg';
 import cartIcon from '../../assets/cart_icon.svg';
+import menuIcon from '../../assets/menu-icon.svg';
 
 
 export default function MainNavigation(props) {
@@ -41,13 +42,7 @@ export default function MainNavigation(props) {
   const openDrawer = () => {
     setDrawerIsOpen(true);
   } 
-      
-  const updateCartFromSession = () => {
-      let cart = retrieveCartFromSession();
-      setCart(cart);
-  }
 
-  
   useEffect(()=>{
       if(user){
           const cancel = getAllCart(user.uid, (snapshot)=>{
@@ -56,26 +51,41 @@ export default function MainNavigation(props) {
                   setCart(cartArray);
               }
           })
-          return typeof cancel === "function" ? cancel : undefined;
-      }else{
-          updateCartFromSession();
-          window.addEventListener('storage', updateCartFromSession);
-          return () => {
-              window.removeEventListener('storage', updateCartFromSession);
-          };
+          return cancel;
+      }else {
+        setCart([]);
       }
   }, [user]);
 
   return (
     <>
+      <AnimatePresence>
         {drawerIsOpen && (
-          <Backdrop onClick={closeDrawer}/>
+          <>
+            <SideDrawer show={drawerIsOpen} onClick={closeDrawer}>
+              <ul>
+                <li>
+                  <NavLink className="side-drawer__item" to="/aboutus" onClick={closeDrawer}>About</NavLink>
+                </li>
+                <li>
+                  <NavLink className="side-drawer__item" to="/products" onClick={closeDrawer}>Products</NavLink>
+                </li>
+                <li>
+                  <NavLink className="side-drawer__item" to="/mycart" onClick={closeDrawer}>
+                    Cart
+                  </NavLink>
+                </li>
+                <li>
+                  <div className="side-drawer__item" onClick={() => {handleSignIn(); closeDrawer()}}>
+                    Account
+                  </div>
+                </li>
+              </ul>
+            </SideDrawer>
+            <Backdrop onClick={closeDrawer}/>
+          </>
         )}
-        <SideDrawer show={drawerIsOpen} onClick={closeDrawer}>
-          <nav className="main-navigation__drawer-nav">
-            <NavLinks />
-          </nav>
-        </SideDrawer>
+        </AnimatePresence>
 
         <Navbar>
           <NavLink to="/" className="main-navigation__logo">
@@ -95,6 +105,9 @@ export default function MainNavigation(props) {
               <img src={profileIcon}/>
             </div>
           </nav>
+          <button className="main-navigation__side-drawer-btn" onClick={openDrawer}>
+            <img src={menuIcon}/>
+          </button>
         </Navbar>
     </>
   )

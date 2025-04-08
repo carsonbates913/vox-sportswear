@@ -14,13 +14,9 @@
   --green1: #01472B;
   --green1-dark: #015332;
   --green1-light: #5D9273;
-  --secondary-color: #02AD69;
+  --green2: #02AD69;
   --tertiary-color: #CEAD8F;
-  --primary-text-color: #000000;
-  --secondary-text-color: white; 
   --light-grey: lightgrey;
-  --black: black; 
-  --white: white;
 }
 
 * {
@@ -34,8 +30,6 @@ h1, h2, h3, h4, h5, h6, p {
 
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
   position: relative;
   background-color: var(--background-color);
 }

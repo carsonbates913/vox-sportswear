@@ -28,6 +28,7 @@
     padding: 0px 40px;
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
     gap: 30px;
 }
 
@@ -37,44 +38,4 @@
 
 .my-cart__content__order-summary-container {
     width: 450px;
-}
-
-.loading-modal {
-    height: 125px;
-    width: 125px;
-    border-radius: 16px;
-    background-color: white;
-}
-
-
-
-
-
-.section-my-cart {
-    width: 100%;
-    max-width: 1300px;
-    margin-top: 75px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 50px;
-}
-
-.cart {
-    max-width: 850px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.right-cart-container {
-    max-width: 400px;
-    flex: 1;
-}
-
-.cart__empty-alert {
-    color: var(--green1);
-    font-size: 16px;
-    font-weight: 600;
 }

@@ -1,10 +1,9 @@
 import {useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx'
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react'
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
 
-import './Products.css'
+import './ViewProduct.css';
 import ViewProductForm from '../../components/ViewProductForm/ViewProductForm.jsx';
 import { getSpecificProduct } from '../../services/datastore';
 import LoadingModule from '../../components/LoadingModule/LoadingModule.jsx';
@@ -18,9 +17,11 @@ const ViewProduct =(props) => {
     const [productInfo, setProductInfo] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(0);
     const [loading, setLoading] = useState(false);
-    const { user } = useAuth();
+    const [loadingCartAddition, setLoadingCartAddition] = useState(false);
+    const { user, signIn } = useAuth();
 
     const navigate = useNavigate();
+
     const { productName } = useParams();
 
     useEffect(() => {
@@ -31,16 +32,10 @@ const ViewProduct =(props) => {
             setLoading(false);
         }
         getProduct();
-    }, []);
+    }, [productName]);
 
     const handleBack=()=>{
         navigate('/products')
-    }
-
-    if(loading){
-        return(
-            <LoadingModule viewport />
-        )
     }
 
     const leftSlider = {
@@ -86,18 +81,30 @@ const ViewProduct =(props) => {
         if(selectedProduct <= productInfo?.ImageURLs?.length - 2) setSelectedProduct((prev) => prev + 1);
       }
     
-      const prevSlide = () => {
+    const prevSlide = () => {
         if(selectedProduct >= 1) setSelectedProduct((prev) => prev - 1);
-      }
+    }
+
+    if(loading){
+        return(
+            <LoadingModule viewport />
+        )
+    }
 
     return(
         <>
             <main className="view-product">
+                <LoadingModule modal show={loadingCartAddition} />
                 <section className="view-product__display-section">
-                    <motion.button initial="hidden" whileHover="visible" className="display-section__back-button"onClick={handleBack}>
-                    <img src={rightArrow2Black}></img>
+                    <motion.button 
+                        className="display-section__back-button"
+                        onClick={handleBack}
+                        initial="hidden" 
+                        whileHover="visible" 
+                    >
+                        <img src={rightArrow2Black} />
                         <motion.div className="display-section__back-button__hover-container" variants={backButton}>
-                            <img src={rightArrow2}></img>
+                            <img src={rightArrow2} />
                         </motion.div>
                     </motion.button>
                     <div className="display-section__product-card">
@@ -108,25 +115,44 @@ const ViewProduct =(props) => {
                         >
                             {productInfo?.ImageURLs?.map((image, index) => {
                                 return (
-                                    <img key={image} src={image} alt={`Product Image ${index + 1}`} className={`product-card__image-container__image ${(selectedProduct == index) && 'active'}`} />
+                                    <img 
+                                        className={`product-card__image-container__image ${(selectedProduct == index) ? 'active' : ''}`}
+                                        key={image} 
+                                        src={image} 
+                                        alt={`Product Image ${index + 1}`} 
+                                    />
                                 )
                             })}
-                            <motion.button className={`btn-left`} style={{left: "10px"}} variants={leftSlider} onClick={prevSlide}>
-                                <img src={leftArrow}></img>
+                            <motion.button 
+                                onClick={prevSlide}
+                                className={`btn-left`} 
+                                style={{left: "10px"}} 
+                                variants={leftSlider} 
+                            >
+                                <img src={leftArrow} />
                             </motion.button>
-                            <motion.button className="btn-right" style={{right: "10px"}} variants={rightSlider} onClick={nextSlide}>
-                                <img src={rightArrow}></img>
+                            <motion.button 
+                                className="btn-right" 
+                                onClick={nextSlide}
+                                style={{right: "10px"}} 
+                                variants={rightSlider} 
+                            >
+                                <img src={rightArrow}/>
                             </motion.button>
                         </motion.div>
                         <ul className="options-container">
                             {productInfo?.ImageURLs?.map((image, index) => 
-                                <li key={image} onClick={() => {setSelectedProduct(index)}} className={(selectedProduct == index) && 'active'}>
+                                <li 
+                                    className={(selectedProduct == index) ? 'active' : ''}
+                                    key={image} 
+                                    onClick={() => {setSelectedProduct(index)}} 
+                                >
                                     <img src={image} alt={`Product Image ${index + 1}`} />
                                 </li>
-                                    )}
+                            )}
                         </ul>
                     </div>
-                    <ViewProductForm productInfo={productInfo} />
+                    <ViewProductForm productInfo={productInfo} user={user} signIn={signIn} loader={setLoadingCartAddition} />
                 </section>
             </main>
             <Footer />

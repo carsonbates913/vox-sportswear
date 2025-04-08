@@ -17,9 +17,12 @@ import designIcon from '../../assets/design-icon.svg'
 import wandIcon from '../../assets/wand-icon.svg'
 import mailIcon from '../../assets/mail-icon.svg'
 import rightArrow2 from '../../assets/right-arrow-2.svg'
+import { useAuth } from '../../context/AuthContext.jsx';
 
 
 const Homepage = () => {
+
+    const { signIn } = useAuth();
 
     const [animationDone, setAnimationDone] = useState(false);
 
@@ -110,6 +113,7 @@ const Homepage = () => {
                                 backgroundColor="black" 
                                 border="1px solid black" 
                                 fontWeight="700"
+                                onClick={async() => { signIn()}}
                             />
                             <button className="homepage__shop-now-btn" onClick={() => navigate('./products')}>
                                 <p>SHOP NOW</p>
@@ -220,6 +224,7 @@ const Homepage = () => {
                                 backgroundColor="black" 
                                 border="1px solid black" 
                                 fontWeight="700"
+                                onClick={async() => { signIn()}}
                             />
                             <button className="homepage__shop-now-btn" onClick={() => navigate('./products')}>
                                 <p>SHOP NOW</p>

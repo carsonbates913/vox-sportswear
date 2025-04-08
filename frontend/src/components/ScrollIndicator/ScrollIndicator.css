@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(32deg, #01472B 13.45%, #02AD69 147.46%);
+  background: linear-gradient(32deg, #01472B 13.45%, var(--green2) 147.46%);
 }
 
 .homepage__scroll-indicator img{

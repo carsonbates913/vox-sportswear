@@ -1,7 +1,8 @@
 .order-history-item {
   width: 100%;
-  max-width: 100%;
+  max-width: 750px;
   border-radius: 8px;
+  flex-shrink: 0;
   position: relative;
   display: flex;
   flex-flow: column nowrap;
@@ -36,8 +37,7 @@
   max-width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .cart-item {

@@ -1,0 +1,43 @@
+.alert-modal {
+  padding: 20px 50px;
+  border-radius: 16px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.alert-modal h1 {
+  margin: 10px 0px;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.alert-modal p {
+  margin: 0px 0px 40px 0px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.alert-modal__btn-container {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+}
+
+.alert-modal button {
+  width: 120px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.alert-modal button:hover {
+  opacity: .8;
+}

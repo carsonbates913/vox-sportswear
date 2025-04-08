@@ -22,8 +22,6 @@ function App() {
 
   const signIn = useCallback(async () => {
     try {
-      console.log(auth)
-      console.log(provider)
         const result = await signInWithPopup(auth, provider);
         return result.user;
     } catch (error) {

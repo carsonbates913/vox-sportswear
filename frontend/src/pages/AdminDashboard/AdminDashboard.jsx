@@ -27,7 +27,6 @@ export default function AdminDashboard () {
   }, [])
 
   const handleSelectOrder = (index) => {
-    console.log(orders);
     setSelectedOrder(orders[index]); 
 }
 

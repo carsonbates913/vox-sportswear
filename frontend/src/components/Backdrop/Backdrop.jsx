@@ -11,6 +11,8 @@ export default function Backdrop(props) {
       style={{backgroundColor: props.backgroundColor}}
       initial={{opacity: 0}}
       animate={{opacity: 1}}
+      transition={{duration: .4, type: 'spring'}}
+      exit={{opacity: 0}}
       onClick={props.onClick}
   />
 

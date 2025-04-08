@@ -23,12 +23,10 @@ export default function ProductGallery({ImageURLs}) {
     const shuffledImages = shuffleArray(ImageURLs);
     setDisplayedImages(shuffledImages.slice(0, 12).map(item => [item, item]));
     setRemainingImages(shuffledImages.slice(12));
-    console.log(displayedImages);
   }, [ImageURLs]); // This runs only once when ImageURLs changes
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(remainingImages);
       if (remainingImages.length >= 2) {
         const indicesToReplace = [];
         while (indicesToReplace.length < 2) {
@@ -51,22 +49,13 @@ export default function ProductGallery({ImageURLs}) {
             const index1 = images[1];
             const index2 = nextImages[0];
             nextImages.shift();
-            console.log("check");
             return [index1, index2];
           }else{
             return [images[1], images[1]];
           }
         })
-        /*
-        indicesToReplace.forEach((index, i) => {
-          remainingImagesToAdd.push(displayedImages[index][1]);
-          updatedDisplayedImages[index][0] = updatedDisplayedImages[index][1];
-          updatedDisplayedImages[index][1] = nextImages[i];
-        });
-        */
 
         updatedRemainingImages = [...updatedRemainingImages, ...remainingImagesToAdd];
-        console.log(updatedDisplayedImages);
 
         setDisplayedImages(updatedDisplayedImages);
         setRemainingImages(updatedRemainingImages);

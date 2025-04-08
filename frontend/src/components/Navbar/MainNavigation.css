@@ -49,6 +49,38 @@
   justify-content: center;
   align-items: center;
   font-size: 13px;
-  color: var(--secondary-text-color);
+  color: white;
   background-color: var(--tertiary-color);
+}
+
+.main-navigation__side-drawer-btn {
+  border: none;
+  border-radius: 8px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+}
+
+.main-navigation__side-drawer-btn img {
+  height: 55px; 
+  width: 55px;
+}
+
+.main-navigation__side-drawer-btn:hover {
+  background-color: var(--background-color-dark);
+}
+
+@media (max-width: 700px) {
+  .main-navigation__header-nav {
+    display: none;
+  }
+
+  .main-navigation__profile-nav {
+    display: none;
+  }
+
+  .main-navigation__side-drawer-btn {
+    display: flex;
+  }
 }
