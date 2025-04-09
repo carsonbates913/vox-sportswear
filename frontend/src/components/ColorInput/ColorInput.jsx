@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 import './ColorInput.css';
 import Backdrop from '../Backdrop/Backdrop.jsx';
-import dropdown from '../../../public/assets/Dropdown.svg';
+import dropdown from '../../assets/Dropdown.svg';
 
 export default function ColorInput({register, selectedColor}) {
 

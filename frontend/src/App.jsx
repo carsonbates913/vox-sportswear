@@ -1,15 +1,15 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext.jsx'
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from './services/datastore.js';
 
-import Homepage from './pages/Homepage/Homepage.jsx';
-import AboutUs from './pages/AboutUs/AboutUs.jsx';
-import MyCart from './pages/MyCart/MyCart.jsx';
-import Products from './pages/Products/Products.jsx';
-import ViewProduct from './pages/Products/ViewProduct.jsx';
-import RootLayout from './layouts/RootLayout.jsx';
+const Homepage = lazy(() => import('./pages/Homepage/Homepage.jsx'));
+const AboutUs = lazy(() => import('./pages/AboutUs/AboutUs.jsx'));
+const MyCart = lazy(() => import('./pages/MyCart/MyCart.jsx'));
+const Products = lazy(() => import('./pages/Products/Products.jsx'));
+const ViewProduct = lazy(() => import('./pages/Products/ViewProduct.jsx'));
+const RootLayout = lazy(() => import('./layouts/RootLayout.jsx'));
 import { MyAccountRedirect } from './routes/ProtectedRoutes.jsx';
 import LoadingModule from './components/LoadingModule/LoadingModule.jsx';
 
@@ -19,6 +19,40 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const provider = useMemo(() => new GoogleAuthProvider(), []);
+
+  const router = useMemo(() => createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout />,
+      children: [
+        {
+          path: '/',
+          element: <Homepage />,
+          errorElement: <div>Page not found</div>,
+        },
+        {
+          path: '/aboutus',
+          element: <AboutUs />,
+        },
+        {
+          path: '/products',
+          element: <Products />,
+        },
+        {
+          path: '/products/:productName',
+          element: <ViewProduct />,
+        },
+        {
+          path: '/mycart',
+          element: <MyCart />,
+        },
+        {
+          path: '/myaccount',
+          element: <MyAccountRedirect user={user} />,
+        },
+      ]
+    }
+  ]), [user]);
 
   const signIn = useCallback(async () => {
     try {
@@ -53,52 +87,19 @@ function App() {
     return () => unsubscribe();
   }, [])
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <RootLayout />,
-      children: [
-        {
-          path: '/',
-          element: <Homepage />,
-          errorElement: <div>Page not found</div>,
-        },
-        {
-          path: '/aboutus',
-          element: <AboutUs />,
-        },
-        {
-          path: '/products',
-          element: <Products />,
-        },
-        {
-          path: '/products/:productName',
-          element: <ViewProduct />,
-        },
-        {
-          path: '/mycart',
-          element: <MyCart />,
-        },
-        {
-          path: '/myaccount',
-          element: <MyAccountRedirect user={user} />,
-        },
-      ]
-    }
-  ])
-
   if(loading){
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <LoadingModule />
+          <LoadingModule show={loading} viewport/>
       </div> 
     )
   }else{
     return (
       <>
       <AuthContext.Provider value={{user, loading, signIn, signOut}}>
-        <RouterProvider router={router}>
-        </RouterProvider>
+        <Suspense fallback={<LoadingModule viewport/>}>
+          <RouterProvider router={router} />
+        </Suspense>
       </AuthContext.Provider>
       </>
     )

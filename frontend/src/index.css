@@ -7,11 +7,11 @@
   position: relative;
 
 
-  --background-color: #FBFAF6;
-  --background-color-dark: #F3F3EF;
+  --background-color: white;
+  --background-color-dark: #f5f5f5;
   --background-color-light: #FDFDFB;
   
-  --green1: #01472B;
+  --green1: #01613b;
   --green1-dark: #015332;
   --green1-light: #5D9273;
   --green2: #02AD69;

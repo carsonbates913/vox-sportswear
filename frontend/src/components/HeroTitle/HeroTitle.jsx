@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 
 import './HeroTitle.css'
 import paintStrokeWord from '../../assets/paint-stroke-word.svg'

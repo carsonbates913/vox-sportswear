@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-import { CSSTransition} from 'react-transition-group';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 import './ProductGallery.css'
 import GalleryItem from '../GalleryItem/GalleryItem';
@@ -8,22 +6,24 @@ import GalleryItem from '../GalleryItem/GalleryItem';
 export default function ProductGallery({ImageURLs}) {
   const [displayedImages, setDisplayedImages] = useState([]);
   const [remainingImages, setRemainingImages] = useState([]);
-  const nodeRef = useRef(null);
 
-  const shuffleArray = (array) => {
-    let shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
+
+  const shuffleArray = useMemo(() => {
+    return (array) => {
+      let shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+  }, []);
 
   useEffect(() => {
     const shuffledImages = shuffleArray(ImageURLs);
     setDisplayedImages(shuffledImages.slice(0, 12).map(item => [item, item]));
     setRemainingImages(shuffledImages.slice(12));
-  }, [ImageURLs]); // This runs only once when ImageURLs changes
+  }, [ImageURLs, shuffleArray]); // This runs only once when ImageURLs changes
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +60,7 @@ export default function ProductGallery({ImageURLs}) {
         setDisplayedImages(updatedDisplayedImages);
         setRemainingImages(updatedRemainingImages);
       }
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [displayedImages, remainingImages]); // Only triggers when images are swapped (do not update dependencies inside the effect)

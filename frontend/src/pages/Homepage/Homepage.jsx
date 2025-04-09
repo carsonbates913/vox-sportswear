@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import './Homepage.css'
 import HeroTitle from '../../components/HeroTitle/HeroTitle.jsx';
 import Carousel from '../../components/Carousel/Carousel.jsx';
-import Hoodie from '../../assets/Vox-Hoodie2.svg?react'
-import Bag from '../../assets/Vox-Bag.svg?react'
+import Hoodie from '../../assets/Vox-Hoodie2.svg';
+import Bag from '../../assets/Vox-Bag.svg';
 import SoftButton from '../../components/SoftButton/SoftButton.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 import ScrollIndicator from '../../components/ScrollIndicator/ScrollIndicator.jsx';
@@ -188,7 +188,7 @@ const Homepage = () => {
                             initial={{ opacity: 0, y: 50}}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{duration: 0.6}}
-                            viewport={{ once: true, margin: "-200px"}}
+                            viewport={{ once: true}}
                         >
                             CHEAPER THAN CUSTOM
                         </motion.h1>
@@ -196,7 +196,7 @@ const Homepage = () => {
                             initial={{ opacity: 0, y: 50}}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{duration: 0.6}}
-                            viewport={{ once: true, margin: "-200px"}}
+                            viewport={{ once: true}}
                         >
                             100% STUDENT-OWNED
                         </motion.h1>
@@ -204,7 +204,7 @@ const Homepage = () => {
                             initial={{ opacity: 0, y: 50}}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{duration: 0.6}}
-                            viewport={{ once: true, margin: "-200px"}}
+                            viewport={{ once: true}}
                         >
                             FASTER THAN ONLINE
                         </motion.h1>

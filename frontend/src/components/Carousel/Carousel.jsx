@@ -55,15 +55,15 @@ export default function Carousel({images, isRunning}){
           <img src={paintStroke}></img>
         </div>
         <div className={`carousel__item`} style={{translate: `${-100 * currentIndex}%`, transition: transitionRef.current ? 'all .3s' : 'none'}}>
-            <LastComponent />
+            <img src={images[images.length - 1]}></img>
         </div>
         {images.map((Image, index) => (
           <div key={index} className={`carousel__item`} style={{translate: `${-100 * currentIndex}%`, transition: transitionRef.current ? 'all .3s' : 'none'}}>
-              <Image />
+              <img src={Image} />
           </div>
         ))}
         <div className={`carousel__item`} style={{translate: `${-100 * currentIndex}%`, transition: transitionRef.current ? 'all .3s' : 'none'}}>
-            <FirstComponent />
+            <img src={images[0]} />
         </div>
       </div>
       <div className="carousel__slider-btn-container">

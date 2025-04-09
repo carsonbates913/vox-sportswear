@@ -109,7 +109,8 @@ const MyCart = () => {
                     <header>
                         <h1>My Cart</h1>
                     </header>
-                    {(loading === "page") ? (<LoadingModule viewport />) : (
+                    <LoadingModule show={loading == "page"} viewport />
+                    {(loading != "page") && (
                         <div className="my-cart__content">
                             <div className="my-cart__content__list-container">
                                 <CartList cartItems={cartItems} handleDeleteFromCart={handleDeleteFromCart}/>

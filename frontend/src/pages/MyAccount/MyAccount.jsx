@@ -43,7 +43,8 @@ const MyAccount = () => {
                     {user.displayName ? <h1>Hi, {user.displayName.split(" ").filter(Boolean)[0]}</h1> : <h1>My Account</h1>}
                     <button className="sign-out-button" onClick={() => {signOut(); navigate('/')}}>Sign Out</button>
                 </header>
-                {loading ? (<LoadingModule viewport />) : (
+                <LoadingModule show={loading} viewport/>
+                {!loading && (
                     <div className="my-account__content">
                     <div className="my-account__content__requests-container">
                         <div className="my-account__content__requests-container-title" style={{height: '100px'}}>
