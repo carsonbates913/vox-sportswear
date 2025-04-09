@@ -9,7 +9,7 @@ import NavLinks from './NavLinks.jsx';
 import Backdrop from '../Backdrop/Backdrop.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { getAllCart} from "../../services/datastore.js";
-import voxlogo from '../../assets/vox-logo.svg';
+import voxlogo from '../../assets/vox-logo.png';
 import profileIcon from '../../assets/profile_icon.svg';
 import cartIcon from '../../assets/cart_icon.svg';
 import menuIcon from '../../assets/menu-icon.svg';
