@@ -10,6 +10,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { uploadImageToStorage, functions } from "../../services/datastore.js";
 import InfoBox from '../InfoBox/InfoBox.jsx';
 import AlertModal from '../AlertModal/AlertModal.jsx';
+import { uploadProduct } from "../../services/datastore.js";
 
 export default function ViewProductForm(props) {
 

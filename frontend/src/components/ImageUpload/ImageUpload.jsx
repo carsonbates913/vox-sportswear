@@ -2,12 +2,12 @@ import './ImageUpload.css';
 
 import { useState, useEffect } from 'react';
 import camera from '../../assets/camera.svg';
+import { uploadProduct } from '../../services/datastore.js';
 
 export default function ImageUpload({register, className, id, selectedImage}) {
 
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
-  const [isValid, setIsValid] = useState();
 
   useEffect(() => {
     if (!selectedImage || selectedImage.length === 0) {

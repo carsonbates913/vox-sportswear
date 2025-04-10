@@ -39,7 +39,7 @@ const Products = () => {
                         <ProductList products={products} />
                         <div className="products__line-break" />
                         <p>Our Products</p>
-                        <ProductGallery ImageURLs={products.flatMap(product => product.ImageURLs)}/>
+                        <ProductGallery/>
                     </>
                 )}
             </div>

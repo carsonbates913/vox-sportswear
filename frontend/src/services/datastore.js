@@ -5,7 +5,7 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import {
   getFirestore, collection, doc, getDocs, deleteDoc, updateDoc, onSnapshot, query, where,
 } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, updateMetadata } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
 import { getFunctions } from "firebase/functions";
 
@@ -50,6 +50,20 @@ export function getAllCart(userID, callback = () => {}){
     callback(snapshot);
   });
   return cancel; 
+}
+
+export async function uploadProduct(image){
+  const newMetadata = {
+    cacheControl: 'public,max-age=300',
+  };
+  console.log("hello");
+  const imageRef = ref(storage, `products/DaliScreenshot2.png`); // Store under "products" folder
+  try {
+    await updateMetadata(imageRef, newMetadata);
+  } catch (error ) {
+    console.log(error);
+  }
+  console.log("clear");
 }
 
 export async function uploadImageToStorage(userID, cartItemRef, image){

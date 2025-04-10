@@ -3,11 +3,30 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import './ProductGallery.css'
 import GalleryItem from '../GalleryItem/GalleryItem';
 
-export default function ProductGallery({ImageURLs}) {
+export default function ProductGallery() {
   const [displayedImages, setDisplayedImages] = useState([]);
   const [remainingImages, setRemainingImages] = useState([]);
 
-
+  const ImageURLs = useMemo(() => {
+    return [
+      "/assets/Vox-Bag.png",
+      "/assets/Vox-BAQShirt.png",
+      "/assets/Vox-FishShirt.png",
+      "/assets/Vox-Hoodie.png",
+      "/assets/Vox-Hoodie2.png",
+      "/assets/Vox-FishShirtBack.png",
+      "/assets/Vox-Hat.png",
+      "/assets/Vox-Polo2.png",
+      "/assets/Vox-PSIEpsilonShirt.png",
+      "/assets/Vox-PSIEpsilonShirtBack.png",
+      "/assets/Vox-Quarterzip.png",
+      "/assets/Vox-RamuntosShirt.png",
+      "/assets/Vox-RamuntosShirtBack.png",
+      "/assets/Vox-Shorts.png",
+      "/assets/Vox-SkiClubSweatpants.png",
+      "/"
+    ]
+  }, [])
   const shuffleArray = useMemo(() => {
     return (array) => {
       let shuffled = [...array];
