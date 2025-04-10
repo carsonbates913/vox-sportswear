@@ -15,9 +15,11 @@
 }
 
 .alert-modal p {
+  max-width: 600px;
   margin: 0px 0px 40px 0px;
   font-size: 20px;
   font-weight: 400;
+  text-align: center;
 }
 
 .alert-modal__btn-container {

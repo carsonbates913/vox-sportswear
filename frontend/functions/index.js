@@ -11,6 +11,8 @@ import sgMail from "@sendgrid/mail";
 const app = admin.initializeApp();
 const db = admin.firestore(app);
 
+const maxRequests = 5;
+
 /*
 const uid = "USER_UID"; // The Firebase UID of the user you want to make admin
 
@@ -44,21 +46,28 @@ export const addOrder = functions.https.onCall(async (request) => {
   const userID = request.auth.uid;
   const userEmail = request.auth.token.email;
   const items = request.data;
-  console.log("items", items);
 
   if (!Array.isArray(items) || items.length === 0 ) {
     throw new functions.https.HttpsError("invalid-argument", "No items provided");
   }
 
   if (items.length > 20 ) {
-    throw new functions.https.HttpsError("resource-exhausted", "Too many items");
+    throw new functions.https.HttpsError("invalid-argument", "Too many items");
+  }
+
+  const now = admin.firestore.Timestamp.now();
+  const startOfDay = admin.firestore.Timestamp.fromDate(new Date(now.toDate().getFullYear(), now.toDate().getMonth(), now.toDate().getDate(), 0, 0, 0, 0));
+
+  const previousOrdersRef = db.collection("Users").doc(userID).collection("OrderHistory");
+  const previousOrdersSnapshot = await previousOrdersRef.where("date", ">=", startOfDay).get();
+  if (previousOrdersSnapshot.size >= maxRequests) {
+    throw new functions.https.HttpsError("resource-exhausted", "Too many requests");
   }
 
   const orderRef = db.collection("Orders").doc();
   const historyRef = db.collection("Users").doc(userID).collection("OrderHistory").doc(orderRef.id);
   const cartRef = db.collection("Users").doc(userID).collection("Cart");
   const cartSnapshot = await cartRef.get();
-
 
   const orderData = {
     userEmail,

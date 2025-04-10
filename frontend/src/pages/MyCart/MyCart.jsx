@@ -67,10 +67,14 @@ const MyCart = () => {
             if(error.code){
                 console.error("Firebase error:", error.code, error.message);
 
-                if(error.code === "unauthenticated"){
+                if(error.code === "functions/unauthenticated"){
                     setCurrentModal("signIn");
-                }else if(error.code === "resource-exhausted"){
+                }else if(error.code === "functions/resource-exhausted"){
+                    setCurrentModal("limitReached");
+                }else if(error.code === "functions/invalid-argument" && error.message === "No items provided"){
                     setCurrentModal("emptyCart");
+                }else if(error.code === "functions/invalid-argument" && error.message === "Too many items"){
+                    setCurrentModal("fullCart");
                 }
             }
         } finally {
@@ -100,9 +104,21 @@ const MyCart = () => {
                     </button>
                 </AlertModal>
                 <AlertModal 
+                show={(currentModal === "limitReached")}
+                header="Request Limit Reached"
+                body="You have reached the maximum number of requests for today. Please try again tomorrow."
+                handleClear={handleClear}
+                />
+                <AlertModal 
                 show={(currentModal === "emptyCart")}
                 header="Cart is Empty"
                 body="Please add items to your cart before checking out"
+                handleClear={handleClear}
+                />
+                <AlertModal 
+                show={(currentModal === "fullCart")}
+                header="Too Many Items"
+                body="Over the limit of 20 items in cart. Please remove some items before checking out."
                 handleClear={handleClear}
                 />
                 <div className="my-cart-wrapper">
