@@ -31,3 +31,9 @@
   letter-spacing: 2px;
   text-align: center; 
 }
+
+@media (max-width: 600px) {
+  .products-wrapper > p {
+    display: none;
+  }
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext.jsx'
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth } from './services/datastore.js';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage.jsx'));
@@ -56,10 +56,19 @@ function App() {
 
   const signIn = useCallback(async () => {
     try {
+      // Check if the device is mobile (example: if the screen width is less than 768px)
+      const isMobile = window.innerWidth <= 768;
+  
+      if (isMobile) {
+        // Use redirect method for mobile devices
+        await signInWithRedirect(auth, provider);
+      } else {
+        // Use popup method for desktops
         const result = await signInWithPopup(auth, provider);
         return result.user;
+      }
     } catch (error) {
-        console.error("Error - ", error);
+      console.error("Error during sign-in:", error);
     }
   }, [provider]);
 

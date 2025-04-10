@@ -63,6 +63,7 @@ export default function MainNavigation(props) {
         {drawerIsOpen && (
           <>
             <SideDrawer show={drawerIsOpen} onClick={closeDrawer}>
+              <button className="side-drawer__exit" onClick={closeDrawer}>x</button>
               <ul>
                 <li>
                   <NavLink className="side-drawer__item" to="/aboutus" onClick={closeDrawer}>About</NavLink>
