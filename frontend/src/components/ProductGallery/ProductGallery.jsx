@@ -24,7 +24,6 @@ export default function ProductGallery() {
       "/assets/Vox-RamuntosShirtBack.png",
       "/assets/Vox-Shorts.png",
       "/assets/Vox-SkiClubSweatpants.png",
-      "/"
     ]
   }, [])
   const shuffleArray = useMemo(() => {
