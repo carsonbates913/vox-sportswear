@@ -38,9 +38,7 @@ const sendEmail = async (to, body) => {
   await sgMail.send(msg);
 };
 
-export const addOrder = functions.runWith({
-  enforceAppCheck: true,
-}).https.onCall(async (request) => {
+export const addOrder = functions.https.onCall(async (request) => {
   if (!request.auth) {
     throw new functions.https.HttpsError("unauthenticated", "User must be signed in");
   }
