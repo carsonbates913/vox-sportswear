@@ -20,10 +20,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const app = initFirebase();
-
-  const appCheck = initializeAppCheck(app, {provider: new ReCaptchaV3Provider('6LfpjRcrAAAAAC6y8bl0R5Q8ctKsNKQ7-Yz6_nSg'), isTokenAutoRefreshEnabled: true});
-
   const provider = useMemo(() => new GoogleAuthProvider(), []);
 
   const router = useMemo(() => createBrowserRouter([
@@ -84,6 +80,9 @@ function App() {
   }, []); 
 
   useEffect(() => {
+      const app = initFirebase();
+      const appCheck = initializeAppCheck(app, {provider: new ReCaptchaV3Provider('6LfpjRcrAAAAAC6y8bl0R5Q8ctKsNKQ7-Yz6_nSg'), isTokenAutoRefreshEnabled: true});
+
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if(currentUser){
           try {
