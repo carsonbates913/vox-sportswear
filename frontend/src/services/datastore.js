@@ -66,14 +66,16 @@ export async function uploadProduct(image){
   console.log("clear");
 }
 
-export async function uploadImageToStorage(userID, cartItemRef, image){
-  if(!image || !cartItemRef || !userID){
-    console.error("Error: Missing parameters");
+export async function uploadImageToStorage(userID, cartItemID, image){
+  console.log("bbb");
+  if(!image || !cartItemID || !userID){
+    console.log("oops");
     return;
   }
   const imageRef = ref(storage, `Users/${userID}/Cart/${image.name}`);
   const upload = await uploadBytes(imageRef, image);
   const url = await getDownloadURL(upload.ref);
+  const cartItemRef = doc(db, "Users", userID, "Cart", cartItemID);
   await updateDoc(cartItemRef, {imageURL: url});
 }
 

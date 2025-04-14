@@ -63,6 +63,7 @@ export default function ViewProductForm(props) {
     props.loader(true);
 
     try {
+      console.log("hello");
       const result = await addToCart({
         product: props.productInfo.name,
         sizes: data.sizes,
@@ -70,7 +71,11 @@ export default function ViewProductForm(props) {
         designNotes: data.designNotes,
       })
 
+      console.log(result);
+
       if (data.file[0]) {
+        console.log("check");
+        console.log(result.data.docId);
         await uploadImageToStorage(user.uid, result.data.docId, data.file[0]);
       }
 
