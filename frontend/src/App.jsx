@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext.jsx'
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth } from './services/datastore.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage.jsx'));
 const AboutUs = lazy(() => import('./pages/AboutUs/AboutUs.jsx'));
@@ -12,11 +13,16 @@ const ViewProduct = lazy(() => import('./pages/Products/ViewProduct.jsx'));
 const RootLayout = lazy(() => import('./layouts/RootLayout.jsx'));
 import { MyAccountRedirect } from './routes/ProtectedRoutes.jsx';
 import LoadingModule from './components/LoadingModule/LoadingModule.jsx';
+import { initFirebase } from './services/datastore.js';
 
 function App() {
   
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const app = initFirebase();
+
+  const appCheck = initializeAppCheck(app, {provider: new ReCaptchaV3Provider('6LfpjRcrAAAAAC6y8bl0R5Q8ctKsNKQ7-Yz6_nSg'), isTokenAutoRefreshEnabled: true});
 
   const provider = useMemo(() => new GoogleAuthProvider(), []);
 
