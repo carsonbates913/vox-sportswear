@@ -10,14 +10,28 @@
   width: 100%;
   min-height: fit-content;
   padding: 80px 0px;
-  background: radial-gradient(75.59% 170.46% at 0% -40%, #FFF 98%, rgba(232, 255, 227) 100%);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+}
+
+.homepage__hero-section h1 {
+  max-width: 800px;
+  font-size: 75px;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: -3px;
 }
 
 .homepage__hero-section h2 {
-  margin: 50px 0px 0px 0px;
+  margin: 30px 0px 0px 0px;
   text-align: center;
   font-size: 34px;
+  font-weight: 400;
   color: black;
+  letter-spacing: -2px;
 }
 
 .homepage__shop-now-btn {
