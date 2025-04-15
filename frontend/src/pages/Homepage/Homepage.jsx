@@ -90,13 +90,13 @@ const Homepage = () => {
             <div className="homepage-wrapper">
                 <ScrollIndicator />
                 <section className="homepage__hero-section">
-                    <HeroTitle/>
+                    <h1>CUSTOM MERCHANDISE MADE SIMPLE</h1>
                     <motion.h2
                         initial={{ opacity: 0, y: 50}}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{duration: 0.6, delay: 1.2}}
                     >
-                        FOR THE DARTMOUTH COMMUNITY AND BEYOND
+                        For the Dartmouth Community and Beyond
                     </motion.h2>
                     <motion.div className="homepage__btns-container"
                         initial={{ opacity: 0, y: 50}}
