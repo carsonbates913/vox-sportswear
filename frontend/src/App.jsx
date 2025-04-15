@@ -5,12 +5,12 @@ import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedi
 import { auth } from './services/datastore.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
-const Homepage = lazy(() => import('./pages/Homepage/Homepage.jsx'));
-const AboutUs = lazy(() => import('./pages/AboutUs/AboutUs.jsx'));
-const MyCart = lazy(() => import('./pages/MyCart/MyCart.jsx'));
-const Products = lazy(() => import('./pages/Products/Products.jsx'));
-const ViewProduct = lazy(() => import('./pages/Products/ViewProduct.jsx'));
-const RootLayout = lazy(() => import('./layouts/RootLayout.jsx'));
+import Homepage from './pages/Homepage/Homepage.jsx';
+import AboutUs from './pages/AboutUs/AboutUs.jsx';
+import MyCart from './pages/MyCart/MyCart.jsx';
+import Products from './pages/Products/Products.jsx';
+import ViewProduct from './pages/Products/ViewProduct.jsx';
+import RootLayout from './layouts/RootLayout.jsx';
 import { MyAccountRedirect } from './routes/ProtectedRoutes.jsx';
 import LoadingModule from './components/LoadingModule/LoadingModule.jsx';
 import { initFirebase } from './services/datastore.js';
@@ -23,7 +23,7 @@ function App() {
 
   const app = initFirebase();
   const appCheck = initializeAppCheck(app, {provider: new ReCaptchaV3Provider('6LfpjRcrAAAAAC6y8bl0R5Q8ctKsNKQ7-Yz6_nSg'), isTokenAutoRefreshEnabled: true});
-  
+
   const provider = useMemo(() => new GoogleAuthProvider(), []);
 
   const router = useMemo(() => createBrowserRouter([
@@ -113,9 +113,7 @@ function App() {
     return (
       <>
       <AuthContext.Provider value={{user, loading, signIn, signOut}}>
-        <Suspense fallback={<LoadingModule viewport/>}>
           <RouterProvider router={router} />
-        </Suspense>
       </AuthContext.Provider>
       </>
     )
