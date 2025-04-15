@@ -10,6 +10,7 @@
   width: 100%;
   min-height: fit-content;
   padding: 80px 0px;
+  background: radial-gradient(75.59% 170.46% at 0% -40%, #FFF 98%, rgba(232, 255, 227) 100%);
 }
 
 .homepage__hero-section h2 {
