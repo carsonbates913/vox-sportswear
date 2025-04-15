@@ -12,10 +12,14 @@
 
 .review-order__item {
   padding: 3px 10px;
-  border: none;
+  border: 2px solid var(--green2);
   border-radius: 5px;
   color: white;
   font-size: 14px;
   font-weight: 400;
-  background: var(--green1);
+  background: var(--green2);
+}
+
+.review-order__item.active {
+  border: 2px solid black;
 }
