@@ -30,34 +30,6 @@ const Homepage = () => {
 
     const images = [Bag, Hoodie];
 
-    const carouselVariantRight = {
-        offscreen: {
-            opacity: 0,
-            x: 100,
-        },
-        onscreen: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.6, ease: "easeOut"
-            },
-        },
-    }
-
-    const carouselVariantLeft = {
-        offscreen: {
-            opacity: 0,
-            x: -100,
-        },
-        onscreen: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.6, ease: "easeOut"
-            },
-        },
-    }
-
     const hijackRef = useRef(null);
 
     // Track scroll progress within this section
@@ -88,20 +60,19 @@ const Homepage = () => {
     return (
         <main className="homepage">
             <div className="homepage-wrapper">
-                <ScrollIndicator />
                 <section className="homepage__hero-section">
                     <h1> Custom Merchandise Made Simple</h1>
                     <motion.h2
-                        initial={{ opacity: 0, y: 50}}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{duration: 0.6, delay: 1.2}}
+                        initial={{ opacity: 0, scale: .6}}
+                        animate={{ opacity: 1, scale: 1}}
+                        transition={{duration: 0.6, delay: .6, type: "spring"}}
                     >
                         For the Dartmouth Community and Beyond
                     </motion.h2>
                     <motion.div className="homepage__btns-container"
-                        initial={{ opacity: 0, y: 50}}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{duration: 0.6, delay: 1.2}}
+                        initial={{ opacity: 0, scale: .6}}
+                        animate={{ opacity: 1, scale: 1}}
+                        transition={{duration: 0.6, delay: .6, type: "spring"}}
                     >
                             <SoftButton 
                                 padding="0px" 
@@ -127,19 +98,27 @@ const Homepage = () => {
                     whileInView="onscreen"
                     viewport={{ once: true, amount: 0.5 }}
                 >
-                    <motion.div 
-                        className="homepage__carousel-section__title"
-                        variants={carouselVariantLeft}
-                    >
-                        <img src={businessDescription}></img>
-                    </motion.div>
-                    <motion.div 
-                        className="homepage__carousel-section__carousel-container"
-                        onAnimationComplete={() => setAnimationDone(true)}
-                        variants={carouselVariantRight}
-                    >
-                        <Carousel isRunning={animationDone} images={images}/>
-                    </motion.div>
+                    <div className="homepage__carousel-content">
+                        <motion.div 
+                            className="homepage__carousel-section__title"
+                        >
+                            <img src={businessDescription}></img>
+                        </motion.div>
+                        <motion.div 
+                            className="homepage__carousel-section__carousel-container"
+                        >
+                            <motion.div 
+                                className="bleep"
+                                initial={{opacity: 0, scale: .6}}
+                                whileInView={{opacity: 1, scale: 1}}
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{duration: 0.6, delay: .6, type: "spring"}}
+                                onAnimationComplete={() => setAnimationDone(true)}
+                            >
+                                <Carousel isRunning={animationDone} images={images}/>
+                            </motion.div>
+                        </motion.div>
+                    </div>
                 </motion.div>
                 <section 
                     ref={hijackRef}

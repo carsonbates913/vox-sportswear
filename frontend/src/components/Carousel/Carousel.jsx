@@ -13,14 +13,6 @@ export default function Carousel({images, isRunning}){
     setCurrentIndex((prevIndex) => prevIndex + 1);
   }
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => prevIndex - 1 + images.length);
-  }
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  }
-
   const transitionRef = useRef(true);
 
   useEffect(() => {
@@ -51,9 +43,6 @@ export default function Carousel({images, isRunning}){
   return (
     <div className="carousel">
       <div className="carousel__container">
-        <div className="carousel__container__background">
-          <img src={paintStroke}></img>
-        </div>
         <div className={`carousel__item`} style={{translate: `${-100 * currentIndex}%`, transition: transitionRef.current ? 'all .3s' : 'none'}}>
             <img src={images[images.length - 1]}></img>
         </div>
@@ -65,12 +54,6 @@ export default function Carousel({images, isRunning}){
         <div className={`carousel__item`} style={{translate: `${-100 * currentIndex}%`, transition: transitionRef.current ? 'all .3s' : 'none'}}>
             <img src={images[0]} />
         </div>
-      </div>
-      <div className="carousel__slider-btn-container">
-          {images.map((image, index) => {
-            if(index == 0) return <button key={index} className={`carousel__slider-btn ${(currentIndex == 1 || currentIndex == images.length + 1)  ? 'active' : ''}`} onClick={()=> {goToSlide(1)}} />
-            return <button key={index} className={`carousel__slider-btn ${currentIndex == index + 1 ? 'active' : ''}`} onClick={()=> {goToSlide(index+1)}} />
-          })}
       </div>
     </div>
   )

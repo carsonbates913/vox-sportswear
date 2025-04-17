@@ -6,20 +6,20 @@
 }
 
 .homepage__hero-section {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   width: 100%;
   min-height: fit-content;
-  padding: 80px 0px;
+  padding: 40px 0px 200px 0px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: center;
   background-color: var(--background-color);
+  background: url('/assets/hero_background.svg') no-repeat center bottom;
 }
 
 .homepage__hero-section h1 {
   max-width: 800px;
-  font-size: 75px;
+  font-size: clamp(50px, 10vw, 75px);
   text-align: center;
   line-height: 1;
   letter-spacing: -3px;
@@ -28,7 +28,7 @@
 .homepage__hero-section h2 {
   margin: 30px 0px 0px 0px;
   text-align: center;
-  font-size: 34px;
+  font-size: clamp(28px, 5vw, 34px);
   font-weight: 400;
   color: black;
   letter-spacing: -2px;
@@ -108,12 +108,22 @@
 }
 
 .homepage__carousel-section {
-  max-width: 1200px;
+  width: 100%;
+  padding: 100px 20px 0px 20px;
   margin: 0px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--green3);
+}
+
+.homepage__carousel-content {
+  max-width: 1300px;
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  gap: 100px;
 }
 
 .homepage__carousel-section > * {
@@ -121,8 +131,8 @@
 }
 
 .homepage__carousel-section__title {
-  flex: 1.5;
-  padding: 80px 20px; 
+  flex: 1.2; 
+  min-width: clamp(35%, 250px, 60%);
 }
 
 .homepage__carousel-section__title img {
@@ -135,15 +145,22 @@
 }
 
 .homepage__carousel-section__carousel-container {
+  min-width: clamp(30%, 200px, 50%);
   flex: 1;
-  padding: 0px 20px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: url('/assets/carousel__background.svg') no-repeat center center;
+  background-size: 100% 100%
 }
 
-.homepage__carousel__container {
-  background-color: green;
+.bleep {
+  width: 60%;
+  height: 65%;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
 }
 
 .homepage__process-section {
@@ -151,7 +168,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  background-color: var(--background-color);
+  background-color: var(--green3);
 }
 
 .sticky-container {

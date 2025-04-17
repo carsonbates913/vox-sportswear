@@ -7,20 +7,21 @@
 
 .products__note {
   margin: 20px 0px 30px 0px;
-  width: 70vw; 
 }
 
-.products__note h3 {
-  font-size: 20px;
-  font-weight: 300; 
+.products__note h1 {
+  font-size: 60px;
+  font-weight: 800; 
   text-align: center;
+  line-height: 1;
+  letter-spacing: -3px;
 }
 
 .products__line-break {
-  height: 2px;
-  width: 70%;
+  height: 4px;
+  width: 75%;
   margin: 30px;
-  border-radius: 1px;
+  border-radius: 4px;
   background-color: var(--green1);
 }
 
