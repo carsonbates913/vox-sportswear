@@ -136,26 +136,26 @@ const Homepage = () => {
                             <InstructionCard 
                                 icon={searchIcon} 
                                 number="01" 
-                                description="Pick any type of clothing" 
+                                description="Pick any item from our product list" 
                                 opacity={fade2} 
                                 y={move2}
                             />
                             <InstructionCard 
                                 icon={designIcon} 
                                 number="02" 
-                                description="Pick a color, size, and quantity" 
+                                description="Choose your color, size, and quantity." 
                                 opacity={fade3} 
                                 y={move3}/>
                             <InstructionCard 
                                 icon={wandIcon} 
                                 number="03" 
-                                description="Add any additional instructions into the request notes" 
+                                description="Add any extra notes or special instructions to the request notes section" 
                                 opacity={fade4} 
                                 y={move4}/>
                             <InstructionCard 
                                 icon={mailIcon} 
                                 number="04" 
-                                description="Your order will be on its way!" 
+                                description="Submit your request — we'll get back to you soon!" 
                                 opacity={fade5} 
                                 y={move5}/>
                         </div>
