@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { httpsCallable } from 'firebase/functions';
 
 import './AdminDashboard.css';
 import { getOrders, getSpecificProduct } from '../../services/datastore.js';
@@ -8,6 +9,8 @@ import PendingOrders from '../../components/PendingOrders/PendingOrders.jsx';
 import ReviewOrder from '../../components/ReviewOrder/ReviewOrder.jsx';
 import OrderForm from '../../components/OrderForm/OrderForm.jsx';
 
+import { functions } from '../../services/datastore.js';
+
 export default function AdminDashboard () {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -15,6 +18,8 @@ export default function AdminDashboard () {
   const {signOut} = useAuth();
 
   const navigate = useNavigate();
+
+  const createAdmin = httpsCallable(functions, "setAdmin")
 
   useEffect(() => {
     const unsubscribe = getOrders(async (snapshot) => {
@@ -33,6 +38,11 @@ export default function AdminDashboard () {
   return (
       <main className="admin-dashboard">
         <header>
+          <button onClick={async () => {
+            const respone = await createAdmin();
+            console.log(respone);
+            console.log("Admin Created");
+            }}>click me</button>
           <h1>Admin Dashboard</h1>
           <button className="sign-out-button" onClick={() => {signOut(); navigate('/')}}>Sign Out</button>
         </header>

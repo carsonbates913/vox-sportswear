@@ -13,17 +13,20 @@ const db = admin.firestore(app);
 
 const maxRequests = 5;
 
-/*
-const uid = "USER_UID"; // The Firebase UID of the user you want to make admin
+const uid = "mEBCwWrIqEaVNCcDYFPrdw52us53"; // The Firebase UID of the user you want to make admin
 
-admin.auth().setCustomUserClaims(uid, {isAdmin: true})
-    .then(() => {
-      console.log(`Custom claim set for user ${uid}`);
-    })
-    .catch((error) => {
-      console.error("Error setting custom claims:", error);
-    });
-*/
+export const setAdmin = functions.https.onCall(async (request) => {
+  admin.auth().setCustomUserClaims(uid, {isAdmin: true})
+      .then(() => {
+        return {success: false};
+      })
+      .catch((error) => {
+        console.error("Error setting custom claims:", error);
+        return {success: false};
+      });
+  return {success: true};
+},
+);
 
 // Initialize Sendgrid
 sgMail.setApiKey(process.env.TWILIO_KEY);
@@ -31,7 +34,8 @@ sgMail.setApiKey(process.env.TWILIO_KEY);
 const sendEmail = async (to, body) => {
   const msg = {
     to: to,
-    from: "carson.d.bates.27@dartmouth.edu",
+    from: "noReply@voxsportswear.shop",
+    replyTo: "vox.sportswear.email@gmail.com",
     subject: "Vox Sportswear Order",
     text: body,
   };
