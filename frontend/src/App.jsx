@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext.jsx'
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth } from './services/datastore.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
@@ -67,7 +67,8 @@ function App() {
   
       if (isMobile) {
         // Use redirect method for mobile devices
-        await signInWithRedirect(auth, provider);
+        const result = await signInWithRedirect(auth, provider);
+        return result.user;
       } else {
         // Use popup method for desktops
         const result = await signInWithPopup(auth, provider);
@@ -84,24 +85,36 @@ function App() {
   }, []); 
 
   useEffect(() => {
+    setLoading(true);
 
-      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-        if(currentUser){
-          try {
-            const token = await currentUser.getIdTokenResult();
-            const isAdmin = token.claims.isAdmin || false;
-            setUser({...currentUser, isAdmin})
-          } catch (error) {
-            setUser(null);
-          }
-        }else{
+    // Handle the redirect result after the user is redirected back
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          setUser(result.user);  // Store the user after redirect
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching redirect result:", error);
+      });
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const token = await currentUser.getIdTokenResult();
+          const isAdmin = token.claims.isAdmin || false;
+          setUser({ ...currentUser, isAdmin });
+        } catch (error) {
           setUser(null);
         }
-        setLoading(false);
-      }) 
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
 
     return () => unsubscribe();
-  }, [])
+  }, []);
 
   if(loading){
     return (

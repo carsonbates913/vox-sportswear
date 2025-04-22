@@ -77,7 +77,7 @@ export default function MainNavigation(props) {
                   </NavLink>
                 </li>
                 <li>
-                  <div className="side-drawer__item" onClick={() => {handleSignIn(); closeDrawer()}}>
+                  <div className="side-drawer__item" onClick={async () => {await handleSignIn(); closeDrawer()}}>
                     Account
                   </div>
                 </li>
@@ -102,7 +102,7 @@ export default function MainNavigation(props) {
               <img src={cartIcon}/>
                     {cart.length > 0 && (cart.length < 10 ? (<div>{cart.length}</div>) : (<div>9+</div>) ) }
             </NavLink>
-            <div className="main-navigation__icon-container" onClick={handleSignIn}>
+            <div className="main-navigation__icon-container" onClick={async () => {handleSignIn()}}>
               <img src={profileIcon}/>
             </div>
           </nav>
