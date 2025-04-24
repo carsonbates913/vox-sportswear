@@ -67,9 +67,3 @@
   opacity: 0;
   transition: all 200ms;
 }
-
-@media (max-width: 600px) {
-  .product-gallery {
-    display: none;
-  }
-}
