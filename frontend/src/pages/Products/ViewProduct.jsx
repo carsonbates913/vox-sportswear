@@ -45,7 +45,7 @@ const ViewProduct =(props) => {
             x: -20,
         },
         visible: {
-            opacity: selectedProduct!==0 ? 1 : 0,
+            opacity: selectedProduct >=  1 ? 1 : 0,
             x: 0,
         }
     }
@@ -56,7 +56,7 @@ const ViewProduct =(props) => {
             x: 20,
         },
         visible: {
-            opacity: selectedProduct!== productInfo?.ImageURLs?.length - 2 ? 1 : 0,
+            opacity: selectedProduct >= productInfo?.ImageURLs?.length - 1 ? 0 : 1,
             x: 0,
         }
     }
@@ -79,7 +79,7 @@ const ViewProduct =(props) => {
     }
 
     const nextSlide = () => {
-        if(selectedProduct <= productInfo?.ImageURLs?.length - 2) setSelectedProduct((prev) => prev + 1);
+        if(!(selectedProduct >= productInfo?.ImageURLs?.length - 1)) setSelectedProduct((prev) => prev + 1);
       }
     
     const prevSlide = () => {
