@@ -38,11 +38,6 @@ export default function AdminDashboard () {
   return (
       <main className="admin-dashboard">
         <header>
-          <button onClick={async () => {
-            const respone = await createAdmin();
-            console.log(respone);
-            console.log("Admin Created");
-            }}>click me</button>
           <h1>Admin Dashboard</h1>
           <button className="sign-out-button" onClick={() => {signOut(); navigate('/')}}>Sign Out</button>
         </header>

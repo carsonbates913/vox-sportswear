@@ -6,9 +6,6 @@
   padding: 0px 20px;
 }
 
-.view-product-form__input-container {
-}
-
 .view-product-form__product-info {
   display: flex;
   flex-flow: column nowrap;
@@ -55,8 +52,8 @@
   background-color: var(--green1-dark);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .view-product-form {
-    max-width: 800px;
+    max-width: 900px;
   }
 }

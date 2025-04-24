@@ -11,7 +11,7 @@ export default function Footer() {
           <a href="https://www.linkedin.com/company/vox-sportswear-inc-"></a>
         </div>
       </div>
-      <p className="footer__socials__contact">contact us at <a href="mailto:voxsportswear@gamil.com">voxsportswear@gmail.com</a></p>
+      <p className="footer__socials__contact">contact us at <a href="mailto:voxsportswear@gamil.com">vox.sportswear.email@gmail.com</a></p>
       </div>
     </footer>
   )

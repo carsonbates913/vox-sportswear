@@ -6,7 +6,7 @@ import {
   getFirestore, collection, doc, getDocs, deleteDoc, updateDoc, onSnapshot, query, where,
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, updateMetadata } from "firebase/storage";
-import { getAuth } from 'firebase/auth';
+import { getAuth, getRedirectResult } from 'firebase/auth';
 import { getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
@@ -25,6 +25,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app)
 export const auth = getAuth(app);
+    getRedirectResult(auth)
+      .then((result) => {
+        console.log("Redirect result:", result);
+        if (result?.user) {
+          //setUser(result.user);  // Store the user after redirect
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching redirect result:", error);
+      });
 export const functions = getFunctions(app);
 
 export const initFirebase = () => {

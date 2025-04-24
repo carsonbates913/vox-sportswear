@@ -11,6 +11,7 @@
 
 .info-box__icon-container {
   width: 80px;
+  align-self: center;
 }
 
 .info-box__note {

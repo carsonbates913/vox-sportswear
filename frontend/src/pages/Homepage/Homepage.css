@@ -132,7 +132,7 @@
 
 .homepage__carousel-section__title {
   flex: 1.2; 
-  min-width: clamp(35%, 250px, 60%);
+  min-width: clamp(40%, 250px, 60%);
 }
 
 .homepage__carousel-section__title img {
@@ -145,7 +145,7 @@
 }
 
 .homepage__carousel-section__carousel-container {
-  min-width: clamp(30%, 200px, 50%);
+  min-width: clamp(45%, 200px, 50%);
   flex: 1;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -165,6 +165,7 @@
 
 .homepage__process-section {
   height: 6000px;
+  width: 100vw;
   position: relative;
   display: flex;
   justify-content: center;
@@ -173,7 +174,6 @@
 
 .sticky-container {
   height: calc(100vh - 80px);
-  width: 100vw;
   padding: 80px 0px;
   border: none;
   position: sticky;
@@ -204,14 +204,15 @@
   font-size: 90px;
   font-weight: bold;
   text-align: center;
+  background-color: p
 }
 
 .instruction-card-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 
 }
 
@@ -254,11 +255,10 @@
   transform: translatex(10px);
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1366px) {
   .homepage__process-section {
     height: fit-content;
-    margin: 50px 0px 0px 0px;
-    background-color: var(--green1);
+    background-color: var(--green1)!important;
   }
 
   .homepage__process-section * {
@@ -269,6 +269,7 @@
   .sticky-container {
     height: fit-content;
     position: block;
+    width: 100vw !important;
   }
 
   .sticky-container h1 {
@@ -288,5 +289,9 @@
     font-weight: 800;
     letter-spacing: -2px;
     text-align: center;
+  }
+
+  .instruction-card-container {
+    flex-flow: row wrap;
   }
 }

@@ -24,14 +24,17 @@ export default function MainNavigation(props) {
 
   const handleSignIn = async () => {
     if(user){
+      console.log("hello");
       navigate('/myaccount');
     }else {
       const result = await signIn(); 
+      /*
       if (result) {
         navigate('/myaccount')
       } else {
         navigate('/');
       }
+      */
     }
   }
 

@@ -37,6 +37,7 @@ const Products = () => {
                     <>
                         <ProductList products={products} />
                         <div className="products__line-break" />
+                        <h1 className="gallery-title">Past Designs We Love</h1>
                         <ProductGallery/>
                     </>
                 )}

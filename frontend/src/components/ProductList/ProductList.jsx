@@ -12,7 +12,7 @@ export default function ProductList(props){
     <>
       <div className="product-list">
           {props.products.map((product) => (
-              <BlockButton onClick={() => {navigate(`./${product.name}`)}} key={product.name} color="black" backgroundColor="var(--background-color)" padding="7px 30px" fontSize="23px">{product.name}</BlockButton>
+              <BlockButton onClick={() => {navigate(`./${encodeURIComponent(product.name)}`)}} key={product.name} color="black" backgroundColor="var(--background-color)" padding="7px 30px" fontSize="23px">{product.name}</BlockButton>
           ))}
       </div>
     </>

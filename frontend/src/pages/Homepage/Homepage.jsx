@@ -54,8 +54,9 @@ const Homepage = () => {
     const fade5 = useTransform(scrollYProgress, [.83, .87], [0, 1]);
     const move5 = useTransform(scrollYProgress, [.83, .87], [20, 0]);
 
-    const width = useTransform(scrollYProgress, [.95, 1], ["100vw", "95vw"])
+    const width = useTransform(scrollYProgress, [.95, 1], ["100vw", "95vw"]);
     const roundedBorder = useTransform(scrollYProgress, [.95, 1], ["0px", "50px"]);
+    const backgroundColor = useTransform(scrollYProgress, [.8, .9], ["var(--green3)", "#ffffff"]);
 
     return (
         <main className="homepage">
@@ -94,9 +95,6 @@ const Homepage = () => {
                 </section>
                 <motion.div 
                     className="homepage__carousel-section"
-                    initial="offscreen"
-                    whileInView="onscreen"
-                    viewport={{ once: true, amount: 0.5 }}
                 >
                     <div className="homepage__carousel-content">
                         <motion.div 
@@ -112,7 +110,7 @@ const Homepage = () => {
                                 initial={{opacity: 0, scale: .6}}
                                 whileInView={{opacity: 1, scale: 1}}
                                 viewport={{ once: true, amount: 0.8 }}
-                                transition={{duration: 0.6, delay: .6, type: "spring"}}
+                                transition={{duration: 0.6, type: "spring"}}
                                 onAnimationComplete={() => setAnimationDone(true)}
                             >
                                 <Carousel isRunning={animationDone} images={images}/>
@@ -120,9 +118,10 @@ const Homepage = () => {
                         </motion.div>
                     </div>
                 </motion.div>
-                <section 
+                <motion.section 
                     ref={hijackRef}
                     className="homepage__process-section"
+                    style={{backgroundColor: backgroundColor}}
                 >
                     <motion.div className="sticky-container" style={{borderRadius: roundedBorder, width: width}}>
                         <motion.div 
@@ -160,7 +159,7 @@ const Homepage = () => {
                                 y={move5}/>
                         </div>
                     </motion.div>
-                </section>
+                </motion.section>
                 <section className="note-section">
                     <div className="note-section__titles-container">
                         <motion.h1

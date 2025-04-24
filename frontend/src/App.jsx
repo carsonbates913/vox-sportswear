@@ -14,6 +14,7 @@ import RootLayout from './layouts/RootLayout.jsx';
 import { MyAccountRedirect } from './routes/ProtectedRoutes.jsx';
 import LoadingModule from './components/LoadingModule/LoadingModule.jsx';
 import { initFirebase } from './services/datastore.js';
+import ScrollToTop from './routes/ScrollToTop.jsx';
 
 function App() {
   
@@ -25,6 +26,30 @@ function App() {
   const appCheck = initializeAppCheck(app, {provider: new ReCaptchaV3Provider('6LfpjRcrAAAAAC6y8bl0R5Q8ctKsNKQ7-Yz6_nSg'), isTokenAutoRefreshEnabled: true});
 
   const provider = useMemo(() => new GoogleAuthProvider(), []);
+
+  useEffect(() => {
+    setLoading(true);
+
+    // Handle the redirect result after the user is redirected back
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      console.log("Current user:", currentUser);
+      if (currentUser) {
+        try {
+          const token = await currentUser.getIdTokenResult();
+          const isAdmin = token.claims.isAdmin || false;
+          setUser({ ...currentUser, isAdmin });
+        } catch (error) {
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const router = useMemo(() => createBrowserRouter([
     {
@@ -84,37 +109,6 @@ function App() {
     return result;
   }, []); 
 
-  useEffect(() => {
-    setLoading(true);
-
-    // Handle the redirect result after the user is redirected back
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          setUser(result.user);  // Store the user after redirect
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching redirect result:", error);
-      });
-
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        try {
-          const token = await currentUser.getIdTokenResult();
-          const isAdmin = token.claims.isAdmin || false;
-          setUser({ ...currentUser, isAdmin });
-        } catch (error) {
-          setUser(null);
-        }
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   if(loading){
     return (
@@ -126,7 +120,8 @@ function App() {
     return (
       <>
       <AuthContext.Provider value={{user, loading, signIn, signOut}}>
-          <RouterProvider router={router} />
+          <RouterProvider router={router}> 
+          </RouterProvider >
       </AuthContext.Provider>
       </>
     )

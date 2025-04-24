@@ -25,6 +25,7 @@ const ViewProduct =(props) => {
     const { productName } = useParams();
 
     useEffect(() => {
+        console.log(productName);
         const getProduct = async () => {
             setLoading(true);
             const data = await getSpecificProduct(productName);
@@ -44,7 +45,7 @@ const ViewProduct =(props) => {
             x: -20,
         },
         visible: {
-            opacity: selectedProduct===1 ? 1 : 0,
+            opacity: selectedProduct!==0 ? 1 : 0,
             x: 0,
         }
     }
@@ -55,7 +56,7 @@ const ViewProduct =(props) => {
             x: 20,
         },
         visible: {
-            opacity: selectedProduct=== productInfo?.ImageURLs?.length - 2 ? 1 : 0,
+            opacity: selectedProduct!== productInfo?.ImageURLs?.length - 2 ? 1 : 0,
             x: 0,
         }
     }
@@ -151,6 +152,9 @@ const ViewProduct =(props) => {
                                 </li>
                             )}
                         </ul>
+                        <p>Get inspired by some of our past made-to-order creations!</p>
+                        <br />
+                        <p>These are just examples — your design can be completely unique. Just let us know what you have in mind in the request notes.</p>
                     </div>
                     <ViewProductForm productInfo={productInfo} user={user} signIn={signIn} loader={setLoadingCartAddition} />
                 </section>

@@ -1,22 +1,24 @@
 .about-us-wrapper {
+  padding: 20px 0px 0px 0px;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
 }
 
 .about-us__title {
-  margin: 20px 0px 120px 0px;
-  font-family: montserrat;
-  font-size: 80px;
-  font-weight: 200;
+  margin: 0px 0px 120px 0px;
+  font-family: montserrat, sans-serif;
+  font-size: 70px;
+  font-weight: 700;
   color: black; 
   text-align: center;
+  line-height: 1;
 }
 
 .about-us__title--bold {
-color: var(--green1);
-font-weight: 700;
-}
+  color: var(--green1);
+  font-weight: 700;
+  }
 
 .about-us__grid-members {
   width: 80vw;
